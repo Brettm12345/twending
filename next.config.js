@@ -1,6 +1,4 @@
 const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
-const withCSS = require("@zeit/next-css");
-const withFonts = require("next-fonts");
 const { pipe } = require("fp-ts/lib/pipeable");
 
 module.exports = pipe(
@@ -11,10 +9,10 @@ module.exports = pipe(
       } else {
         config.resolve.plugins = [new TsconfigPathsPlugin()];
       }
-
       return config;
     }
   },
-  withFonts,
-  withCSS
+  require("next-fonts"),
+  require("@zeit/next-css"),
+  require('next-offline')
 );
