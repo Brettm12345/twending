@@ -361,9 +361,9 @@ const languageMap = {
     color: "#60B5CC",
     url: "https://github.com/trending?l=Elm"
   },
-  "Emacs Lisp": {
+  Emacs: {
     color: "#c065db",
-    url: "https://github.com/trending?l=Emacs-Lisp"
+    url: "https://github.com/trending?l=Emacs"
   },
   EmberScript: {
     color: "#FFF4F3",
