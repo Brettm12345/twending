@@ -9,6 +9,10 @@
   "description": "A react application for github trending",
   "main": "index.js",
   "license": "MIT",
+  "homepage": "https://twending.now.sh/",
+  "repository": {
+    "url": "https://github.com/brettm12345/twending"
+  },
   "dependencies": {
     "@atlaskit/select": "^11.0.2",
     "@devexperts/remote-data-ts": "^2.0.1",

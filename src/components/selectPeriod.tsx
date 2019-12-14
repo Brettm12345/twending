@@ -10,7 +10,7 @@ const options: PeriodOption[] = [
 ];
 
 const SelectPeriod: React.FC<SelectProps<PeriodOption>> = props => (
-  <Select {...props} options={options} />
+  <Select {...props} options={options} isSearchable={false} />
 );
 
 export default SelectPeriod;
