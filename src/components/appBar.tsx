@@ -14,10 +14,7 @@ const AppBar: React.FC<AppBarProps> = ({ children }) => (
       >
         <Github size="3em" />
       </a>
-      <div
-        className="flex justify-end overflow-hidden"
-        style={{ width: "calc(100vw - 9em)" }}
-      >
+      <div className="flex justify-end" style={{ width: "calc(100vw - 9em)" }}>
         {children}
       </div>
     </div>
