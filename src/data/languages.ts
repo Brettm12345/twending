@@ -1489,6 +1489,11 @@ const languageMap = {
 
 export type Language = keyof typeof languageMap;
 export const languages = Object.keys(languageMap);
-export const getColor = (language: Language) => languageMap[language].color;
+export const getColor = (language: string) =>
+  language === "Emacs Lisp"
+    ? languageMap["Emacs"].color
+    : (languageMap[language as Language] &&
+        languageMap[language as Language].color) ||
+      "#ffffff";
 export const getUrl = (language: Language) => languageMap[language].url;
 export const options = languages.map(makeOption);

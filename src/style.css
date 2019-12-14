@@ -24,8 +24,8 @@ body {
   height: 0;
   background: 0 0;
 }
+
 .repo-icon svg {
-  width: 1em;
-  height: 1em;
-  margin-bottom: 0.5em;
+  width: 1.3em;
+  height: 1.3em;
 }

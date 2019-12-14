@@ -1,3 +1,4 @@
+import { Language, getColor } from 'data/languages'
 import React from 'react'
 import {
   IssueOpened,
@@ -15,6 +16,7 @@ const RepoItem: React.FC<RepoProps> = ({
   description,
   forks,
   issues,
+  language,
   isLast,
   name,
   stars,
@@ -37,13 +39,23 @@ const RepoItem: React.FC<RepoProps> = ({
         <p className="max-w-3xl mb-4 text-gray-300">
           {description || "No description given"}
         </p>
-        <div className="mt-auto text-sm text-gray-400">
+        <div className="flex mt-auto text-sm text-gray-400">
+          <span className="inline-flex mr-4">
+            <span
+              className="w-5 h-5 mr-1 text-gray-400 rounded-full"
+              style={{
+                backgroundColor: getColor(language as Language) as string,
+                marginTop: "-0.1em"
+              }}
+            />
+            <span>{language}</span>
+          </span>
           {[
             [<Star />, stars],
             [<RepoForked />, forks],
             [<IssueOpened />, issues]
           ].map(([icon, value], index) => (
-            <span key={index} className="mr-4 repo-icon">
+            <span key={index} className="inline-flex mr-4 repo-icon">
               {icon}
               &nbsp;{value}
             </span>

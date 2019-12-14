@@ -10,6 +10,8 @@ import {
   fold
 } from '@devexperts/remote-data-ts'
 
+import Loading from './loading'
+
 export interface RepoListProps {
   repos: RemoteData<Errors, Repo[]>;
 }
@@ -17,8 +19,8 @@ export interface RepoListProps {
 const RepoList: React.FC<RepoListProps> = flow(
   prop("repos"),
   fold(
-    () => <div>Init</div>,
-    () => <div>Loading...</div>,
+    () => <Loading />,
+    () => <Loading />,
     err => {
       console.error(err);
       return <div>Failed to fetch repos</div>;

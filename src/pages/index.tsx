@@ -3,6 +3,7 @@ import 'assets/fonts/futura'
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css'
 
 import AppBar from 'components/appBar'
+import Loading from 'components/loading'
 import RepoList, { RepoListProps } from 'components/repoList'
 import { makeOption } from 'components/select'
 import SelectLanguage from 'components/selectLanguage'
@@ -11,7 +12,6 @@ import { useRepos } from 'hooks/useRepos'
 import { NextPage } from 'next'
 import Head from 'next/head'
 import React, { memo } from 'react'
-import Loader from 'react-loader-spinner'
 import { LanguageOption, PeriodOption } from 'types'
 import createPersistedState from 'use-persisted-state'
 
@@ -38,16 +38,16 @@ const Home: NextPage<RepoListProps> = () => {
       <Head>
         <title>Twending - Yet another GitHub trending application</title>
       </Head>
-      <main className="flex flex-col items-center justify-center pt-24">
+      <main className="flex flex-col items-center justify-center pt-24 mb-10">
         <AppBar>
           <SelectPeriod onChange={setPeriod} value={period} />
           <SelectLanguage onChange={setLanguage} value={language} />
         </AppBar>
         <h1 className="mt-6 text-2xl text-center">Trending Repositories</h1>
         <RepoList repos={repos} />
-        <div className="mt-4">
+        <div className="mt-6">
           {loading ? (
-            <Loader type="Rings" color="white" />
+            <Loading />
           ) : (
             <button className="btn btn-blue" onClick={fetchMore}>
               Load next {period.value}
