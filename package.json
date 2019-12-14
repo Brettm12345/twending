@@ -10,6 +10,9 @@
   "main": "index.js",
   "license": "MIT",
   "homepage": "https://twending.now.sh/",
+  "engines": {
+    "node": "12.x"
+  },
   "repository": {
     "url": "https://github.com/brettm12345/twending"
   },
