@@ -1,0 +1,9 @@
+{
+  "short_name": "Twending",
+  "name": "Github twending",
+  "start_url": "/",
+  "background_color": "#24283A",
+  "display": "standalone",
+  "scope": "/",
+  "theme_color": "#24283A"
+}
