@@ -20,6 +20,7 @@
     "@types/styled-components": "^4.4.1",
     "@types/use-persisted-state": "^0.3.0",
     "@zeit/next-css": "^1.0.1",
+    "babel-plugin-styled-components": "^1.10.6",
     "dayjs": "^1.8.17",
     "fp-ts": "^2.3.1",
     "io-ts": "^2.0.1",
@@ -51,7 +52,5 @@
     "use-persisted-state": "^0.3.0",
     "webpack": "^4.41.2"
   },
-  "devDependencies": {
-    "now": "^16.7.0"
-  }
+  "devDependencies": {}
 }
