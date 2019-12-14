@@ -36,7 +36,7 @@ const Home: NextPage<RepoListProps> = () => {
   return (
     <>
       <Head>
-        <title>Twending</title>
+        <title>Twending - Yet another GitHub trending application</title>
       </Head>
       <main className="flex flex-col items-center justify-center p-8 pt-24">
         <AppBar>

@@ -20,11 +20,16 @@ const RepoItem: React.FC<RepoProps> = ({
   stars,
   url
 }) => (
-  <a href={url}>
-    <li className="flex px-8 pt-8 pb-4 hover:bg-gray-900 transition-bg">
-      <a href={author.url} className="flex-shrink-0 w-1/12 pt-1 mr-8">
-        <img className="rounded-lg" src={author.avatar} alt="Author avatar" />
-      </a>
+  <li>
+    <a
+      className="flex px-8 pt-8 pb-4 hover:bg-gray-900 transition-bg"
+      href={url}
+    >
+      <div className="flex-shrink-0 w-1/12 pt-1 mr-8">
+        <a href={author.url}>
+          <img className="rounded-lg" src={author.avatar} alt="Author avatar" />
+        </a>
+      </div>
       <div className="flex flex-col flex-grow">
         <h3 className="mb-1 text-lg text-white">
           {author.name}/{name}
@@ -45,9 +50,9 @@ const RepoItem: React.FC<RepoProps> = ({
           ))}
         </div>
       </div>
-    </li>
+    </a>
     {!isLast && <hr className="border-gray-900" />}
-  </a>
+  </li>
 );
 
 export default RepoItem;
