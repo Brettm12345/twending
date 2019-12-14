@@ -3,6 +3,7 @@ import 'assets/fonts/futura'
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css'
 
 import AppBar from 'components/appBar'
+import Head from 'components/head'
 import Loading from 'components/loading'
 import RepoList, { RepoListProps } from 'components/repoList'
 import { makeOption } from 'components/select'
@@ -10,7 +11,6 @@ import SelectLanguage from 'components/selectLanguage'
 import SelectPeriod from 'components/selectPeriod'
 import { useRepos } from 'hooks/useRepos'
 import { NextPage } from 'next'
-import Head from 'next/head'
 import React, { memo } from 'react'
 import { LanguageOption, PeriodOption } from 'types'
 import createPersistedState from 'use-persisted-state'
@@ -35,9 +35,7 @@ const Home: NextPage<RepoListProps> = () => {
 
   return (
     <>
-      <Head>
-        <title>Twending - Yet another GitHub trending application</title>
-      </Head>
+      <Head />
       <main className="flex flex-col items-center justify-center pt-24 mb-10">
         <AppBar>
           <SelectPeriod onChange={setPeriod} value={period} />
