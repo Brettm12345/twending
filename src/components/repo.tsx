@@ -42,10 +42,10 @@ const RepoItem: React.FC<RepoProps> = ({
         <div className="flex mt-auto text-sm text-gray-400">
           <span className="inline-flex mr-4">
             <span
-              className="w-5 h-5 mr-1 text-gray-400 rounded-full"
+              className="relative w-4 h-4 mr-1 text-gray-400 rounded-full"
               style={{
                 backgroundColor: getColor(language as Language) as string,
-                marginTop: "-0.1em"
+                bottom: "-0.1em"
               }}
             />
             <span>{language}</span>
