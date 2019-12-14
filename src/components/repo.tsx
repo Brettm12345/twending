@@ -24,7 +24,7 @@ const RepoItem: React.FC<RepoProps> = ({
 }) => (
   <li>
     <a
-      className="flex p-6 pb-2 md:p-8 md:pb-4 hover:bg-gray-900 transition-bg"
+      className="flex p-6 pb-4 md:p-8 hover:bg-gray-900 transition-bg"
       href={url}
     >
       <div className="flex-shrink-0 w-1/6 pt-1 mr-4 md:mr-8 md:w-1/8 lg:w-1/12">
