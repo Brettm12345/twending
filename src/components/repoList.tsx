@@ -24,7 +24,7 @@ const RepoList: React.FC<RepoListProps> = flow(
       return <div>Failed to fetch repos</div>;
     },
     repos => (
-      <ul className="mx-20 mt-6 overflow-hidden list-none bg-gray-800 border-gray-900 rounded-lg shadow-xl">
+      <ul className="w-11/12 mt-6 overflow-hidden list-none bg-gray-800 border-gray-900 rounded-lg shadow-xl md:w-10/12">
         {repos.map(({ id, ...repo }, index) => (
           <RepoItem key={id} isLast={index === repos.length - 1} {...repo} />
         ))}

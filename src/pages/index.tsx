@@ -38,7 +38,7 @@ const Home: NextPage<RepoListProps> = () => {
       <Head>
         <title>Twending - Yet another GitHub trending application</title>
       </Head>
-      <main className="flex flex-col items-center justify-center p-8 pt-24">
+      <main className="flex flex-col items-center justify-center pt-24">
         <AppBar>
           <SelectPeriod onChange={setPeriod} value={period} />
           <SelectLanguage onChange={setLanguage} value={language} />
