@@ -3,6 +3,28 @@ const { pipe } = require("fp-ts/lib/pipeable");
 
 module.exports = pipe(
   {
+    transformManifest: manifest => ["/"].concat(manifest),
+    generateInDevMode: true,
+    workboxOpts: {
+      swDest: "static/service-worker.js",
+      runtimeCaching: [
+        {
+          urlPattern: /^https?.*/,
+          handler: "NetworkFirst",
+          options: {
+            cacheName: "https-calls",
+            networkTimeoutSeconds: 15,
+            expiration: {
+              maxEntries: 150,
+              maxAgeSeconds: 30 * 24 * 60 * 60 // 1 month
+            },
+            cacheableResponse: {
+              statuses: [0, 200]
+            }
+          }
+        }
+      ]
+    },
     webpack: config => {
       if (config.resolve.plugins) {
         config.resolve.plugins.push(new TsconfigPathsPlugin());
@@ -14,5 +36,5 @@ module.exports = pipe(
   },
   require("next-fonts"),
   require("@zeit/next-css"),
-  require('next-offline')
+  require("next-offline")
 );
