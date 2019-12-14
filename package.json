@@ -50,5 +50,8 @@
     "typescript-require": "^0.2.10",
     "use-persisted-state": "^0.3.0",
     "webpack": "^4.41.2"
+  },
+  "devDependencies": {
+    "now": "^16.7.0"
   }
 }

@@ -9,6 +9,7 @@ import SelectLanguage from 'components/selectLanguage'
 import SelectPeriod from 'components/selectPeriod'
 import { useRepos } from 'hooks/useRepos'
 import { NextPage } from 'next'
+import Head from 'next/head'
 import React, { memo } from 'react'
 import Loader from 'react-loader-spinner'
 import { LanguageOption, PeriodOption } from 'types'
@@ -34,7 +35,9 @@ const Home: NextPage<RepoListProps> = () => {
 
   return (
     <>
-      <head>Twending</head>
+      <Head>
+        <title>Twending</title>
+      </Head>
       <main className="flex flex-col items-center justify-center p-8 pt-24">
         <AppBar>
           <SelectPeriod onChange={setPeriod} value={period} />
