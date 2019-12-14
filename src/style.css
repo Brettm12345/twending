@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@tailwind screens;
+
+body {
+  @apply bg-gray-700 text-white font-sans font-medium;
+  line-height: 1.42857142857143;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+}
+
+.btn {
+  @apply font-semibold py-2 px-4 rounded;
+}
+.btn-blue {
+  @apply bg-blue-500 text-white;
+}
+.btn-blue:hover {
+  @apply bg-blue-700;
+}
+
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  background: 0 0;
+}
+.repo-icon svg {
+  width: 1em;
+  height: 1em;
+  margin-bottom: 0.5em;
+}

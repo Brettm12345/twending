@@ -1,0 +1,32 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": ".",
+    "checkJs": true,
+    "esModuleInterop": true,
+    "jsx": "preserve",
+    "lib": ["dom", "es2015", "es2017"],
+    "module": "esnext",
+    "noEmit": true,
+    "noImplicitAny": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "resolveJsonModule": true,
+    "paths": {
+      "*": ["./src/*"]
+    },
+    "preserveConstEnums": true,
+    "removeComments": false,
+    "strict": true,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "target": "esnext",
+    "typeRoots": ["./node_modules/@types"],
+    "forceConsistentCasingInFileNames": true,
+    "moduleResolution": "node",
+    "isolatedModules": true
+  },
+  "include": ["./src/**/*", "github.ts"],
+  "exclude": ["node_modules"]
+}
