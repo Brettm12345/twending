@@ -11,7 +11,7 @@
   "license": "MIT",
   "homepage": "https://twending.now.sh/",
   "engines": {
-    "node": "12.x"
+    "node": "10.x"
   },
   "repository": {
     "url": "https://github.com/brettm12345/twending"

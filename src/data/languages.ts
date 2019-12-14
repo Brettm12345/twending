@@ -405,10 +405,6 @@ const languageMap = {
     color: null,
     url: "https://github.com/trending?l=Filterscript"
   },
-  fish: {
-    color: null,
-    url: "https://github.com/trending?l=fish"
-  },
   FLUX: {
     color: "#88ccff",
     url: "https://github.com/trending?l=FLUX"
@@ -1130,7 +1126,7 @@ const languageMap = {
     url: "https://github.com/trending?l=REALbasic"
   },
   Reason: {
-    color: null,
+    color: "#ff5847",
     url: "https://github.com/trending?l=Reason"
   },
   Rebol: {
@@ -1492,6 +1488,8 @@ export const languages = Object.keys(languageMap);
 export const getColor = (language: string) =>
   language === "Emacs Lisp"
     ? languageMap["Emacs"].color
+    : language === "Vim script"
+    ? languageMap["VimL"].color
     : (languageMap[language as Language] &&
         languageMap[language as Language].color) ||
       "#ffffff";
