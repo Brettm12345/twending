@@ -6,7 +6,7 @@ interface AppBarProps {
 }
 
 const AppBar: React.FC<AppBarProps> = ({ children }) => (
-  <header className="fixed top-0 right-0 flex w-full bg-gray-800">
+  <header className="fixed top-0 right-0 flex w-full bg-gray-800 shadow-md">
     <div className="relative flex items-center w-full h-20 px-4">
       <a
         className="mr-16 opacity-75 hover:opacity-100 transition-opacity"
