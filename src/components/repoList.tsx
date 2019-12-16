@@ -2,7 +2,7 @@ import RepoItem from 'components/repo'
 import { flow } from 'fp-ts/lib/function'
 import { Errors } from 'io-ts'
 import { prop } from 'ramda'
-import React, { memo } from 'react'
+import React from 'react'
 import { Repo } from 'types'
 
 import {
@@ -35,4 +35,4 @@ const RepoList: React.FC<RepoListProps> = flow(
   )
 );
 
-export default memo(RepoList);
+export default RepoList;

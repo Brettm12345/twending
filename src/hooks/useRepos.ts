@@ -94,6 +94,7 @@ export const useRepos: UseRepos = (options = {}) => {
   };
 
   useEffect(() => {
+    setRepos(remoteData.pending);
     (async () => {
       pipe(
         await getRepos(),
