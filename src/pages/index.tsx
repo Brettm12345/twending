@@ -11,7 +11,7 @@ import SelectLanguage from 'components/selectLanguage'
 import SelectPeriod from 'components/selectPeriod'
 import { useRepos } from 'hooks/useRepos'
 import { NextPage } from 'next'
-import React, { memo } from 'react'
+import React from 'react'
 import { LanguageOption, PeriodOption } from 'types'
 import createPersistedState from 'use-persisted-state'
 
