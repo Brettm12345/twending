@@ -57,4 +57,4 @@ const Home: NextPage<RepoListProps> = () => {
   );
 };
 
-export default memo(Home);
+export default Home;

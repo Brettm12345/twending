@@ -38,17 +38,17 @@ const fetchGithubRepos = ({
   period = "month",
   page = 0,
   language = "All Languages"
-}: FetchReposOptions = {}): taskEither.TaskEither<t.Errors, GithubResponse> =>
+}: FetchReposOptions = {}) =>
   pipe(
-    {
-      lang: language === "All Languages" ? "" : `language:${language} `,
-      dateRange: pipe(
+    [
+      language === "All Languages" ? "" : `language:${language} `,
+      pipe(
         [page + 1, page],
         map(transformDate(period)),
         ([from, to]) => `created:${from}..${to}`
       )
-    },
-    ({ lang, dateRange }) => `${BASE_URL}${lang}${dateRange}`,
+    ],
+    ([lang, dateRange]) => `${BASE_URL}${lang}${dateRange}`,
     query => async () =>
       pipe(
         await fetch(query),
