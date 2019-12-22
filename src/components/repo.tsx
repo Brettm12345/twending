@@ -1,5 +1,14 @@
 import { Language, getColor } from 'data/languages'
-import React from 'react'
+import {
+  chain,
+  fold,
+  fromNullable,
+  map,
+  toUndefined
+} from 'fp-ts/lib/Option'
+import { constant } from 'fp-ts/lib/function'
+import { pipe } from 'fp-ts/lib/pipeable'
+import React, { CSSProperties } from 'react'
 import {
   IssueOpened,
   RepoForked,
@@ -42,11 +51,20 @@ const RepoItem: React.FC<RepoProps> = ({
         <div className="flex mt-auto text-sm text-gray-400">
           <span className="inline-flex mr-4">
             <span
-              className="relative w-4 h-4 mr-1 text-gray-400 rounded-full"
-              style={{
-                backgroundColor: getColor(language as Language) as string,
-                bottom: "-0.1em"
-              }}
+              className="relative w-4 h-4 mr-1 rounded-full text-gray-40a0"
+              style={pipe(
+                fromNullable(language),
+                chain(getColor),
+                fold<string, CSSProperties>(
+                  constant({
+                    display: "none"
+                  }),
+                  backgroundColor => ({
+                    backgroundColor,
+                    bottom: "-0.1em"
+                  })
+                )
+              )}
             />
             <span>{language}</span>
           </span>
