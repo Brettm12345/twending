@@ -5,26 +5,64 @@
 @tailwind utilities;
 @tailwind screens;
 
+* {
+  scrollbar-width: none;
+}
+
 body {
-  @apply bg-gray-700 text-white font-sans font-medium;
+  @apply font-sans font-medium text-white bg-gray-700;
   line-height: 1.42857142857143;
-  -ms-overflow-style: -ms-autohiding-scrollbar;
 }
 
 .btn {
-  @apply font-semibold py-2 px-4 rounded;
-}
-.btn-blue {
-  @apply bg-blue-500 text-white;
-}
-.btn-blue:hover {
-  @apply bg-blue-700;
+  @apply px-4 py-2 font-semibold rounded;
 }
 
-::-webkit-scrollbar {
-  width: 0;
-  height: 0;
-  background: 0 0;
+.btn-blue {
+  @apply text-white bg-primary;
+}
+
+.btn-blue:hover {
+  @apply bg-primary;
+}
+
+.select-container {
+  @apply mx-2;
+  width: 150px;
+  .select__control {
+    @apply bg-gray-700 border-none;
+    &:hover {
+      @apply bg-gray-500;
+    }
+  }
+  .select__single-value {
+    @apply text-gray-200 leading-normal;
+  }
+  .select__control--menu-is-open .select__indicator {
+    transform: rotate(180deg);
+  }
+  .select__dropdown-indicator {
+    @apply text-gray-400 transition-transform;
+    &:hover {
+      @apply text-gray-300;
+    }
+  }
+  .select__input {
+    @apply text-white;
+  }
+
+  .select__menu {
+    @apply bg-gray-700;
+  }
+  .select__option {
+    @apply text-white cursor-pointer;
+    &:focus {
+      background-color: rgba(white, 0.04);
+    }
+    &:active {
+      background-color: rgba(white, 0.2);
+    }
+  }
 }
 
 .repo-icon svg {

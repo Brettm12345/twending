@@ -30,6 +30,7 @@
     "@types/use-persisted-state": "^0.3.0",
     "@zeit/next-css": "^1.0.1",
     "babel-plugin-styled-components": "^1.10.6",
+    "clsx": "^1.0.4",
     "cssnano": "^4.1.10",
     "dayjs": "^1.8.17",
     "fp-ts": "^2.3.1",
@@ -40,7 +41,10 @@
     "next": "^9.1.5",
     "next-fonts": "^0.19.0",
     "next-offline": "^4.0.6",
+    "postcss-momentum-scrolling": "^2.2.9",
+    "postcss-nested": "^4.2.1",
     "postcss-preset-env": "^6.7.0",
+    "postcss-ts-classnames": "^0.1.2",
     "prop-types": "^15.7.2",
     "ramda": "^0.26.1",
     "react": "^16.12.0",
@@ -51,16 +55,25 @@
     "react-use": "^13.12.2",
     "styled-components": "^4.4.1",
     "styled-icons": "^9.1.0",
-    "tailwindcss": "^1.1.4",
+    "styled-tools": "^1.7.1",
+    "tailwindcss": "^1.2.0-canary.2",
     "tailwindcss-aspect-ratio": "^2.0.0",
     "tailwindcss-dark-mode": "^1.1.0",
     "tailwindcss-debug-screens": "^0.1.0",
+    "tailwindcss-theming": "^2.3.0",
     "tailwindcss-transitions": "^2.1.0",
+    "ts-classnames": "^0.1.1",
     "tsconfig-paths-webpack-plugin": "^3.2.0",
     "typescript": "^3.7.3",
     "typescript-require": "^0.2.10",
     "use-persisted-state": "^0.3.0",
     "webpack": "^4.41.2"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "babel-plugin-macros": "^2.8.0",
+    "babel-plugin-tailwind-components": "^0.5.10",
+    "postcss-nesting": "jonathantneal/postcss-nesting",
+    "postcss-scrollbar": "^0.3.0",
+    "tailwind.macro": "^0.5.10"
+  }
 }

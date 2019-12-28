@@ -1,9 +1,10 @@
 import Select from 'components/select'
 import { options } from 'data/languages'
-import React from 'react'
-import { LanguageOption, SelectProps } from 'types'
+import { FC } from 'react'
+import { Props } from 'react-select'
+import { LanguageOption } from 'types'
 
-const SelectLanguage: React.FC<SelectProps<LanguageOption>> = props => (
+const SelectLanguage: FC<Props<LanguageOption>> = props => (
   <Select {...props} options={options} />
 );
 

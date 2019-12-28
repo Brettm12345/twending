@@ -16,7 +16,6 @@ import {
   GithubResponse,
   transformResponse
 } from '../data/github'
-import { Language } from '../data/languages'
 
 const BASE_URL =
   "https://api.github.com/search/repositories?sort=stars&order=desc&q=";
@@ -24,9 +23,12 @@ const BASE_URL =
 interface FetchReposOptions {
   /** @default month */
   period?: Period;
+
   /** @default 0 */
   page?: number;
-  language?: Language;
+
+  /** @default "All Languages" */
+  language?: string;
 }
 
 const transformDate = (period: Period) => (value: number) =>
@@ -56,9 +58,10 @@ const fetchGithubRepos = ({
       )
   );
 
-const fetchRepos = flow(
+export const fetchRepos = flow(
   fetchGithubRepos,
-  taskEither.map(transformResponse)
+  taskEither.map(transformResponse),
+  task.map(remoteData.fromEither)
 );
 
 type Repos = remoteData.RemoteData<t.Errors, Repo[]>;
@@ -77,10 +80,7 @@ export const useRepos: UseRepos = (options = {}) => {
   const loading = useBoolean(false);
   const [repos, setRepos] = useState<Repos>(remoteData.initial);
 
-  const getRepos = pipe(
-    fetchRepos({ ...options, page: page.value }),
-    task.map(remoteData.fromEither)
-  );
+  const getRepos = fetchRepos({ ...options, page: page.value });
 
   const fetchMore = async () => {
     loading.setTrue();
@@ -94,6 +94,7 @@ export const useRepos: UseRepos = (options = {}) => {
   };
 
   useEffect(() => {
+    setRepos(remoteData.pending);
     (async () => {
       pipe(
         await getRepos(),

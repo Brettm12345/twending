@@ -27,6 +27,6 @@
     "moduleResolution": "node",
     "isolatedModules": true
   },
-  "include": ["./src/**/*", "github.ts"],
+  "include": ["./src/**/*", "./src/classnames.d.ts", "./next-env.d.ts"],
   "exclude": ["node_modules"]
 }

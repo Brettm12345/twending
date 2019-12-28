@@ -1,28 +1,22 @@
-import { Language, getColor } from 'data/languages'
-import {
-  chain,
-  fold,
-  fromNullable,
-  map,
-  toUndefined
-} from 'fp-ts/lib/Option'
-import { constant } from 'fp-ts/lib/function'
-import { pipe } from 'fp-ts/lib/pipeable'
-import React, { CSSProperties } from 'react'
+import { FC } from 'react'
 import {
   IssueOpened,
   RepoForked,
   Star
 } from 'styled-icons/octicons'
-import { Repo } from 'types'
+import { cn } from 'ts-classnames'
+import { Repo as RepoType } from 'types'
 
-interface RepoProps extends Omit<Repo, "id"> {
+import Avatar from './avatar'
+import Language from './language'
+
+interface RepoProps extends Omit<RepoType, "id"> {
   isLast: boolean;
 }
 
-const RepoItem: React.FC<RepoProps> = ({
+const RepoItem: FC<RepoProps> = ({
   author,
-  description,
+  description = "No description given",
   forks,
   issues,
   language,
@@ -31,57 +25,37 @@ const RepoItem: React.FC<RepoProps> = ({
   stars,
   url
 }) => (
-  <li>
-    <a
-      className="flex p-6 pb-4 md:p-8 hover:bg-gray-900 transition-bg"
-      href={url}
-    >
-      <div className="flex-shrink-0 w-1/6 pt-1 mr-4 md:mr-8 md:w-1/8 lg:w-1/12">
-        <a href={author.url}>
-          <img className="rounded-lg" src={author.avatar} alt="Author avatar" />
-        </a>
-      </div>
-      <div className="flex flex-col flex-grow">
-        <h3 className="mb-1 text-lg text-white">
-          {author.name}/{name}
-        </h3>
-        <p className="max-w-3xl mb-4 text-gray-300">
-          {description || "No description given"}
-        </p>
-        <div className="flex mt-auto text-sm text-gray-400">
-          <span className="inline-flex mr-4">
-            <span
-              className="relative w-4 h-4 mr-1 rounded-full text-gray-40a0"
-              style={pipe(
-                fromNullable(language),
-                chain(getColor),
-                fold<string, CSSProperties>(
-                  constant({
-                    display: "none"
-                  }),
-                  backgroundColor => ({
-                    backgroundColor,
-                    bottom: "-0.1em"
-                  })
-                )
-              )}
-            />
-            <span>{language}</span>
+  <li
+    className={cn(
+      "flex",
+      "p-6",
+      "pb-4",
+      "md:p-8",
+      "hover:bg-gray-900",
+      "transition-bg"
+    )}
+  >
+    <Avatar {...author} />
+    <a className={cn("flex", "flex-col", "flex-grow")} href={url}>
+      <h3 className={cn("mb-1", "text-lg", "text-white")}>
+        {author.name}/{name}
+      </h3>
+      <p className={cn("max-w-3xl", "mb-4", "text-gray-300")}>{description}</p>
+      <div className={cn("flex", "mt-auto", "text-sm", "text-gray-400")}>
+        <Language>{language || "Unknown"}</Language>
+        {[
+          [<Star />, stars],
+          [<RepoForked />, forks],
+          [<IssueOpened />, issues]
+        ].map(([icon, value], index) => (
+          <span key={index} className={cn("inline-flex", "mr-4", "repo-icon")}>
+            {icon}
+            &nbsp;{value}
           </span>
-          {[
-            [<Star />, stars],
-            [<RepoForked />, forks],
-            [<IssueOpened />, issues]
-          ].map(([icon, value], index) => (
-            <span key={index} className="inline-flex mr-4 repo-icon">
-              {icon}
-              &nbsp;{value}
-            </span>
-          ))}
-        </div>
+        ))}
       </div>
     </a>
-    {!isLast && <hr className="border-gray-900" />}
+    {!isLast && <hr className={cn("border-gray-900")} />}
   </li>
 );
 

@@ -1,4 +1,4 @@
-import { Language } from 'data/languages'
+import { Props } from 'react-select'
 
 export interface User {
   avatar: string;
@@ -19,8 +19,7 @@ export interface Repo {
   url: string;
 }
 
-export interface SelectProps<T> {
-  onChange: (value: T) => void;
+export interface SelectProps<T> extends Props<T> {
   value: T;
 }
 
@@ -32,6 +31,6 @@ export interface PeriodOption {
 }
 
 export interface LanguageOption {
-  value: Language;
-  label: Language;
+  value: string;
+  label: string;
 }
