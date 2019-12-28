@@ -55,9 +55,10 @@ body {
     @apply bg-gray-700;
   }
   .select__option {
-    @apply text-white cursor-pointer;
-    &:focus {
-      background-color: rgba(white, 0.04);
+    @apply text-white cursor-pointer p-2 px-3;
+    &:focus,
+    &:hover {
+      @apply bg-gray-600;
     }
     &:active {
       background-color: rgba(white, 0.2);
