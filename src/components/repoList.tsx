@@ -3,7 +3,7 @@ import { error } from 'fp-ts/lib/Console'
 import { toError } from 'fp-ts/lib/Either'
 import { constant, flow } from 'fp-ts/lib/function'
 import { Errors } from 'io-ts'
-import { prop } from 'ramda'
+import { Lens } from 'monocle-ts'
 import { FC } from 'react'
 import { cn } from 'ts-classnames'
 import { Repo } from 'types'
@@ -47,8 +47,10 @@ const render = (repos: Repo[]) => (
   </ul>
 );
 
+const prop = Lens.fromProp<RepoListProps>()("repos");
+
 const RepoList: FC<RepoListProps> = flow(
-  prop("repos"),
+  prop.get,
   fold(loading, loading, failed, render)
 );
 
