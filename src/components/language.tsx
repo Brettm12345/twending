@@ -1,22 +1,18 @@
 import { getColor } from 'data/languages'
-import { prop } from 'ramda'
-import React from 'react'
-import styled from 'styled-components'
+import { FC } from 'react'
 import { cn } from 'ts-classnames'
-
-const Dot = styled("span")<{ color: string }>`
-  background-color: ${prop("color")};
-  bottom: -0.1em;
-`;
 
 interface LanguageProps {
   children: string;
 }
 
-const Language: React.FC<LanguageProps> = ({ children }) => (
+const Language: FC<LanguageProps> = ({ children }) => (
   <span className={cn("inline-flex", "mr-4")}>
-    <Dot
-      color={getColor(children)}
+    <span
+      css={{
+        backgroundColor: getColor(children),
+        bottom: "-0.1em"
+      }}
       className={cn(
         "relative",
         "w-4",

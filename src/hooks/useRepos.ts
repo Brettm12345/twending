@@ -1,16 +1,16 @@
 import dayjs from 'dayjs'
+import { flatten, map } from 'fp-ts/lib/Array'
 import * as task from 'fp-ts/lib/Task'
 import * as taskEither from 'fp-ts/lib/TaskEither'
 import { flow } from 'fp-ts/lib/function'
 import { pipe } from 'fp-ts/lib/pipeable'
 import * as t from 'io-ts'
 import fetch from 'isomorphic-fetch'
-import { flatten, map } from 'ramda'
 import { useEffect, useState } from 'react'
 import { useBoolean, useNumber } from 'react-hanger'
 import { Period, Repo } from 'types'
 
-import * as remoteData from '@devexperts/remote-data-ts'
+import * as rd from '@devexperts/remote-data-ts'
 
 import {
   GithubResponse,
@@ -61,46 +61,48 @@ const fetchGithubRepos = ({
 export const fetchRepos = flow(
   fetchGithubRepos,
   taskEither.map(transformResponse),
-  task.map(remoteData.fromEither)
+  task.map(rd.fromEither)
 );
 
-type Repos = remoteData.RemoteData<t.Errors, Repo[]>;
+type Repos = rd.RemoteData<t.Errors, Repo[]>;
 
-type UseReposOptions = Omit<FetchReposOptions, "page">;
 interface UseReposResult {
   repos: Repos;
   loading: boolean;
   fetchMore: () => Promise<void>;
 }
 
-type UseRepos = (options?: UseReposOptions) => UseReposResult;
-
-export const useRepos: UseRepos = (options = {}) => {
+export const useRepos = (
+  options: Omit<FetchReposOptions, "page"> = {}
+): UseReposResult => {
   const page = useNumber(0);
   const loading = useBoolean(false);
-  const [repos, setRepos] = useState<Repos>(remoteData.initial);
+  const [repos, setRepos] = useState<Repos>(rd.initial);
+
+  const setReposWith = async (f: task.Task<Repos>) => {
+    pipe(
+      f,
+      task.map(setRepos)
+    );
+  };
 
   const getRepos = fetchRepos({ ...options, page: page.value });
+  const getMoreRepos = pipe(
+    getRepos,
+    task.map(r => rd.combine(repos, r)),
+    task.map(rd.map(flatten))
+  );
 
   const fetchMore = async () => {
     loading.setTrue();
     page.increase();
-    pipe(
-      remoteData.combine(repos, await getRepos()),
-      remoteData.map(flatten),
-      setRepos
-    );
+    setReposWith(getMoreRepos);
     loading.setFalse();
   };
 
   useEffect(() => {
-    setRepos(remoteData.pending);
-    (async () => {
-      pipe(
-        await getRepos(),
-        setRepos
-      );
-    })();
+    setReposWith(task.of(rd.pending));
+    setReposWith(getRepos);
   }, [options.language, options.period]);
 
   return {

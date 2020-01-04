@@ -41,8 +41,8 @@ const AppBar: FC<AppBarProps> = ({ children }) => (
         <Github size="3em" />
       </a>
       <div
+        css={{ width: "calc(100vw - 9em)" }}
         className={cn("flex", "justify-end")}
-        style={{ width: "calc(100vw - 9em)" }}
       >
         {children}
       </div>
