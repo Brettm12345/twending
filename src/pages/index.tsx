@@ -9,9 +9,7 @@ import Root, { RepoListProps } from 'components/repoList'
 import { makeOption } from 'components/select'
 import SelectLanguage from 'components/selectLanguage'
 import SelectPeriod from 'components/selectPeriod'
-import * as task from 'fp-ts/lib/Task'
-import { pipe } from 'fp-ts/lib/pipeable'
-import { fetchRepos, useRepos } from 'hooks/useRepos'
+import { useRepos } from 'hooks/useRepos'
 import { NextPage } from 'next'
 import React from 'react'
 import { cn } from 'ts-classnames'
@@ -78,10 +76,5 @@ const Home: NextPage<RepoListProps> = () => {
     </>
   );
 };
-
-Home.getInitialProps = pipe(
-  fetchRepos(),
-  task.map(repos => ({ repos }))
-);
 
 export default Home;
