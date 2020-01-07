@@ -47,12 +47,10 @@ const Home: FC = () => {
       >
         <AppBar>
           <Language
-            isLoading={loading}
             onChange={setLanguage as any}
             value={language}
           />
           <Period
-            isLoading={loading}
             onChange={setPeriod as any}
             value={period}
           />
