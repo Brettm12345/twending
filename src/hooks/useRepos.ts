@@ -1,26 +1,25 @@
 import dayjs from 'dayjs'
-import { flatten, map } from 'fp-ts/lib/Array'
+import fetch from 'unfetch'
+import * as t from 'io-ts'
+import * as RD from '@devexperts/remote-data-ts'
 import * as T from 'fp-ts/lib/Task'
 import * as TE from 'fp-ts/lib/TaskEither'
+import { flatten, map } from 'fp-ts/lib/Array'
 import { flow } from 'fp-ts/lib/function'
 import { pipe } from 'fp-ts/lib/pipeable'
-import * as t from 'io-ts'
-import fetch from 'isomorphic-fetch'
 import { useEffect, useState } from 'react'
 import { useBoolean, useNumber } from 'react-hanger'
-import { Period, Repo } from 'types'
-
-import * as RD from '@devexperts/remote-data-ts'
 
 import {
   GithubResponse,
   transformResponse,
-} from '../data/github'
+} from 'data/github'
+import { Period, Repo } from 'types'
 
 const BASE_URL =
   'https://api.github.com/search/repositories?sort=stars&order=desc&q='
 
-interface FetchReposOptions {
+interface QueryOptions {
   /** @default month */
   period?: Period
 
@@ -36,11 +35,11 @@ const transformDate = (period: Period) => (value: number) =>
     .subtract(value, period)
     .format('YYYY-MM-DD')
 
-const fetchGithubRepos = ({
+const getQuery = ({
   period = 'month',
   page = 0,
   language = 'All Languages',
-}: FetchReposOptions = {}) =>
+}: QueryOptions): string =>
   pipe(
     [
       language === 'All Languages'
@@ -52,20 +51,24 @@ const fetchGithubRepos = ({
         ([from, to]) => `created:${from}..${to}`
       ),
     ],
-    ([lang, dateRange]) => `${BASE_URL}${lang}${dateRange}`,
-    query => async () =>
-      pipe(await fetch(query), response =>
-        response.json().then(GithubResponse.decode)
-      )
+    ([lang, dateRange]) => `${BASE_URL}${lang}${dateRange}`
   )
 
-export const fetchRepos = flow(
-  fetchGithubRepos,
+const fetchAndDecode = (type: t.Mixed) => (
+  query: string
+) => () =>
+  fetch(query).then(r => r.json().then(type.decode))
+
+type Repos = RD.RemoteData<t.Errors, Repo[]>
+
+type FetchRepos = (options: QueryOptions) => T.Task<Repos>
+
+export const fetchRepos: FetchRepos = flow(
+  getQuery,
+  fetchAndDecode(GithubResponse),
   TE.map(transformResponse),
   T.map(RD.fromEither)
 )
-
-type Repos = RD.RemoteData<t.Errors, Repo[]>
 
 interface UseReposResult {
   repos: Repos
@@ -74,15 +77,14 @@ interface UseReposResult {
 }
 
 export const useRepos = (
-  options: Omit<FetchReposOptions, 'page'> = {}
+  options: Omit<QueryOptions, 'page'> = {}
 ): UseReposResult => {
   const page = useNumber(0)
   const loading = useBoolean(false)
   const [repos, setRepos] = useState<Repos>(RD.initial)
 
-  const setReposWith = async (f: T.Task<Repos>) => {
+  const setReposWith = async (f: T.Task<Repos>) =>
     pipe(f, T.map(setRepos))()
-  }
 
   const getRepos = fetchRepos({
     ...options,
