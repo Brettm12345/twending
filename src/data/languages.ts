@@ -16,7 +16,7 @@ import {
 export const getColor = (language: string) =>
   pipe(
     lookup(language, colors),
-    getOrElse(constant(theme.colors.primary))
+    getOrElse(constant(theme.colors.gray[400]))
   )
 
 export const options = pipe(
