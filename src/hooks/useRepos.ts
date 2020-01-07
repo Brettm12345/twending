@@ -100,7 +100,7 @@ export const useRepos = (
   const fetchMore = async () => {
     loading.setTrue()
     page.increase()
-    setReposWith(getMoreRepos)
+    await setReposWith(getMoreRepos)
     loading.setFalse()
   }
 

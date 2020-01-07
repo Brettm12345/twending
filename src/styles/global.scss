@@ -10,6 +10,14 @@
   scrollbar-width: none;
 }
 
+html {
+  @apply antialiased;
+}
+
 body {
   @apply font-sans font-medium text-white bg-gray-700 leading-normal;
+}
+
+.center {
+  @apply justify-center items-center;
 }

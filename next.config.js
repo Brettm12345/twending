@@ -19,7 +19,6 @@ module.exports = pipe(
     },
     workboxOpts: {
       clientsClaim: true,
-      maximumFileSizeToCacheInBytes: 4 * 1024 * 1024,
       runtimeCaching: [
         {
           handler: 'StaleWhileRevalidate',

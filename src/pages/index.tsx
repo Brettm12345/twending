@@ -38,10 +38,9 @@ const Home: FC = () => {
       <Head />
       <main
         className={cn(
+          'center',
           'flex',
           'flex-col',
-          'items-center',
-          'justify-center',
           'pt-24',
           'mb-10'
         )}
@@ -72,6 +71,8 @@ const Home: FC = () => {
               className={cn(
                 'px-4',
                 'py-2',
+                'outline-none',
+                'focus:outline-none',
                 'font-semibold',
                 'rounded',
                 'text-white',
