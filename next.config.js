@@ -3,15 +3,6 @@ const {
 } = require('tsconfig-paths-webpack-plugin')
 const { pipe } = require('fp-ts/lib/pipeable')
 
-const cacheableResponse = {
-  statuses: [0, 200],
-}
-
-const expiration = maxEntries => ({
-  maxAgeSeconds: 30 * 24 * 60 * 60, // 1 month
-  maxEntries,
-})
-
 module.exports = pipe(
   {
     generateInDevMode: false,
@@ -28,23 +19,19 @@ module.exports = pipe(
     },
     workboxOpts: {
       clientsClaim: true,
+      maximumFileSizeToCacheInBytes: 4 * 1024 * 1024,
       runtimeCaching: [
         {
-          handler: 'CacheFirst',
-          options: {
-            cacheName: 'avatars',
-            cacheableResponse,
-            expiration: expiration(20),
-          },
-          urlPattern: /^githubusercontent.*/,
-        },
-        {
-          handler: 'NetworkFirst',
+          handler: 'StaleWhileRevalidate',
           options: {
             cacheName: 'https-calls',
-            cacheableResponse,
-            expiration: expiration(150),
-            networkTimeoutSeconds: 15,
+            cacheableResponse: {
+              statuses: [0, 200],
+            },
+            expiration: {
+              maxAgeSeconds: 30 * 24 * 60 * 60, // 1 month
+              maxEntries: 150,
+            },
           },
           urlPattern: /^https?.*/,
         },
