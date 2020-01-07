@@ -1,4 +1,6 @@
-const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin')
+const {
+  TsconfigPathsPlugin,
+} = require('tsconfig-paths-webpack-plugin')
 const { pipe } = require('fp-ts/lib/pipeable')
 
 const cacheableResponse = {
@@ -12,7 +14,7 @@ const expiration = maxEntries => ({
 
 module.exports = pipe(
   {
-    generateInDevMode: true,
+    generateInDevMode: false,
     transformManifest: manifest => ['/'].concat(manifest),
     webpack: config => {
       if (config.resolve.plugins) {

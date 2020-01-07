@@ -38,6 +38,7 @@
     "next": "^9.1.5",
     "next-fonts": "^0.19.0",
     "next-offline": "^4.0.6",
+    "postcss-scrollbar": "^0.3.0",
     "postcss-momentum-scrolling": "^2.2.9",
     "postcss-nested": "^4.2.1",
     "postcss-preset-env": "^6.7.0",
@@ -52,7 +53,6 @@
     "react-use": "^13.12.2",
     "styled-components": "^4.4.1",
     "styled-icons": "^9.1.0",
-    "styled-tools": "^1.7.1",
     "tailwindcss": "^1.2.0-canary.2",
     "tailwindcss-touch": "^1.0.1",
     "tailwindcss-transitions": "^2.1.0",
@@ -81,8 +81,6 @@
     "eslint-plugin-sort-keys-fix": "^1.0.1",
     "eslint-plugin-standard": "^4.0.0",
     "eslint-plugin-unicorn": "^12.0.2",
-    "postcss-nesting": "jonathantneal/postcss-nesting",
-    "postcss-scrollbar": "^0.3.0",
     "prettier": "^1.18.2"
   }
 }

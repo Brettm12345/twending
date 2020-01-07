@@ -1,14 +1,17 @@
 /* purgecss start ignore */
 .select-container {
   @apply mx-2;
-  min-width: 140px;
+  min-width: 10rem;
   flex-grow: 1;
-  max-width: 175px;
+  max-width: 12rem;
   .select__control {
     @apply bg-gray-700 border-none;
     &:hover {
       @apply bg-gray-500;
     }
+  }
+  .select__value-container {
+    flex-wrap: nowrap;
   }
   .select__option--is-focused {
     background-color: rgba(white, 0.04);
