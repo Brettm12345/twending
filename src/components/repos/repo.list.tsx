@@ -30,14 +30,15 @@ const success = (repos: Repo[]) => (
   <ul
     className={cn(
       'w-11/12',
+      'md:w-10/12',
       'mt-6',
       'overflow-hidden',
       'list-none',
       'bg-gray-800',
+      'border',
       'border-gray-900',
       'rounded-lg',
-      'shadow-xl',
-      'md:w-10/12'
+      'shadow-xl'
     )}
   >
     {repos.map(({ id, ...repo }, index) => (
