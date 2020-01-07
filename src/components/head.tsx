@@ -41,6 +41,7 @@ const meta = {
   description,
   'msapplication-TitleColor': theme.colors.primary,
   'theme-color': theme.colors.gray[300],
+  viewport: 'initial-scale=1.0, width=device-width',
 }
 
 const Head: FC = () => (

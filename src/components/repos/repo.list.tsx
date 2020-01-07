@@ -11,7 +11,7 @@ import {
 } from '@devexperts/remote-data-ts'
 
 import Loading from 'components/loading'
-import RepoItem from 'components/repo'
+import RepoItem from './repo.item'
 import { Repo } from 'types'
 
 export interface RepoListProps {

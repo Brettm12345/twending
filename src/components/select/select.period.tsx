@@ -4,8 +4,9 @@ import React, { FC } from 'react'
 import { collect } from 'fp-ts/lib/Record'
 import Select, { Props } from 'react-select'
 
+import selectProps from './select.props'
+
 import { Period, PeriodLabel, PeriodOption } from 'types'
-import selectProps from 'data/selectProps'
 
 const SelectPeriod: FC<Props<PeriodOption>> = props => (
   <Select

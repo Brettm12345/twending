@@ -9,9 +9,8 @@ import createPersistedState from 'use-persisted-state'
 import AppBar from 'components/appBar'
 import Head from 'components/head'
 import Loading from 'components/loading'
-import Root from 'components/repoList'
-import SelectLanguage from 'components/selectLanguage'
-import SelectPeriod from 'components/selectPeriod'
+import Repos from 'components/repos'
+import { Language, Period } from 'components/select'
 import { useRepos } from 'hooks/useRepos'
 import { LanguageOption, PeriodOption } from 'types'
 import { makeOption } from 'utils'
@@ -48,12 +47,12 @@ const Home: FC = () => {
         )}
       >
         <AppBar>
-          <SelectLanguage
+          <Language
             isLoading={loading}
             onChange={setLanguage as any}
             value={language}
           />
-          <SelectPeriod
+          <Period
             isLoading={loading}
             onChange={setPeriod as any}
             value={period}
@@ -64,7 +63,7 @@ const Home: FC = () => {
         >
           Trending Repositories
         </h1>
-        <Root repos={repos} />
+        <Repos repos={repos} />
         <div className={cn('mt-6')}>
           {loading ? (
             <Loading />

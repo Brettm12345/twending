@@ -1,6 +1,6 @@
 import { Props } from 'react-select'
 
-import theme from './theme'
+import theme from 'data/theme'
 
 const {
   colors: { blue },

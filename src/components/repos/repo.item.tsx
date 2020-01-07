@@ -1,9 +1,9 @@
 import { cn } from 'ts-classnames'
 import React, { FC } from 'react'
 
-import Avatar from './avatar'
-import Language from './language'
-import Icon, { IconName } from './icon'
+import Avatar from './repo.avatar'
+import Language from './repo.language'
+import Icon, { IconName } from './repo.icon'
 
 import { Repo as RepoType } from 'types'
 
@@ -43,7 +43,7 @@ const RepoItem: FC<RepoProps> = ({
       <p
         className={cn('max-w-3xl', 'mb-4', 'text-gray-300')}
       >
-        {description}
+        {description || 'No description provided'}
       </p>
       <div
         className={cn(
