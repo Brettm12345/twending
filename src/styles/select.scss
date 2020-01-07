@@ -87,11 +87,11 @@
       @apply text-white cursor-pointer p-2 px-3;
       &:focus,
       &:hover,
-      &--is-focused,
-      &--is-selected {
+      &--is-focused {
         @apply bg-gray-600;
       }
-      &:active {
+      &:active,
+      &--is-selected {
         @apply bg-gray-500;
       }
     }
