@@ -1,50 +1,50 @@
-import 'style.css'
+import 'styles/global.css'
 import 'assets/fonts/futura'
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css'
+
+import { cn } from 'ts-classnames'
+import React, { FC } from 'react'
+import createPersistedState from 'use-persisted-state'
 
 import AppBar from 'components/appBar'
 import Head from 'components/head'
 import Loading from 'components/loading'
-import Root, { RepoListProps } from 'components/repoList'
-import { makeOption } from 'components/select'
+import Root from 'components/repoList'
 import SelectLanguage from 'components/selectLanguage'
 import SelectPeriod from 'components/selectPeriod'
 import { useRepos } from 'hooks/useRepos'
-import { NextPage } from 'next'
-import React from 'react'
-import { cn } from 'ts-classnames'
+import { makeOption } from '../util'
 import { LanguageOption, PeriodOption } from 'types'
-import createPersistedState from 'use-persisted-state'
 
-const usePeriod = createPersistedState("period");
-const useLanguage = createPersistedState("language");
+const usePeriod = createPersistedState('period')
+const useLanguage = createPersistedState('language')
 
-const Home: NextPage<RepoListProps> = () => {
+const Home: FC = () => {
   const [period, setPeriod] = usePeriod<PeriodOption>({
-    label: "Monthly",
-    value: "month"
-  });
+    label: 'Monthly',
+    value: 'month',
+  })
 
-  const [language, setLanguage] = useLanguage<LanguageOption>(
-    makeOption("All Languages")
-  );
+  const [language, setLanguage] = useLanguage<
+    LanguageOption
+  >(makeOption('All Languages'))
 
   const { repos, fetchMore, loading } = useRepos({
+    language: language.value,
     period: period.value,
-    language: language.value
-  });
+  })
 
   return (
     <>
       <Head />
       <main
         className={cn(
-          "flex",
-          "flex-col",
-          "items-center",
-          "justify-center",
-          "pt-24",
-          "mb-10"
+          'flex',
+          'flex-col',
+          'items-center',
+          'justify-center',
+          'pt-24',
+          'mb-10'
         )}
       >
         <AppBar>
@@ -59,22 +59,27 @@ const Home: NextPage<RepoListProps> = () => {
             value={period}
           />
         </AppBar>
-        <h1 className={cn("mt-6", "text-2xl", "text-center")}>
+        <h1
+          className={cn('mt-6', 'text-2xl', 'text-center')}
+        >
           Trending Repositories
         </h1>
         <Root repos={repos} />
-        <div className={cn("mt-6")}>
+        <div className={cn('mt-6')}>
           {loading ? (
             <Loading />
           ) : (
-            <button className={cn("btn", "btn-blue")} onClick={fetchMore}>
+            <button
+              className={cn('btn', 'btn-blue')}
+              onClick={fetchMore}
+            >
               Load next {period.value}
             </button>
           )}
         </div>
       </main>
     </>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home

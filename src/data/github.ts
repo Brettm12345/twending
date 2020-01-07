@@ -1,44 +1,47 @@
+/* eslint-disable @typescript-eslint/camelcase */
 import * as t from 'io-ts'
 import { Repo, User } from 'types'
 
 const GithubUser = t.type({
-  login: t.string,
   avatar_url: t.string,
-  html_url: t.string
-});
+  html_url: t.string,
+  login: t.string,
+})
 
-type GithubUser = t.TypeOf<typeof GithubUser>;
+type GithubUser = t.TypeOf<typeof GithubUser>
+
+const nullable = (type: t.Mixed) => t.union([type, t.null])
 
 export const GithubRepo = t.type({
-  node_id: t.string,
-  name: t.string,
-  full_name: t.string,
-  private: t.boolean,
-  owner: GithubUser,
-  html_url: t.string,
-  description: t.union([t.string, t.null]),
   created_at: t.string,
-  stargazers_count: t.number,
-  language: t.union([t.string, t.null]),
+  description: nullable(t.string),
   forks_count: t.number,
-  open_issues_count: t.number
-});
+  full_name: t.string,
+  html_url: t.string,
+  language: nullable(t.string),
+  name: t.string,
+  node_id: t.string,
+  open_issues_count: t.number,
+  owner: GithubUser,
+  private: t.boolean,
+  stargazers_count: t.number,
+})
 
-export type GithubRepo = t.TypeOf<typeof GithubRepo>;
+export type GithubRepo = t.TypeOf<typeof GithubRepo>
 
 export const GithubResponse = t.type({
-  total_count: t.number,
   incomplete_results: t.boolean,
-  items: t.array(GithubRepo)
-});
+  items: t.array(GithubRepo),
+  total_count: t.number,
+})
 
-export type GithubResponse = t.TypeOf<typeof GithubResponse>;
+export type GithubResponse = t.TypeOf<typeof GithubResponse>
 
 const transformUser = (user: GithubUser): User => ({
   avatar: user.avatar_url,
   name: user.login,
-  url: user.html_url
-});
+  url: user.html_url,
+})
 
 export const transformRepo = ({
   description,
@@ -56,8 +59,9 @@ export const transformRepo = ({
   language,
   name,
   stars: repo.stargazers_count,
-  url: repo.html_url
-});
+  url: repo.html_url,
+})
 
-export const transformResponse = (response: GithubResponse): Repo[] =>
-  response.items.map(transformRepo);
+export const transformResponse = (
+  response: GithubResponse
+): Repo[] => response.items.map(transformRepo)

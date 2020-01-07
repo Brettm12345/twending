@@ -1,38 +1,22 @@
 /* purgecss start ignore */
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-@tailwind screens;
-
-* {
-  scrollbar-width: none;
-}
-
-body {
-  @apply font-sans font-medium text-white bg-gray-700;
-  line-height: 1.42857142857143;
-}
-
-.btn {
-  @apply px-4 py-2 font-semibold rounded;
-}
-
-.btn-blue {
-  @apply text-white bg-primary;
-}
-
-.btn-blue:hover {
-  @apply bg-primary;
-}
-
 .select-container {
   @apply mx-2;
-  width: 150px;
+  min-width: 140px;
+  flex-grow: 1;
+  max-width: 175px;
   .select__control {
     @apply bg-gray-700 border-none;
     &:hover {
       @apply bg-gray-500;
+    }
+  }
+  .select__option--is-focused {
+    background-color: rgba(white, 0.04);
+  }
+  .select__option--is-selected {
+    background-color: rgba(white, 0.1);
+    &:active {
+      background-color: rgba(white, 0.2);
     }
   }
   .select__single-value {
@@ -54,6 +38,9 @@ body {
   .select__menu {
     @apply bg-gray-700;
   }
+  .select__indicator-separator {
+    @apply bg-gray-500;
+  }
   .select__option {
     @apply text-white cursor-pointer p-2 px-3;
     &:focus,
@@ -65,10 +52,4 @@ body {
     }
   }
 }
-
-.repo-icon svg {
-  width: 1.3em;
-  height: 1.3em;
-}
-
 /* purgecss end ignore */

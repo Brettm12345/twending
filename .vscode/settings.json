@@ -1,5 +1,30 @@
 {
   "files.associations": {
     "*.css": "postcss"
-  }
+  },
+  "eslint.enable": true,
+  "importSorter.importStringConfiguration.trailingComma": "multiLine",
+  "importSorter.sortConfiguration.customOrderingRules.rules": [
+    {
+      "regex": "^React",
+      "orderLevel": 5,
+      "numberOfEmptyLinesAfterGroup": 0,
+      "disableSort": true
+    },
+    {
+      "type": "importMember",
+      "regex": "^$",
+      "orderLevel": 10,
+      "numberOfEmptyLinesAfterGroup": 0,
+      "disableSort": false
+    },
+    {
+      "regex": "^[.]",
+      "orderLevel": 40
+    },
+    {
+      "regex": "^(assets|components|data|hooks|pages|types|theme)",
+      "orderLevel": 50
+    }
+  ]
 }

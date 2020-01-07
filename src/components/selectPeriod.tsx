@@ -1,29 +1,29 @@
-import Select from 'components/select'
-import { map } from 'fp-ts/lib/Array'
 import { pipe } from 'fp-ts/lib/pipeable'
-import { FC } from 'react'
-import { Props } from 'react-select'
+import React, { FC } from 'react'
+import { collect } from 'fp-ts/lib/Record'
+import Select, { Props } from 'react-select'
+
 import { Period, PeriodLabel, PeriodOption } from 'types'
+import selectProps from 'data/selectProps'
 
 const SelectPeriod: FC<Props<PeriodOption>> = props => (
   <Select
+    {...selectProps}
     {...props}
-    options={pipe(
-      [
-        ["Daily", "day"],
-        ["Weekly", "week"],
-        ["Monthly", "month"],
-        ["Annually", "year"]
-      ],
-      map(
-        ([label, value]: [PeriodLabel, Period]): PeriodOption => ({
-          label,
-          value
-        })
-      )
-    )}
     isSearchable={false}
+    options={pipe<
+      Record<Period, PeriodLabel>,
+      PeriodOption[]
+    >(
+      {
+        day: 'Daily',
+        month: 'Monthly',
+        week: 'Weekly',
+        year: 'Annually',
+      },
+      collect((value, label) => ({ label, value }))
+    )}
   />
-);
+)
 
-export default SelectPeriod;
+export default SelectPeriod

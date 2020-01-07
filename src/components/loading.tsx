@@ -1,7 +1,10 @@
-import { FC } from 'react'
+import React, { FC } from 'react'
 import Loader from 'react-loader-spinner'
-import theme from 'theme'
 
-const Loading: FC = () => <Loader type="Rings" color={theme.colors.primary} />;
+import theme from 'data/theme'
 
-export default Loading;
+const Loading: FC = () => (
+  <Loader color={theme.colors.primary} type="Rings" />
+)
+
+export default Loading
