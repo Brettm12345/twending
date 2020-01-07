@@ -4,14 +4,13 @@ import { lookup } from 'fp-ts/lib/Record'
 import { constant } from 'fp-ts/lib/function'
 import { pipe } from 'fp-ts/lib/pipeable'
 
-import theme from 'data/theme'
-import { makeOption } from 'utils'
-
 import {
   colors,
   everythingElse,
   popular,
-} from './languages.json'
+} from 'data/languages.json'
+import theme from 'data/theme'
+import { makeOption } from 'utils'
 
 export const getColor = (language: string) =>
   pipe(
