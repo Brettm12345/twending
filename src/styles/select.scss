@@ -1,0 +1,99 @@
+@import 'dot.scss';
+
+@function select($selector) {
+  @return '.select__#{$selector}';
+}
+
+#language-select {
+  #{ select('') } {
+    &control--menu-is-open #{select('input')}::before {
+      @apply bg-gray-400;
+    }
+    &single-value,
+    &placeholder,
+    &input,
+    &option {
+      @include dot;
+      &::before {
+        @apply transition-bg;
+      }
+    }
+  }
+}
+
+%arrow {
+  @apply text-gray-400 transition-transform;
+  &--hover {
+    @apply text-gray-300;
+  }
+  &--open {
+    transform: rotate(180deg);
+  }
+}
+
+%separator {
+  @apply bg-gray-500;
+  &--hover {
+    @apply bg-gray-400;
+  }
+}
+
+%control {
+  @apply bg-gray-700 border-none transition-all;
+  &--hover {
+    @apply bg-gray-600;
+  }
+}
+
+.select-container {
+  @apply mx-2 flex-grow;
+  min-width: 10rem;
+  max-width: 12rem;
+  #{select('')} {
+    &indicator {
+      @extend %arrow;
+      &-separator {
+        @extend %separator;
+      }
+    }
+    &control {
+      @extend %control;
+      &--menu-is-open #{select('indicator')} {
+        @extend %arrow--open;
+      }
+      &:hover {
+        @extend %control--hover;
+        #{select('indicator')} {
+          @extend %arrow--hover;
+          &-separator {
+            @extend %separator--hover;
+          }
+        }
+      }
+    }
+    &input {
+      @apply text-white;
+    }
+    &menu {
+      @apply bg-gray-700;
+    }
+    &value-container {
+      @apply flex-no-wrap;
+    }
+    &single-value {
+      @apply text-gray-200 leading-normal;
+    }
+    &option {
+      @apply text-white cursor-pointer p-2 px-3;
+      &:focus,
+      &:hover,
+      &--is-focused,
+      &--is-selected {
+        @apply bg-gray-600;
+      }
+      &:active {
+        @apply bg-gray-500;
+      }
+    }
+  }
+}

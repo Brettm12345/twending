@@ -1,13 +1,9 @@
-import {
-  IssueOpened,
-  RepoForked,
-  Star,
-} from 'styled-icons/octicons'
 import { cn } from 'ts-classnames'
 import React, { FC } from 'react'
 
 import Avatar from './avatar'
 import Language from './language'
+import Icon, { IconName } from './icon'
 
 import { Repo as RepoType } from 'types'
 
@@ -58,23 +54,16 @@ const RepoItem: FC<RepoProps> = ({
         )}
       >
         <Language>{language || 'Unknown'}</Language>
-        {[
-          [<Star key="star" />, stars],
-          [<RepoForked key="fork" />, forks],
-          [<IssueOpened key="issue" />, issues],
-        ].map(([icon, value], index) => (
-          <span
-            className={cn(
-              'inline-flex',
-              'mr-4',
-              'repo-icon'
-            )}
-            key={index}
-          >
-            {icon}
-            &nbsp;{value}
-          </span>
-        ))}
+        {Object.entries({ forks, issues, stars }).map(
+          ([key, value]) => (
+            <span
+              className={cn('inline-flex', 'mr-4')}
+              key={key}
+            >
+              <Icon name={key as IconName} /> &nbsp;{value}
+            </span>
+          )
+        )}
       </div>
     </a>
     {!isLast && <hr className={cn('border-gray-900')} />}

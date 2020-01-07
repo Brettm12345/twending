@@ -10,7 +10,7 @@ import { useEffect, useState } from 'react'
 import { useBoolean, useNumber } from 'react-hanger'
 import { Period, Repo } from 'types'
 
-import * as rd from '@devexperts/remote-data-ts'
+import * as RD from '@devexperts/remote-data-ts'
 
 import {
   GithubResponse,
@@ -62,10 +62,10 @@ const fetchGithubRepos = ({
 export const fetchRepos = flow(
   fetchGithubRepos,
   TE.map(transformResponse),
-  T.map(rd.fromEither)
+  T.map(RD.fromEither)
 )
 
-type Repos = rd.RemoteData<t.Errors, Repo[]>
+type Repos = RD.RemoteData<t.Errors, Repo[]>
 
 interface UseReposResult {
   repos: Repos
@@ -78,7 +78,7 @@ export const useRepos = (
 ): UseReposResult => {
   const page = useNumber(0)
   const loading = useBoolean(false)
-  const [repos, setRepos] = useState<Repos>(rd.initial)
+  const [repos, setRepos] = useState<Repos>(RD.initial)
 
   const setReposWith = async (f: T.Task<Repos>) => {
     pipe(f, T.map(setRepos))()
@@ -91,8 +91,8 @@ export const useRepos = (
 
   const getMoreRepos = pipe(
     getRepos,
-    T.map(r => rd.combine(repos, r)),
-    T.map(rd.map(flatten))
+    T.map(r => RD.combine(repos, r)),
+    T.map(RD.map(flatten))
   )
 
   const fetchMore = async () => {
@@ -103,7 +103,7 @@ export const useRepos = (
   }
 
   useEffect(() => {
-    setReposWith(T.of(rd.pending))
+    setReposWith(T.of(RD.pending))
     setReposWith(getRepos)
   }, [options.language, options.period])
 

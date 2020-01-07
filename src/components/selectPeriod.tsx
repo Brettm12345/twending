@@ -1,3 +1,4 @@
+/* eslint-disable sort-keys-fix/sort-keys-fix */
 import { pipe } from 'fp-ts/lib/pipeable'
 import React, { FC } from 'react'
 import { collect } from 'fp-ts/lib/Record'
@@ -17,8 +18,8 @@ const SelectPeriod: FC<Props<PeriodOption>> = props => (
     >(
       {
         day: 'Daily',
-        month: 'Monthly',
         week: 'Weekly',
+        month: 'Monthly',
         year: 'Annually',
       },
       collect((value, label) => ({ label, value }))

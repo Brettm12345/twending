@@ -1,4 +1,4 @@
-import 'styles/global.css'
+import 'styles/global.scss'
 import 'assets/fonts/futura'
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css'
 
@@ -13,8 +13,8 @@ import Root from 'components/repoList'
 import SelectLanguage from 'components/selectLanguage'
 import SelectPeriod from 'components/selectPeriod'
 import { useRepos } from 'hooks/useRepos'
-import { makeOption } from '../util'
 import { LanguageOption, PeriodOption } from 'types'
+import { makeOption } from 'utils'
 
 const usePeriod = createPersistedState('period')
 const useLanguage = createPersistedState('language')
@@ -70,7 +70,16 @@ const Home: FC = () => {
             <Loading />
           ) : (
             <button
-              className={cn('btn', 'btn-blue')}
+              className={cn(
+                'px-4',
+                'py-2',
+                'font-semibold',
+                'rounded',
+                'text-white',
+                'bg-blue-500',
+                'transition-bg',
+                'hover:bg-blue-400'
+              )}
               onClick={fetchMore}
             >
               Load next {period.value}

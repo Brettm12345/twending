@@ -1,0 +1,6 @@
+@import 'dot.scss';
+
+.language {
+  @include dot;
+  @apply inline-flex mr-4 whitespace-no-wrap overflow-x-hidden ellipsis;
+}

@@ -6,11 +6,7 @@
     "checkJs": true,
     "esModuleInterop": true,
     "jsx": "preserve",
-    "lib": [
-      "dom",
-      "es2015",
-      "es2017"
-    ],
+    "lib": ["dom", "es2015", "es2017"],
     "module": "esnext",
     "noEmit": true,
     "noImplicitAny": true,
@@ -18,9 +14,7 @@
     "noUnusedParameters": true,
     "resolveJsonModule": true,
     "paths": {
-      "*": [
-        "./src/*"
-      ]
+      "*": ["./src/*", "./src/@types/*"]
     },
     "preserveConstEnums": true,
     "removeComments": false,
@@ -28,9 +22,7 @@
     "skipLibCheck": true,
     "sourceMap": true,
     "target": "esnext",
-    "typeRoots": [
-      "./node_modules/@types"
-    ],
+    "typeRoots": ["./node_modules/@types"],
     "forceConsistentCasingInFileNames": true,
     "moduleResolution": "node",
     "isolatedModules": true
@@ -40,7 +32,5 @@
     "./src/classnames.d.ts",
     "./next-env.d.ts"
   ],
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": ["node_modules"]
 }

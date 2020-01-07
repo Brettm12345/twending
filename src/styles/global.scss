@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@tailwind screens;
+@import 'dot.scss';
+@import 'select.scss';
+@import 'language.scss';
+
+* {
+  scrollbar-width: none;
+}
+
+body {
+  @apply font-sans font-medium text-white bg-gray-700 leading-normal;
+}

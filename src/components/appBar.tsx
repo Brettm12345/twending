@@ -1,6 +1,8 @@
-import { Github } from 'styled-icons/feather/Github'
+/** @jsx jsx */
+import { jsx } from '@emotion/core'
+import { GitHub } from 'react-feather'
 import { cn } from 'ts-classnames'
-import React, { FC, ReactNode } from 'react'
+import { FC, ReactNode } from 'react'
 
 interface AppBarProps {
   children?: ReactNode
@@ -38,11 +40,11 @@ const AppBar: FC<AppBarProps> = ({ children }) => (
         )}
         href="https://github.com/brettm12345/twending"
       >
-        <Github size="3em" />
+        <GitHub size="3em" strokeWidth={1} />
       </a>
       <div
         className={cn('flex', 'justify-end')}
-        style={{ width: 'calc(100vw - 9em)' }}
+        css={{ width: 'calc(100vw - 9em)' }}
       >
         {children}
       </div>

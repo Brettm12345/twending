@@ -26,7 +26,7 @@ const failed = flow(
   constant(<div>Failed to fetch repos</div>)
 )
 
-const render = (repos: Repo[]) => (
+const success = (repos: Repo[]) => (
   <ul
     className={cn(
       'w-11/12',
@@ -51,6 +51,6 @@ const render = (repos: Repo[]) => (
 )
 
 const RepoList: FC<RepoListProps> = ({ repos }) =>
-  pipe(repos, fold(loading, loading, failed, render))
+  pipe(repos, fold(loading, loading, failed, success))
 
 export default RepoList

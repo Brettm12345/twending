@@ -1,0 +1,9 @@
+@mixin dot {
+  &::before {
+    @apply inline-block relative mr-1 rounded-full;
+    content: ' ';
+    bottom: -0.18em;
+    height: 1em;
+    width: 1em;
+  }
+}

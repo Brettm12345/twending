@@ -1,38 +1,28 @@
-import cn from 'ts-classnames'
 import React, { FC } from 'react'
 import Select, { Props } from 'react-select'
 
-import Language from 'components/language'
 import selectProps from 'data/selectProps'
-import { options } from 'data/languages'
+import { options, getColor } from 'data/languages'
 import { LanguageOption } from 'types'
+import { styleFn } from 'react-select/src/styles'
+
+const dot: styleFn = (initial, { data }) => ({
+  ...initial,
+  '&::before': {
+    backgroundColor: getColor(data.label),
+  },
+})
 
 const SelectLanguage: FC<Props<LanguageOption>> = props => (
   <Select
     {...selectProps}
     {...props}
-    components={{
-      Option: ({ isDisabled, innerProps, label }) =>
-        !isDisabled ? (
-          <div
-            className={cn(
-              'p-2',
-              'px-3',
-              'hover:bg-gray-600',
-              'select__option'
-            )}
-            {...innerProps}
-          >
-            <Language>{label}</Language>
-          </div>
-        ) : null,
-      SingleValue: ({ data: { label }, innerProps }) => (
-        <div {...innerProps}>
-          <Language>{label}</Language>
-        </div>
-      ),
-    }}
+    id="language-select"
     options={options}
+    styles={{
+      option: dot,
+      singleValue: dot,
+    }}
   />
 )
 

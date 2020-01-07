@@ -5,7 +5,7 @@ import { constant } from 'fp-ts/lib/function'
 import { pipe } from 'fp-ts/lib/pipeable'
 
 import theme from 'data/theme'
-import { makeOption } from '../util'
+import { makeOption } from 'utils'
 
 import {
   colors,
