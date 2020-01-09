@@ -1,30 +1,22 @@
-/** @jsx jsx */
-import { jsx } from '@emotion/core'
-import { cn } from 'ts-classnames'
-import { FC, HTMLAttributes } from 'react'
-
 import { getColor } from 'data/languages/utils'
+import styled from '@emotion/styled'
+import cn from 'ts-classnames'
+import { flow as f } from 'fp-ts/lib/function'
+import { prop } from 'fp-ts-ramda'
+import React, { FC } from 'react'
 
-interface LanguageProps
-  extends HTMLAttributes<HTMLSpanElement> {
+interface LanguageProps {
   children: string
 }
 
-const Language: FC<LanguageProps> = ({
-  children,
-  ...rest
-}) => (
-  <span
-    className={cn('language')}
-    css={{
-      '&::before': {
-        backgroundColor: getColor(children),
-      },
-    }}
-    {...rest}
-  >
-    {children}
-  </span>
+const Dot = styled('span')<LanguageProps>`
+  &::before {
+    background-color: ${f(prop('children'), getColor)};
+  }
+`
+
+const Language: FC<LanguageProps> = ({ children }) => (
+  <Dot className={cn('language')}>{children}</Dot>
 )
 
 export default Language

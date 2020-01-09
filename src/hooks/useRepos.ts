@@ -1,6 +1,5 @@
 import date from 'dayjs'
 import fetch from 'unfetch'
-import * as t from 'io-ts'
 import * as E from 'fp-ts/lib/Either'
 import * as RD from '@devexperts/remote-data-ts'
 import * as T from 'fp-ts/lib/Task'
@@ -21,12 +20,15 @@ import {
 } from 'data/github'
 import { join } from 'utils'
 
+type Errors = import('io-ts').Errors
+
 type Period = import('data/period').Value
 type Repo = import('data/github').Repo
 
-const gh = (
+type Gh = (
   q: string
-): TE.TaskEither<t.Errors, GithubResponse> =>
+) => TE.TaskEither<Errors, GithubResponse>
+const gh: Gh = q =>
   c(
     fetch(
       `https://api.github.com/search/repositories?sort=stars&order=desc&q=${q}`
@@ -75,7 +77,7 @@ const getQuery: GetQuery = ({
   language = 'All Languages',
 }) => [getLanguage(language), getPage(page, period)].join()
 
-type Repos = RD.RemoteData<t.Errors, Repo[]>
+type Repos = RD.RemoteData<Errors, Repo[]>
 
 type FetchRepos = (options: QueryOptions) => T.Task<Repos>
 export const fetchRepos: FetchRepos = f(
@@ -119,7 +121,8 @@ export const useRepos: UseRepos = (o = {}) => {
   const fetchMore: T.Task<void> = async () => {
     loading.setTrue()
     page.increase()
-    p(setReposWith(getMoreRepos), T.map(loading.setFalse))
+    await setReposWith(getMoreRepos)
+    loading.setFalse()
   }
 
   useEffect(() => {
