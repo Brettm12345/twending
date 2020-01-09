@@ -5,9 +5,9 @@ import { tw } from 'utils'
 type User = import('data/github').User
 
 const A = tw('a')(
-  'md:mr-8',
-  'lg:w-1/12',
-  'w-1/6',
+  'mr-8',
+  'md:w-1/12',
+  'sm:w-20',
   'pt-1',
   'mr-4'
 )

@@ -14,7 +14,7 @@ import { pipe as p } from 'fp-ts/lib/pipeable'
 import { useEffect, useState } from 'react'
 import { useBoolean, useNumber } from 'react-hanger'
 
-import { AllLanguages } from 'data/languages'
+import { SpecificLanguage } from 'data/languages'
 import {
   GithubResponse,
   transformResponse,
@@ -55,7 +55,7 @@ const param: Param = k => v => p([k, v], join(':'))
 
 type GetLanguage = (l: string) => string
 const getLanguage: GetLanguage = f(
-  AllLanguages.decode,
+  SpecificLanguage.decode,
   E.fold(c(''), param('language'))
 )
 

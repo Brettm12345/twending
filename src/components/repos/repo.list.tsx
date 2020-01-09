@@ -16,7 +16,7 @@ type Errors = import('io-ts').Errors
 type Repo = import('data/github').Repo
 
 const List = tw('ul')(
-  'w-11/12',
+  'sm:w-11/12',
   'md:w-10/12',
   'mt-6',
   'overflow-hidden',

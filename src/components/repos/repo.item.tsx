@@ -12,6 +12,7 @@ type RepoItemProps = Omit<import('data/github').Repo, 'id'>
 const Li = tw('li')(
   'flex',
   'sm:p-6',
+  'md:p-8',
   'p-8',
   'pb-4',
   'hover:bg-gray-900',
