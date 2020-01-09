@@ -41,7 +41,7 @@ const gh: GH = q =>
     T.map(GithubResponse.decode)
   )
 
-const transformDate = (p: Period) => (v: number): string =>
+const getDate = (p: Period) => (v: number): string =>
   date()
     .subtract(v, p)
     .format('YYYY-MM-DD')
@@ -59,7 +59,7 @@ type GetPage = (page: number, period: Period) => string
 const getPage: GetPage = (page, period) =>
   p(
     [page + 1, page],
-    map(transformDate(period)),
+    map(getDate(period)),
     join('..'),
     param('created')
   )
