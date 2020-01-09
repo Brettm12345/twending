@@ -29,7 +29,9 @@ const RepoItem: FC<RepoProps> = ({
       'pb-4',
       'md:p-8',
       'hover:bg-gray-900',
-      'transition-bg'
+      'transition-bg',
+      'border-gray-900',
+      { 'border-b': !isLast }
     )}
   >
     <Avatar {...author} />
@@ -66,7 +68,6 @@ const RepoItem: FC<RepoProps> = ({
         )}
       </div>
     </a>
-    {!isLast && <hr className={cn('border-gray-900')} />}
   </li>
 )
 
