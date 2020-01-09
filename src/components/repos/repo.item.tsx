@@ -7,17 +7,12 @@ import Icon, { IconName } from './repo.icon'
 
 import { Repo as RepoType } from 'types'
 
-interface RepoProps extends Omit<RepoType, 'id'> {
-  isLast: boolean
-}
-
-const RepoItem: FC<RepoProps> = ({
+const RepoItem: FC<Omit<RepoType, 'id'>> = ({
   author,
   description = 'No description given',
   forks,
   issues,
   language,
-  isLast,
   name,
   stars,
   url,
@@ -30,14 +25,17 @@ const RepoItem: FC<RepoProps> = ({
       'md:p-8',
       'hover:bg-gray-900',
       'transition-bg',
+      'border-b',
       'border-gray-900',
-      { 'border-b': !isLast }
+      'last:border-b-0'
     )}
   >
     <Avatar {...author} />
     <a
       className={cn('flex', 'flex-col', 'flex-grow')}
       href={url}
+      rel="noopener noreferrer"
+      target="_blank"
     >
       <h3 className={cn('mb-1', 'text-lg', 'text-white')}>
         {author.name}/{name}

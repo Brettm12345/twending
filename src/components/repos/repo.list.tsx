@@ -41,12 +41,8 @@ const success = (repos: Repo[]) => (
       'shadow-xl'
     )}
   >
-    {repos.map(({ id, ...repo }, index) => (
-      <RepoItem
-        isLast={index === repos.length - 1}
-        key={id}
-        {...repo}
-      />
+    {repos.map(({ id, ...repo }) => (
+      <RepoItem key={id} {...repo} />
     ))}
   </ul>
 )

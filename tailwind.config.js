@@ -7,4 +7,7 @@ module.exports = {
     'tailwindcss-touch',
   ].map(str => require(str)()),
   theme: require('./src/data/theme').default,
+  variants: {
+    borderWidth: ['responsive', 'last', 'hover', 'focus'],
+  },
 }
