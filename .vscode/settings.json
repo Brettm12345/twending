@@ -26,5 +26,8 @@
       "regex": "^(assets|components|data|hooks|pages|types|theme)",
       "orderLevel": 50
     }
+  ],
+  "cSpell.words": [
+    "Twending"
   ]
 }
