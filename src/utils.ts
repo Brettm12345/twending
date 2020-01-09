@@ -1,5 +1,4 @@
 import * as t from 'io-ts'
-import * as T from 'fp-ts/lib/Task'
 import fetch from 'unfetch'
 import {
   constant as c,
@@ -9,17 +8,14 @@ import {
 } from 'fp-ts/lib/function'
 import { fromFoldableMap, lookup } from 'fp-ts/lib/Record'
 import { filter, flatten, array } from 'fp-ts/lib/Array'
+import { chain, Task } from 'fp-ts/lib/Task'
 import { FC, createElement } from 'react'
 import { pipe as p } from 'fp-ts/lib/pipeable'
 import { getLastSemigroup } from 'fp-ts/lib/Semigroup'
 import cn from 'ts-classnames'
-import { equals } from 'fp-ts-ramda'
-import { eqString } from 'fp-ts/lib/Eq'
-
-type Task<T> = T.Task<T>
 
 type Json = (f: Task<Response>) => Task<any>
-export const json: Json = T.chain(r => c(r.json()))
+export const json: Json = chain(r => c(r.json()))
 
 type Get = (...a: Parameters<typeof fetch>) => Task<any>
 export const get: Get = f(f(fetch, c), json)
@@ -40,9 +36,7 @@ interface SelectOption<L extends string> {
 type MakeOption = <L extends string>(
   label: L
 ) => SelectOption<L>
-export const makeOption: MakeOption = <L extends string>(
-  label: L
-): SelectOption<L> => ({
+export const makeOption: MakeOption = label => ({
   label,
   value: label,
 })
