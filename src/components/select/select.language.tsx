@@ -13,10 +13,10 @@ type StyleFn = (
   i: CSSProperties,
   p: StyleProps
 ) => CSSProperties
-const dot: StyleFn = (initial, { data }) => ({
-  ...initial,
+const dot: StyleFn = (i, { data: { label } }) => ({
+  ...i,
   '&::before': {
-    backgroundColor: getColor(data.label),
+    backgroundColor: getColor(label),
   },
 })
 

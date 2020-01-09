@@ -37,20 +37,3 @@ h1 {
 main {
   @apply center flex flex-col pt-24 mb-10;
 }
-
-header {
-  @apply fixed top-0 right-0 z-50 flex w-full bg-gray-800 shadow-md;
-  & > div {
-    @apply relative flex items-center w-full h-20 px-4;
-    & > a {
-      @apply mr-16 opacity-75 transition-opacity;
-      &:hover {
-        @apply opacity-100;
-      }
-    }
-    & > div {
-      @apply flex justify-end;
-      width: calc(100vw - 9em);
-    }
-  }
-}
