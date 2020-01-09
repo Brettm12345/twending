@@ -6,8 +6,9 @@ import * as T from 'fp-ts/lib/Task'
 import * as TE from 'fp-ts/lib/TaskEither'
 import { flatten, map } from 'fp-ts/lib/Array'
 import {
-  flow as f,
   constant as c,
+  flow as f,
+  identity as id,
 } from 'fp-ts/lib/function'
 import { pipe as p } from 'fp-ts/lib/pipeable'
 import { useEffect, useState } from 'react'
@@ -20,40 +21,33 @@ import {
 } from 'data/github'
 import { join } from 'utils'
 
+type TaskEither<E, A> = TE.TaskEither<E, A>
+type RemoteData<E, A> = RD.RemoteData<E, A>
+type Task<T> = T.Task<T>
 type Errors = import('io-ts').Errors
 
 type Period = import('data/period').Value
 type Repo = import('data/github').Repo
 
-type Gh = (
-  q: string
-) => TE.TaskEither<Errors, GithubResponse>
-const gh: Gh = q =>
-  c(
-    fetch(
-      `https://api.github.com/search/repositories?sort=stars&order=desc&q=${q}`
-    ).then(r => r.json().then(GithubResponse.decode))
+type Get = (...a: Parameters<typeof fetch>) => Task<any>
+const get: Get = f(fetch, c)
+
+type GH = (q: string) => TaskEither<Errors, GithubResponse>
+const gh: GH = q =>
+  p(
+    `https://api.github.com/search/repositories?sort=stars&order=desc&q=${q}`,
+    get,
+    T.chain(r => c(r.json())),
+    T.map(GithubResponse.decode)
   )
 
-interface QueryOptions {
-  /** @default month */
-  period?: Period
-
-  /** @default 0 */
-  page?: number
-
-  /** @default "All Languages" */
-  language?: string
-}
-
-type TransformDate = (p: Period) => (v: number) => string
-const transformDate: TransformDate = period => value =>
+const transformDate = (p: Period) => (v: number): string =>
   date()
-    .subtract(value, period)
+    .subtract(v, p)
     .format('YYYY-MM-DD')
 
-type Param = (k: string) => (v: string) => string
-const param: Param = k => v => p([k, v], join(':'))
+const param = (k: string) => (v: string): string =>
+  `${k}:${v}`
 
 type GetLanguage = (l: string) => string
 const getLanguage: GetLanguage = f(
@@ -70,6 +64,17 @@ const getPage: GetPage = (page, period) =>
     param('created')
   )
 
+interface QueryOptions {
+  /** @default month */
+  period?: Period
+
+  /** @default 0 */
+  page?: number
+
+  /** @default "All Languages" */
+  language?: string
+}
+
 type GetQuery = (o: QueryOptions) => string
 const getQuery: GetQuery = ({
   period = 'month',
@@ -77,9 +82,9 @@ const getQuery: GetQuery = ({
   language = 'All Languages',
 }) => [getLanguage(language), getPage(page, period)].join()
 
-type Repos = RD.RemoteData<Errors, Repo[]>
+type Repos = RemoteData<Errors, Repo[]>
 
-type FetchRepos = (options: QueryOptions) => T.Task<Repos>
+type FetchRepos = (o: QueryOptions) => Task<Repos>
 export const fetchRepos: FetchRepos = f(
   getQuery,
   gh,
@@ -90,7 +95,7 @@ export const fetchRepos: FetchRepos = f(
 interface UseReposResult {
   repos: Repos
   loading: boolean
-  fetchMore: () => Promise<void>
+  fetchMore: Task<void>
 }
 
 type UseRepos = (
@@ -101,35 +106,28 @@ export const useRepos: UseRepos = (o = {}) => {
   const loading = useBoolean(false)
   const [repos, setRepos] = useState<Repos>(RD.initial)
 
-  type RepoTask = T.Task<Repos>
+  type SetWith = (fn: Task<Repos>) => Task<void>
+  const setWith: SetWith = f(id, T.map(setRepos))
 
-  type SetReposWith = (f: RepoTask) => T.Task<void>
-  const setReposWith: SetReposWith = (f: RepoTask) =>
-    p(f, T.map(setRepos))
-
-  const getRepos: RepoTask = fetchRepos({
+  const getRepos: Task<Repos> = fetchRepos({
     ...o,
     page: page.value,
   })
 
-  const getMoreRepos: RepoTask = p(
+  const getMore: Task<Repos> = p(
     getRepos,
     T.map(r => RD.combine(repos, r)),
     T.map(RD.map(flatten))
   )
 
-  const fetchMore: T.Task<void> = async () => {
+  const fetchMore: Task<void> = async () => {
     loading.setTrue()
     page.increase()
-    await setReposWith(getMoreRepos)
-    loading.setFalse()
+    p(setWith(getMore), T.map(loading.setFalse))
   }
 
   useEffect(() => {
-    p(
-      setReposWith(T.of(RD.pending)),
-      setReposWith(getRepos)
-    )
+    p(setWith(T.of(RD.pending)), setWith(getRepos))
   }, [o.language, o.period])
 
   return {

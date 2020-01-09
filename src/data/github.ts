@@ -30,7 +30,6 @@ const GithubUser = t.type({
   html_url: t.string,
   login: t.string,
 })
-
 type GithubUser = t.TypeOf<typeof GithubUser>
 
 export const GithubRepo = t.type({
@@ -54,7 +53,6 @@ export const GithubResponse = t.type({
   items: t.array(GithubRepo),
   total_count: t.number,
 })
-
 export type GithubResponse = t.TypeOf<typeof GithubResponse>
 
 type TransformUser = (u: GithubUser) => User

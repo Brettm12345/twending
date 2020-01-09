@@ -10,7 +10,9 @@ import { pipe as p } from 'fp-ts/lib/pipeable'
 import { getLastSemigroup } from 'fp-ts/lib/Semigroup'
 import cn from 'ts-classnames'
 
-type Tag = keyof import('@emotion/styled').StyledTags<any>
+type Tag = keyof import('@emotion/styled').StyledTags<
+  unknown
+>
 type Option<A> = import('fp-ts/lib/Option').Option<A>
 type PropsOf<
   T
@@ -31,7 +33,7 @@ export const makeOption: MakeOption = <L extends string>(
   value: label,
 })
 
-type Join = <A extends any[]>(
+type Join = <A extends unknown[]>(
   s?: string
 ) => (a: A) => string
 export const join: Join = s => a => a.join(s)
@@ -51,7 +53,6 @@ export const inAny: InAny = xs => x =>
   p(flatten(xs), has(x))
 
 type OneOf = (xs: string[]) => t.Mixed
-
 export const oneOf: OneOf = xs =>
   p(
     fromFoldableMap(getLastSemigroup<string>(), array)(
@@ -66,7 +67,10 @@ type Find = <A>(
 ) => (k: string) => Option<A>
 export const find: Find = r => k => lookup(k, r)
 
-export const nullable = (type: t.Mixed) =>
+type Nullable = (
+  type: t.Mixed
+) => t.UnionC<[t.Mixed, t.NullC]>
+export const nullable: Nullable = type =>
   t.union([type, t.null])
 
 type TW = <T extends Tag>(

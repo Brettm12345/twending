@@ -3,7 +3,7 @@ import React, { FC, LinkHTMLAttributes } from 'react'
 
 import theme from 'data/theme'
 
-const links: LinkHTMLAttributes<HTMLLinkElement>[] = [
+const links: Array<LinkHTMLAttributes<HTMLLinkElement>> = [
   {
     href: '/apple-touch-icon.png',
     rel: 'apple-touch-icon',

@@ -42,11 +42,11 @@ const Home: FC = () => {
       <main>
         <AppBar>
           <Select.Language
-            onChange={setLanguage as any}
+            onChange={setLanguage as () => void}
             value={language}
           />
           <Select.Period
-            onChange={setPeriod as any}
+            onChange={setPeriod as () => void}
             value={period}
           />
         </AppBar>

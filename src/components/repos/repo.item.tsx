@@ -1,10 +1,10 @@
 import React, { FC } from 'react'
 import { pipe as p } from 'fp-ts/lib/pipeable'
+import { map } from 'fp-ts/lib/Array'
 
 import Avatar from './repo.avatar'
 import Language from './repo.language'
 import Icon, { IconName } from './repo.icon'
-import { map } from 'fp-ts/lib/Array'
 import { tw } from 'utils'
 
 type RepoItemProps = Omit<import('data/github').Repo, 'id'>

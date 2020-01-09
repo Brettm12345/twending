@@ -1,5 +1,9 @@
 import { toError } from 'fp-ts/lib/Either'
-import { constant, flow as f } from 'fp-ts/lib/function'
+import { map } from 'fp-ts/lib/Array'
+import {
+  constant as c,
+  flow as f,
+} from 'fp-ts/lib/function'
 import { prop } from 'fp-ts-ramda'
 import React, { FC } from 'react'
 import {
@@ -31,26 +35,25 @@ export interface RepoListProps {
   repos: RemoteData<Errors, Repo[]>
 }
 
-const loading = constant(<Loading />)
-
-const failed = f(
+const handleError = f(
   JSON.stringify,
   toError,
-  console.error,
-  constant(<div>Failed to fetch repos</div>)
+  console.error
 )
-
-const success = (repos: Repo[]) => (
-  <List>
-    {repos.map(({ id, ...repo }) => (
-      <Item key={id} {...repo} />
-    ))}
-  </List>
-)
+const error = c(<div>Failed to fetch repos</div>)
+const loading = c(<Loading />)
 
 const RepoList: FC<RepoListProps> = f(
   prop('repos'),
-  fold(loading, loading, failed, success)
+  fold(
+    loading,
+    loading,
+    f(handleError, error),
+    f(
+      map(({ id, ...repo }) => <Item key={id} {...repo} />),
+      c => <List>{c}</List>
+    )
+  )
 )
 
 export default RepoList
