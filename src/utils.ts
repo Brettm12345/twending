@@ -1,7 +1,11 @@
 import * as t from 'io-ts'
+import * as T from 'fp-ts/lib/Task'
+import fetch from 'unfetch'
 import {
+  constant as c,
   flow as f,
   identity as id,
+  not,
 } from 'fp-ts/lib/function'
 import { fromFoldableMap, lookup } from 'fp-ts/lib/Record'
 import { filter, flatten, array } from 'fp-ts/lib/Array'
@@ -9,6 +13,16 @@ import { FC, createElement } from 'react'
 import { pipe as p } from 'fp-ts/lib/pipeable'
 import { getLastSemigroup } from 'fp-ts/lib/Semigroup'
 import cn from 'ts-classnames'
+import { equals } from 'fp-ts-ramda'
+import { eqString } from 'fp-ts/lib/Eq'
+
+type Task<T> = T.Task<T>
+
+type Json = (f: Task<Response>) => Task<any>
+export const json: Json = T.chain(r => c(r.json()))
+
+type Get = (...a: Parameters<typeof fetch>) => Task<any>
+export const get: Get = f(f(fetch, c), json)
 
 type Tag = keyof import('@emotion/styled').StyledTags<
   unknown
@@ -38,15 +52,16 @@ type Join = <A extends unknown[]>(
 ) => (a: A) => string
 export const join: Join = s => a => a.join(s)
 
-type Any = (a: boolean[]) => boolean
-export const any: Any = f(
-  filter<boolean>(id),
-  a => a.length > 0
-)
+export const empty = (a: any[]) => a.length === 0
+
+export const any = f(filter<boolean>(id), not(empty))
 
 type Has = <A>(x: A) => (xs: A[]) => boolean
-export const has: Has = x => xs =>
-  xs.filter(a => a === x).length > 0
+export const has: Has = x =>
+  f(
+    filter(a => a === x),
+    not(empty)
+  )
 
 type InAny = <A>(xs: A[][]) => (x: A) => boolean
 export const inAny: InAny = xs => x =>
@@ -81,6 +96,6 @@ export const tw: TW = t => (...c) => ({
   ...p
 }) =>
   createElement(t, {
-    className: `${cn(...c)}${className}`,
+    className: `${cn(...c)} ${className}`,
     ...p,
   })

@@ -1,6 +1,4 @@
 import date from 'dayjs'
-import fetch from 'unfetch'
-import * as E from 'fp-ts/lib/Either'
 import * as RD from '@devexperts/remote-data-ts'
 import * as T from 'fp-ts/lib/Task'
 import * as TE from 'fp-ts/lib/TaskEither'
@@ -10,6 +8,7 @@ import {
   flow as f,
   identity as id,
 } from 'fp-ts/lib/function'
+import { fold } from 'fp-ts/lib/Either'
 import { pipe as p } from 'fp-ts/lib/pipeable'
 import { useEffect, useState } from 'react'
 import { useBoolean, useNumber } from 'react-hanger'
@@ -19,7 +18,7 @@ import {
   GithubResponse,
   transformResponse,
 } from 'data/github'
-import { join } from 'utils'
+import { get, join } from 'utils'
 
 type TaskEither<E, A> = TE.TaskEither<E, A>
 type RemoteData<E, A> = RD.RemoteData<E, A>
@@ -28,17 +27,15 @@ type Errors = import('io-ts').Errors
 
 type Period = import('data/period').Value
 type Repo = import('data/github').Repo
-
-type Get = (...a: Parameters<typeof fetch>) => Task<any>
-const get: Get = f(fetch, c)
+const then = T.map
 
 type GH = (q: string) => TaskEither<Errors, GithubResponse>
 const gh: GH = q =>
   p(
-    `https://api.github.com/search/repositories?sort=stars&order=desc&q=${q}`,
-    get,
-    T.chain(r => c(r.json())),
-    T.map(GithubResponse.decode)
+    get(
+      `https://api.github.com/search/repositories?sort=stars&order=desc&q=${q}`
+    ),
+    then(GithubResponse.decode)
   )
 
 const getDate = (p: Period) => (v: number): string =>
@@ -52,7 +49,7 @@ const param = (k: string) => (v: string): string =>
 type GetLanguage = (l: string) => string
 const getLanguage: GetLanguage = f(
   SpecificLanguage.decode,
-  E.fold(c(''), param('language'))
+  fold(c(''), param('language'))
 )
 
 type GetPage = (page: number, period: Period) => string
@@ -89,7 +86,7 @@ export const fetchRepos: FetchRepos = f(
   getQuery,
   gh,
   TE.map(transformResponse),
-  T.map(RD.fromEither)
+  then(RD.fromEither)
 )
 
 interface UseReposResult {
@@ -116,14 +113,14 @@ export const useRepos: UseRepos = (o = {}) => {
 
   const getMore: Task<Repos> = p(
     getRepos,
-    T.map(r => RD.combine(repos, r)),
-    T.map(RD.map(flatten))
+    then(r => RD.combine(repos, r)),
+    then(RD.map(flatten))
   )
 
   const fetchMore: Task<void> = async () => {
     loading.setTrue()
     page.increase()
-    p(setWith(getMore), T.map(loading.setFalse))
+    p(setWith(getMore), then(loading.setFalse))
   }
 
   useEffect(() => {
