@@ -14,7 +14,7 @@
     "noUnusedParameters": true,
     "resolveJsonModule": true,
     "paths": {
-      "*": ["./src/*", "./src/@types/*"]
+      "*": ["./src/*"]
     },
     "preserveConstEnums": true,
     "removeComments": false,

@@ -1,7 +1,7 @@
 @tailwind base;
+@tailwind screens;
 @tailwind components;
 @tailwind utilities;
-@tailwind screens;
 @import 'dot.scss';
 @import 'select.scss';
 @import 'language.scss';
@@ -20,4 +20,37 @@ body {
 
 .center {
   @apply justify-center items-center;
+}
+
+button,
+button:focus {
+  @apply px-4 py-2 outline-none font-semibold rounded text-white bg-blue-500 transition-bg;
+  &:hover {
+    @apply bg-blue-400;
+  }
+}
+
+h1 {
+  @apply mt-6 text-2xl text-center;
+}
+
+main {
+  @apply center flex flex-col pt-24 mb-10;
+}
+
+header {
+  @apply fixed top-0 right-0 z-50 flex w-full bg-gray-800 shadow-md;
+  & > div {
+    @apply relative flex items-center w-full h-20 px-4;
+    & > a {
+      @apply mr-16 opacity-75 transition-opacity;
+      &:hover {
+        @apply opacity-100;
+      }
+    }
+    & > div {
+      @apply flex justify-end;
+      width: calc(100vw - 9em);
+    }
+  }
 }

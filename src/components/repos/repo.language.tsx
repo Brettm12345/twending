@@ -3,7 +3,7 @@ import { jsx } from '@emotion/core'
 import { cn } from 'ts-classnames'
 import { FC, HTMLAttributes } from 'react'
 
-import { getColor } from 'data/languages'
+import { getColor } from 'data/languages/utils'
 
 interface LanguageProps
   extends HTMLAttributes<HTMLSpanElement> {

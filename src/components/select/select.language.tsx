@@ -1,20 +1,26 @@
-import React, { FC } from 'react'
+import React, { CSSProperties, FC } from 'react'
 import Select, { Props } from 'react-select'
-import { styleFn } from 'react-select/src/styles'
 
 import selectProps from './select.props'
 
-import { options, getColor } from 'data/languages'
-import { LanguageOption } from 'types'
+import { options, getColor, Option } from 'data/languages'
 
-const dot: styleFn = (initial, { data }) => ({
+interface StyleProps {
+  data: Option
+}
+
+type StyleFn = (
+  i: CSSProperties,
+  p: StyleProps
+) => CSSProperties
+const dot: StyleFn = (initial, { data }) => ({
   ...initial,
   '&::before': {
     backgroundColor: getColor(data.label),
   },
 })
 
-const SelectLanguage: FC<Props<LanguageOption>> = props => (
+const SelectLanguage: FC<Props<Option>> = props => (
   <Select
     {...selectProps}
     {...props}

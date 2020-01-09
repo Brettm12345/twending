@@ -1,6 +1,29 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import * as t from 'io-ts'
-import { Repo, User } from 'types'
+import { flow as f } from 'fp-ts/lib/function'
+import { map } from 'fp-ts/lib/Array'
+import { prop } from 'fp-ts-ramda'
+
+import { nullable } from 'utils'
+
+export interface User {
+  avatar: string
+  name: string
+  url: string
+}
+
+export interface Repo {
+  author: User
+  createdAt: string
+  description: string | null
+  forks: number
+  issues: number
+  id: string
+  language: string | null
+  name: string
+  stars: number
+  url: string
+}
 
 const GithubUser = t.type({
   avatar_url: t.string,
@@ -9,8 +32,6 @@ const GithubUser = t.type({
 })
 
 type GithubUser = t.TypeOf<typeof GithubUser>
-
-const nullable = (type: t.Mixed) => t.union([type, t.null])
 
 export const GithubRepo = t.type({
   created_at: t.string,
@@ -26,7 +47,6 @@ export const GithubRepo = t.type({
   private: t.boolean,
   stargazers_count: t.number,
 })
-
 export type GithubRepo = t.TypeOf<typeof GithubRepo>
 
 export const GithubResponse = t.type({
@@ -37,19 +57,21 @@ export const GithubResponse = t.type({
 
 export type GithubResponse = t.TypeOf<typeof GithubResponse>
 
-const transformUser = (user: GithubUser): User => ({
-  avatar: user.avatar_url,
-  name: user.login,
-  url: user.html_url,
+type TransformUser = (u: GithubUser) => User
+const transformUser: TransformUser = u => ({
+  avatar: u.avatar_url,
+  name: u.login,
+  url: u.html_url,
 })
 
-export const transformRepo = ({
+type TransformRepo = (a: GithubRepo) => Repo
+export const transformRepo: TransformRepo = ({
   description,
   language,
   owner,
   name,
   ...repo
-}: GithubRepo): Repo => ({
+}) => ({
   author: transformUser(owner),
   createdAt: repo.created_at,
   description,
@@ -62,6 +84,8 @@ export const transformRepo = ({
   url: repo.html_url,
 })
 
-export const transformResponse = (
-  response: GithubResponse
-): Repo[] => response.items.map(transformRepo)
+type TransformResponse = (r: GithubResponse) => Repo[]
+export const transformResponse: TransformResponse = f(
+  prop('items'),
+  map(transformRepo)
+)

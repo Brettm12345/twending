@@ -10,23 +10,26 @@ import AppBar from 'components/appBar'
 import Head from 'components/head'
 import Loading from 'components/loading'
 import Repos from 'components/repos'
-import { Language, Period } from 'components/select'
+import * as Select from 'components/select'
 import { useRepos } from 'hooks/useRepos'
-import { LanguageOption, PeriodOption } from 'types'
+
 import { makeOption } from 'utils'
+
+type Period = import('data/period').Option
+type Language = import('data/languages').Option
 
 const usePeriod = createPersistedState('period')
 const useLanguage = createPersistedState('language')
 
 const Home: FC = () => {
-  const [period, setPeriod] = usePeriod<PeriodOption>({
+  const [period, setPeriod] = usePeriod<Period>({
     label: 'Monthly',
     value: 'month',
   })
 
-  const [language, setLanguage] = useLanguage<
-    LanguageOption
-  >(makeOption('All Languages'))
+  const [language, setLanguage] = useLanguage<Language>(
+    makeOption('All Languages')
+  )
 
   const { repos, fetchMore, loading } = useRepos({
     language: language.value,
@@ -36,50 +39,24 @@ const Home: FC = () => {
   return (
     <>
       <Head />
-      <main
-        className={cn(
-          'center',
-          'flex',
-          'flex-col',
-          'pt-24',
-          'mb-10'
-        )}
-      >
+      <main>
         <AppBar>
-          <Language
+          <Select.Language
             onChange={setLanguage as any}
             value={language}
           />
-          <Period
+          <Select.Period
             onChange={setPeriod as any}
             value={period}
           />
         </AppBar>
-        <h1
-          className={cn('mt-6', 'text-2xl', 'text-center')}
-        >
-          Trending Repositories
-        </h1>
+        <h1>Trending Repositories</h1>
         <Repos repos={repos} />
         <div className={cn('mt-6')}>
           {loading ? (
             <Loading />
           ) : (
-            <button
-              className={cn(
-                'px-4',
-                'py-2',
-                'outline-none',
-                'focus:outline-none',
-                'font-semibold',
-                'rounded',
-                'text-white',
-                'bg-blue-500',
-                'transition-bg',
-                'hover:bg-blue-400'
-              )}
-              onClick={fetchMore}
-            >
+            <button onClick={fetchMore}>
               Load next {period.value}
             </button>
           )}
