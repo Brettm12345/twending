@@ -1,6 +1,10 @@
 import date from 'dayjs'
 import * as RD from '@devexperts/remote-data-ts'
-import * as T from 'fp-ts/lib/Task'
+import {
+  Task,
+  map as then,
+  of as load,
+} from 'fp-ts/lib/Task'
 import * as TE from 'fp-ts/lib/TaskEither'
 import { flatten, map } from 'fp-ts/lib/Array'
 import {
@@ -22,12 +26,10 @@ import { get, join } from 'utils'
 
 type TaskEither<E, A> = TE.TaskEither<E, A>
 type RemoteData<E, A> = RD.RemoteData<E, A>
-type Task<T> = T.Task<T>
 type Errors = import('io-ts').Errors
 
 type Period = import('data/period').Value
 type Repo = import('data/github').Repo
-const then = T.map
 
 type GH = (q: string) => TaskEither<Errors, GithubResponse>
 const gh: GH = q =>
@@ -38,11 +40,6 @@ const gh: GH = q =>
     then(GithubResponse.decode)
   )
 
-const getDate = (p: Period) => (v: number): string =>
-  date()
-    .subtract(v, p)
-    .format('YYYY-MM-DD')
-
 const param = (k: string) => (v: string): string =>
   `${k}:${v}`
 
@@ -52,15 +49,23 @@ const getLanguage: GetLanguage = f(
   fold(c(''), param('language'))
 )
 
-type GetPage = (page: number, period: Period) => string
-const getPage: GetPage = (page, period) =>
-  p(
-    [page + 1, page],
-    map(getDate(period)),
-    join('..'),
-    param('created')
+type MkPage = (x: number) => [number, number]
+const mkPage: MkPage = x => [x + 1, x]
+
+type DateFn<T> = (period: Period) => (page: number) => T
+
+const getDates: DateFn<string[]> = period =>
+  f(
+    mkPage,
+    map(value =>
+      date()
+        .subtract(value, period)
+        .format('YYYY-MM-DD')
+    )
   )
 
+const getPage: DateFn<string> = period =>
+  f(getDates(period), join('..'), param('created'))
 interface QueryOptions {
   /** @default month */
   period?: Period
@@ -77,7 +82,8 @@ const getQuery: GetQuery = ({
   period = 'month',
   page = 0,
   language = 'All Languages',
-}) => [getLanguage(language), getPage(page, period)].join()
+}) =>
+  [getLanguage(language), p(page, getPage(period))].join()
 
 type Repos = RemoteData<Errors, Repo[]>
 
@@ -104,7 +110,7 @@ export const useRepos: UseRepos = (o = {}) => {
   const [repos, setRepos] = useState<Repos>(RD.initial)
 
   type SetWith = (fn: Task<Repos>) => Task<void>
-  const setWith: SetWith = f(id, T.map(setRepos))
+  const setWith: SetWith = f(id, then(setRepos))
 
   const getRepos: Task<Repos> = fetchRepos({
     ...o,
@@ -120,11 +126,12 @@ export const useRepos: UseRepos = (o = {}) => {
   const fetchMore: Task<void> = async () => {
     loading.setTrue()
     page.increase()
-    p(setWith(getMore), then(loading.setFalse))
+    setWith(getMore)
+    loading.setFalse()
   }
 
   useEffect(() => {
-    p(setWith(T.of(RD.pending)), setWith(getRepos))
+    p(RD.pending, load, setWith, then(setWith(getRepos)))()
   }, [o.language, o.period])
 
   return {
