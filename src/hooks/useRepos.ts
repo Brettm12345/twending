@@ -129,7 +129,7 @@ export const useRepos: UseRepos = (o = {}) => {
   const fetchMore: Task<void> = async () => {
     loading.setTrue()
     page.increase()
-    await setWith(getMore)
+    await setWith(getMore)()
     loading.setFalse()
   }
 
