@@ -83,7 +83,10 @@ const getQuery: GetQuery = ({
   page = 0,
   language = 'All Languages',
 }) =>
-  [getLanguage(language), p(page, getPage(period))].join()
+  p(
+    [getLanguage(language), getPage(period)(page)],
+    join(' ')
+  )
 
 type Repos = RemoteData<Errors, Repo[]>
 
@@ -126,7 +129,7 @@ export const useRepos: UseRepos = (o = {}) => {
   const fetchMore: Task<void> = async () => {
     loading.setTrue()
     page.increase()
-    setWith(getMore)
+    await setWith(getMore)
     loading.setFalse()
   }
 

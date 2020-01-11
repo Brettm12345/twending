@@ -1,16 +1,29 @@
 /* eslint-disable @typescript-eslint/camelcase */
-import * as t from 'io-ts'
-import { flow as f } from 'fp-ts/lib/function'
-import { map } from 'fp-ts/lib/Array'
 import { prop } from 'fp-ts-ramda'
-
+import { map } from 'fp-ts/lib/Array'
+import { flow as f } from 'fp-ts/lib/function'
+import * as t from 'io-ts'
 import { nullable } from 'utils'
+
+type TypeOf<A extends t.Any> = t.TypeOf<A>
 
 export interface User {
   avatar: string
   name: string
   url: string
 }
+const GithubUser = t.type({
+  avatar_url: t.string,
+  html_url: t.string,
+  login: t.string,
+})
+type GithubUser = TypeOf<typeof GithubUser>
+type TransformUser = (u: GithubUser) => User
+const transformUser: TransformUser = u => ({
+  avatar: u.avatar_url,
+  name: u.login,
+  url: u.html_url,
+})
 
 export interface Repo {
   author: User
@@ -24,14 +37,6 @@ export interface Repo {
   stars: number
   url: string
 }
-
-const GithubUser = t.type({
-  avatar_url: t.string,
-  html_url: t.string,
-  login: t.string,
-})
-type GithubUser = t.TypeOf<typeof GithubUser>
-
 export const GithubRepo = t.type({
   created_at: t.string,
   description: nullable(t.string),
@@ -46,22 +51,7 @@ export const GithubRepo = t.type({
   private: t.boolean,
   stargazers_count: t.number,
 })
-export type GithubRepo = t.TypeOf<typeof GithubRepo>
-
-export const GithubResponse = t.type({
-  incomplete_results: t.boolean,
-  items: t.array(GithubRepo),
-  total_count: t.number,
-})
-export type GithubResponse = t.TypeOf<typeof GithubResponse>
-
-type TransformUser = (u: GithubUser) => User
-const transformUser: TransformUser = u => ({
-  avatar: u.avatar_url,
-  name: u.login,
-  url: u.html_url,
-})
-
+export type GithubRepo = TypeOf<typeof GithubRepo>
 type TransformRepo = (a: GithubRepo) => Repo
 export const transformRepo: TransformRepo = ({
   description,
@@ -82,6 +72,12 @@ export const transformRepo: TransformRepo = ({
   url: repo.html_url,
 })
 
+export const GithubResponse = t.type({
+  incomplete_results: t.boolean,
+  items: t.array(GithubRepo),
+  total_count: t.number,
+})
+export type GithubResponse = TypeOf<typeof GithubResponse>
 type TransformResponse = (r: GithubResponse) => Repo[]
 export const transformResponse: TransformResponse = f(
   prop('items'),
