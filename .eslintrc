@@ -40,9 +40,9 @@
   "rules": {
     "arrow-body-style": ["error", "as-needed"],
     "comma-dangle": "off",
+    "no-duplicate-imports": "off",
     "indent": "off",
     "no-case-declarations": "off",
-    "no-duplicate-imports": "error",
     "no-unexpected-multiline": "off",
     "lines-between-class-members": "off",
     "no-console": [
@@ -60,6 +60,8 @@
     "prefer-arrow-callback": "error",
 
     "import/default": "off",
+    "import/no-duplicates": "off",
+
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/member-delimiter-style": "off",

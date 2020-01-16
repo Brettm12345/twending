@@ -1,7 +1,7 @@
 import { getColor } from 'data/languages/utils'
 import styled from '@emotion/styled'
 import cn from 'ts-classnames'
-import { flow as f } from 'fp-ts/lib/function'
+import { flow } from 'fp-ts/lib/function'
 import { prop } from 'fp-ts-ramda'
 import React, { FC } from 'react'
 
@@ -11,7 +11,7 @@ interface LanguageProps {
 
 const Dot = styled('span')<LanguageProps>`
   &::before {
-    background-color: ${f(prop('children'), getColor)};
+    background-color: ${flow(prop('children'), getColor)};
   }
 `
 

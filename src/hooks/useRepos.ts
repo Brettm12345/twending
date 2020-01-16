@@ -1,71 +1,62 @@
-import date from 'dayjs'
+import dayjs from 'dayjs'
 import * as RD from '@devexperts/remote-data-ts'
-import {
-  Task,
-  map as then,
-  of as load,
-} from 'fp-ts/lib/Task'
+import * as T from 'fp-ts/lib/Task'
 import * as TE from 'fp-ts/lib/TaskEither'
-import { flatten, map } from 'fp-ts/lib/Array'
+import { Errors } from 'io-ts'
+import { RemoteData } from '@devexperts/remote-data-ts'
+import { Task, task } from 'fp-ts/lib/Task'
+import { TaskEither } from 'fp-ts/lib/TaskEither'
+import { map, array } from 'fp-ts/lib/Array'
 import {
-  constant as c,
-  flow as f,
+  constant,
+  flow,
   identity as id,
 } from 'fp-ts/lib/function'
 import { fold } from 'fp-ts/lib/Either'
-import { pipe as p } from 'fp-ts/lib/pipeable'
+import { pipe } from 'fp-ts/lib/pipeable'
 import { useEffect, useState } from 'react'
 import { useBoolean, useNumber } from 'react-hanger'
 
-import { SpecificLanguage } from 'data/languages'
+import { Value as Period } from 'data/period'
 import {
+  Repo,
   GithubResponse,
   transformResponse,
 } from 'data/github'
-import { get, join } from 'utils'
-
-type TaskEither<E, A> = TE.TaskEither<E, A>
-type RemoteData<E, A> = RD.RemoteData<E, A>
-type Errors = import('io-ts').Errors
-
-type Period = import('data/period').Value
-type Repo = import('data/github').Repo
+import { SpecificLanguage } from 'data/languages'
+import { get, join, joinRD } from 'utils'
 
 type GH = (q: string) => TaskEither<Errors, GithubResponse>
 const gh: GH = q =>
-  p(
+  pipe(
     get(
       `https://api.github.com/search/repositories?sort=stars&order=desc&q=${q}`
     ),
-    then(GithubResponse.decode)
+    T.map(GithubResponse.decode)
   )
 
 const param = (k: string) => (v: string): string =>
-  `${k}:${v}`
+  pipe([k, v], join(':'))
 
 type GetLanguage = (l: string) => string
-const getLanguage: GetLanguage = f(
+const getLanguage: GetLanguage = flow(
   SpecificLanguage.decode,
-  fold(c(''), param('language'))
+  fold(constant(''), param('language'))
 )
 
-type MkPage = (x: number) => [number, number]
-const mkPage: MkPage = x => [x + 1, x]
-
-type DateFn<T> = (period: Period) => (page: number) => T
-
-const getDates: DateFn<string[]> = period =>
-  f(
-    mkPage,
+type GetPage = (period: Period) => (value: number) => string
+const getPage: GetPage = period => page =>
+  pipe(
+    [page + 1, page],
     map(value =>
-      date()
+      dayjs()
         .subtract(value, period)
         .format('YYYY-MM-DD')
-    )
+    ),
+    join('..'),
+    param('created')
   )
 
-const getPage: DateFn<string> = period =>
-  f(getDates(period), join('..'), param('created'))
 interface QueryOptions {
   /** @default month */
   period?: Period
@@ -77,29 +68,30 @@ interface QueryOptions {
   language?: string
 }
 
-type GetQuery = (o: QueryOptions) => string
-const getQuery: GetQuery = ({
+type QueryFn<T> = (o: QueryOptions) => T
+
+const getQuery: QueryFn<string> = ({
   period = 'month',
   page = 0,
   language = 'All Languages',
 }) =>
-  p(
+  pipe(
     [getLanguage(language), getPage(period)(page)],
     join(' ')
   )
 
-type Repos = RemoteData<Errors, Repo[]>
+type RemoteRepos = RemoteData<Errors, Repo[]>
+type RepoTask = Task<RemoteRepos>
 
-type FetchRepos = (o: QueryOptions) => Task<Repos>
-export const fetchRepos: FetchRepos = f(
+export const fetchRepos: QueryFn<RepoTask> = flow(
   getQuery,
   gh,
   TE.map(transformResponse),
-  then(RD.fromEither)
+  T.map(RD.fromEither)
 )
 
 interface UseReposResult {
-  repos: Repos
+  repos: RemoteRepos
   loading: boolean
   fetchMore: Task<void>
 }
@@ -110,20 +102,21 @@ type UseRepos = (
 export const useRepos: UseRepos = (o = {}) => {
   const page = useNumber(0)
   const loading = useBoolean(false)
-  const [repos, setRepos] = useState<Repos>(RD.initial)
+  const [repos, setRepos] = useState<RemoteRepos>(
+    RD.initial
+  )
 
-  type SetWith = (fn: Task<Repos>) => Task<void>
-  const setWith: SetWith = f(id, then(setRepos))
+  type SetWith = (fn: RepoTask) => Task<void>
+  const setWith: SetWith = flow(id, T.map(setRepos))
 
-  const getRepos: Task<Repos> = fetchRepos({
+  const getRepos: RepoTask = fetchRepos({
     ...o,
     page: page.value,
   })
 
-  const getMore: Task<Repos> = p(
+  const getMore: RepoTask = pipe(
     getRepos,
-    then(r => RD.combine(repos, r)),
-    then(RD.map(flatten))
+    T.map(joinRD(repos))
   )
 
   const fetchMore: Task<void> = async () => {
@@ -134,7 +127,11 @@ export const useRepos: UseRepos = (o = {}) => {
   }
 
   useEffect(() => {
-    p(RD.pending, load, setWith, then(setWith(getRepos)))()
+    pipe(
+      [T.of(RD.pending), getRepos],
+      map(setWith),
+      array.sequence(task)
+    )()
   }, [o.language, o.period])
 
   return {

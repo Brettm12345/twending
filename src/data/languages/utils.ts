@@ -1,10 +1,7 @@
 import { map, flatten } from 'fp-ts/lib/Array'
-import { getOrElse as maybe } from 'fp-ts/lib/Option'
-import {
-  constant as c,
-  flow as f,
-} from 'fp-ts/lib/function'
-import { pipe as p } from 'fp-ts/lib/pipeable'
+import { getOrElse } from 'fp-ts/lib/Option'
+import { constant, flow } from 'fp-ts/lib/function'
+import { pipe } from 'fp-ts/lib/pipeable'
 
 import {
   colors,
@@ -21,13 +18,13 @@ const {
 } = theme
 
 type GetColor = (l: Language) => string
-export const getColor: GetColor = f(
+export const getColor: GetColor = flow(
   find(colors),
-  maybe(c(gray[400]))
+  getOrElse(constant(gray[400]))
 )
 
-export const options: Option[] = p(
+export const options: Option[] = pipe(
   [['All Languages'], popular, everythingElse],
   flatten,
-  map(l => makeOption<Language>(l))
+  map(makeOption)
 )

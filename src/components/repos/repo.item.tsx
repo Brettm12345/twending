@@ -1,13 +1,13 @@
 import React, { FC } from 'react'
-import { pipe as p } from 'fp-ts/lib/pipeable'
+import { pipe } from 'fp-ts/lib/pipeable'
 import { map } from 'fp-ts/lib/Array'
 
 import Avatar from './repo.avatar'
 import Language from './repo.language'
 import Icon, { IconName } from './repo.icon'
-import { tw } from 'utils'
 
-type RepoItemProps = Omit<import('data/github').Repo, 'id'>
+import { Repo } from 'data/github'
+import { tw } from 'utils'
 
 const Li = tw('li')(
   'flex',
@@ -41,6 +41,8 @@ const Info = tw('div')(
 
 const InfoItem = tw('span')('inline-flex', 'mr-4')
 
+type RepoItemProps = Omit<Repo, 'id'>
+
 const RepoItem: FC<RepoItemProps> = ({
   author,
   description = 'No description given',
@@ -58,11 +60,11 @@ const RepoItem: FC<RepoItemProps> = ({
         {author.name}/{name}
       </Title>
       <Description>
-        {description || 'No description provided'}
+        {description ?? 'No description provided'}
       </Description>
       <Info>
-        <Language>{language || 'Unknown'}</Language>
-        {p(
+        <Language>{language ?? 'Unknown'}</Language>
+        {pipe(
           { forks, issues, stars },
           Object.entries,
           map(([key, value]) => (

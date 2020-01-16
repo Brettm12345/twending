@@ -1,8 +1,7 @@
 import React, { FC } from 'react'
 
+import { User } from 'data/github'
 import { tw } from 'utils'
-
-type User = import('data/github').User
 
 const A = tw('a')(
   'mr-8',

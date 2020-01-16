@@ -10,11 +10,11 @@ interface StyleProps {
 }
 
 type StyleFn = (
-  i: CSSProperties,
-  p: StyleProps
+  initial: CSSProperties,
+  props: StyleProps
 ) => CSSProperties
-const dot: StyleFn = (i, { data: { label } }) => ({
-  ...i,
+const dot: StyleFn = (initial, { data: { label } }) => ({
+  ...initial,
   '&::before': {
     backgroundColor: getColor(label),
   },

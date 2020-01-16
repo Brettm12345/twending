@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/camelcase */
 import { prop } from 'fp-ts-ramda'
 import { map } from 'fp-ts/lib/Array'
-import { flow as f } from 'fp-ts/lib/function'
+import { flow } from 'fp-ts/lib/function'
 import * as t from 'io-ts'
 import { nullable } from 'utils'
 
@@ -79,7 +79,7 @@ export const GithubResponse = t.type({
 })
 export type GithubResponse = TypeOf<typeof GithubResponse>
 type TransformResponse = (r: GithubResponse) => Repo[]
-export const transformResponse: TransformResponse = f(
+export const transformResponse: TransformResponse = flow(
   prop('items'),
   map(transformRepo)
 )
