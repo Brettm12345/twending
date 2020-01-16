@@ -9,7 +9,8 @@ import {
   Endomorphism,
   FunctionN as FN,
 } from 'fp-ts/lib/function'
-import { fromFoldableMap, lookup } from 'fp-ts/lib/Record'
+import * as R from 'fp-ts/lib/Record'
+import { lookup } from 'fp-ts/lib/Record'
 import {
   filter,
   flatten,
@@ -73,7 +74,7 @@ export const inAny: InAny = xs => x =>
 type OneOf = FN<[Array<string>], t.Mixed>
 export const oneOf: OneOf = xs =>
   pipe(
-    fromFoldableMap(getLastSemigroup<string>(), array)(
+    R.fromFoldableMap(getLastSemigroup<string>(), array)(
       xs,
       x => [x, x]
     ),

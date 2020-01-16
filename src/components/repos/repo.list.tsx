@@ -47,7 +47,7 @@ const RepoList: FC<RepoListProps> = flow(
     flow(handleError, error),
     flow(
       map(({ id, ...repo }) => <Item key={id} {...repo} />),
-      c => <List>{c}</List>
+      items => <List>{items}</List>
     )
   )
 )
