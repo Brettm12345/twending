@@ -1,7 +1,6 @@
 import { toError } from 'fp-ts/lib/Either'
 import { map } from 'fp-ts/lib/Array'
 import { constant, flow } from 'fp-ts/lib/function'
-import { Errors } from 'io-ts'
 import { prop } from 'fp-ts-ramda'
 import React, { FC } from 'react'
 import {
@@ -28,7 +27,7 @@ const List = tw('ul')(
   'shadow-xl'
 )
 export interface RepoListProps {
-  repos: RemoteData<Errors, Repo[]>
+  repos: RemoteData<Error, Repo[]>
 }
 
 const handleError = flow(

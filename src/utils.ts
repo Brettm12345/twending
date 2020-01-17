@@ -3,7 +3,6 @@ import * as RD from '@devexperts/remote-data-ts'
 import { RemoteData } from '@devexperts/remote-data-ts'
 import fetch from 'unfetch'
 import {
-  constant,
   flow,
   not,
   Endomorphism,
@@ -17,7 +16,8 @@ import {
   array,
   isEmpty,
 } from 'fp-ts/lib/Array'
-import { chain, Task } from 'fp-ts/lib/Task'
+import * as T from 'fp-ts/lib/Task'
+import { Task } from 'fp-ts/lib/Task'
 import { FC, createElement } from 'react'
 import { pipe } from 'fp-ts/lib/pipeable'
 import { Option } from 'fp-ts/lib/Option'
@@ -35,11 +35,12 @@ type JoinRD = <E, A>(
 export const joinRD: JoinRD = a => b =>
   pipe(RD.combine(a, b), RD.map(flatten))
 
-type Json = FN<[Task<Response>], Task<any>>
-export const json: Json = chain(r => () => r.json())
-
 type Get = FN<Parameters<typeof fetch>, Task<any>>
-export const get: Get = flow(flow(fetch, constant), json)
+export const get: Get = (...args) =>
+  pipe(
+    () => fetch(...args),
+    T.chain(r => () => r.json())
+  )
 
 interface SelectOption<L extends string> {
   label: L

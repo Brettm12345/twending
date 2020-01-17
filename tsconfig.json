@@ -19,6 +19,7 @@
     "preserveConstEnums": true,
     "removeComments": false,
     "strict": true,
+    "strictNullChecks": true,
     "skipLibCheck": true,
     "sourceMap": true,
     "target": "esnext",

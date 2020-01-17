@@ -4,11 +4,15 @@ import { User } from 'data/github'
 import { tw } from 'utils'
 
 const A = tw('a')(
-  'mr-8',
-  'md:w-1/12',
-  'sm:w-20',
+  'hidden',
+  'xs:inline-block',
+  'flex-shrink-0',
   'pt-1',
-  'mr-4'
+  'mr-4',
+  'md:mr-8',
+  'w-16',
+  'sm:w-20',
+  'md:w-24'
 )
 
 const Img = tw('img')('rounded-lg')

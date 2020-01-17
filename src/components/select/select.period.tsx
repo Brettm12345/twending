@@ -6,14 +6,14 @@ import Select, { Props } from 'react-select'
 
 import selectProps from './select.props'
 
-import { Label, Value, Option } from 'data/period'
+import { Label, Value, OptionType } from 'data/period'
 
-const SelectPeriod: FC<Props<Option>> = props => (
+const SelectPeriod: FC<Props<OptionType>> = props => (
   <Select
     {...selectProps}
     {...props}
     isSearchable={false}
-    options={pipe<Record<Value, Label>, Option[]>(
+    options={pipe<Record<Value, Label>, OptionType[]>(
       {
         day: 'Daily',
         week: 'Weekly',

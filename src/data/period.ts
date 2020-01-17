@@ -6,7 +6,7 @@ export type Label =
 
 export type Value = 'day' | 'week' | 'month' | 'year'
 
-export interface Option {
+export interface OptionType {
   label: Label
   value: Value
 }

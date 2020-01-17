@@ -11,12 +11,10 @@ import Head from 'components/head'
 import Loading from 'components/loading'
 import Repos from 'components/repos'
 import * as Select from 'components/select'
+import { OptionType as Period } from 'data/period'
+import { OptionType as Language } from 'data/languages'
 import { useRepos } from 'hooks/useRepos'
-
 import { makeOption } from 'utils'
-
-type Period = import('data/period').Option
-type Language = import('data/languages').Option
 
 const usePeriod = createPersistedState('period')
 const useLanguage = createPersistedState('language')
@@ -42,11 +40,11 @@ const Home: FC = () => {
       <main>
         <AppBar>
           <Select.Language
-            onChange={setLanguage as () => void}
+            onChange={setLanguage as VoidFunction}
             value={language}
           />
           <Select.Period
-            onChange={setPeriod as () => void}
+            onChange={setPeriod as VoidFunction}
             value={period}
           />
         </AppBar>

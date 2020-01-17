@@ -1,6 +1,7 @@
-import { map, flatten } from 'fp-ts/lib/Array'
+import { GroupedOptionsType, GroupType } from 'react-select'
 import { getOrElse } from 'fp-ts/lib/Option'
 import { constant, flow } from 'fp-ts/lib/function'
+import { map } from 'fp-ts/lib/Array'
 import { pipe } from 'fp-ts/lib/pipeable'
 
 import {
@@ -8,7 +9,7 @@ import {
   everythingElse,
   popular,
 } from './list.json'
-import { Language, Option } from './types'
+import { Language, OptionType, all } from './types'
 
 import { makeOption, find } from 'utils'
 import theme from 'data/theme'
@@ -23,8 +24,19 @@ export const getColor: GetColor = flow(
   getOrElse(constant(gray[400]))
 )
 
-export const options: Option[] = pipe(
-  [['All Languages'], popular, everythingElse],
-  flatten,
-  map(makeOption)
+type MakeGroup = (
+  a: [string, string[]]
+) => GroupType<OptionType>
+const makeGroup: MakeGroup = ([label, values]) => ({
+  label,
+  options: values.map(makeOption),
+})
+
+export const options: GroupedOptionsType<OptionType> = pipe(
+  [
+    [all, [all]],
+    ['Popular', popular],
+    ['Everything Else', everythingElse],
+  ],
+  map(makeGroup)
 )

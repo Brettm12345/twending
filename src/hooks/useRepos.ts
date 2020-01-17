@@ -2,37 +2,39 @@ import dayjs from 'dayjs'
 import * as RD from '@devexperts/remote-data-ts'
 import * as T from 'fp-ts/lib/Task'
 import * as TE from 'fp-ts/lib/TaskEither'
-import { Errors } from 'io-ts'
 import { RemoteData } from '@devexperts/remote-data-ts'
 import { Task, task } from 'fp-ts/lib/Task'
 import { TaskEither } from 'fp-ts/lib/TaskEither'
 import { map, array } from 'fp-ts/lib/Array'
-import {
-  constant,
-  flow,
-  identity as id,
-} from 'fp-ts/lib/function'
-import { fold } from 'fp-ts/lib/Either'
+import { constant, flow } from 'fp-ts/lib/function'
+import { fold, toError } from 'fp-ts/lib/Either'
 import { pipe } from 'fp-ts/lib/pipeable'
 import { useEffect, useState } from 'react'
 import { useBoolean, useNumber } from 'react-hanger'
+import Octokit, {
+  SearchReposResponse,
+  Response,
+} from '@octokit/rest'
 
 import { Value as Period } from 'data/period'
-import {
-  Repo,
-  GithubResponse,
-  transformResponse,
-} from 'data/github'
+import { Repo, handleResponse } from 'data/github'
 import { SpecificLanguage } from 'data/languages'
-import { get, join, joinRD } from 'utils'
+import { join, joinRD } from 'utils'
 
-type GH = (q: string) => TaskEither<Errors, GithubResponse>
+const octokit = new Octokit()
+
+type GH = (
+  q: string
+) => TaskEither<Error, Response<SearchReposResponse>>
 const gh: GH = q =>
-  pipe(
-    get(
-      `https://api.github.com/search/repositories?sort=stars&order=desc&q=${q}`
-    ),
-    T.map(GithubResponse.decode)
+  TE.tryCatch(
+    () =>
+      octokit.search.repos({
+        order: 'desc',
+        q,
+        sort: 'stars',
+      }),
+    toError
   )
 
 const param = (k: string) => (v: string): string =>
@@ -51,7 +53,7 @@ const getPage: GetPage = period => page =>
     map(value =>
       dayjs()
         .subtract(value, period)
-        .format('YYYY-MM-DD')
+        .toISOString()
     ),
     join('..'),
     param('created')
@@ -70,23 +72,23 @@ interface QueryOptions {
 
 type QueryFn<T> = (o: QueryOptions) => T
 
-const getQuery: QueryFn<string> = ({
+const buildQuery: QueryFn<string> = ({
   period = 'month',
   page = 0,
   language = 'All Languages',
 }) =>
   pipe(
     [getLanguage(language), getPage(period)(page)],
-    join(' ')
+    join('+')
   )
 
-type RemoteRepos = RemoteData<Errors, Repo[]>
+type RemoteRepos = RemoteData<Error, Repo[]>
 type RepoTask = Task<RemoteRepos>
 
 export const fetchRepos: QueryFn<RepoTask> = flow(
-  getQuery,
+  buildQuery,
   gh,
-  TE.map(transformResponse),
+  TE.map(handleResponse),
   T.map(RD.fromEither)
 )
 
@@ -107,7 +109,7 @@ export const useRepos: UseRepos = (o = {}) => {
   )
 
   type SetWith = (fn: RepoTask) => Task<void>
-  const setWith: SetWith = flow(id, T.map(setRepos))
+  const setWith: SetWith = T.map(setRepos)
 
   const getRepos: RepoTask = fetchRepos({
     ...o,

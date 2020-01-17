@@ -9,6 +9,9 @@
   min-width: 10rem;
   max-width: 12rem;
   #{ select('') } {
+    &group-heading {
+      @apply text-gray-300 tracking-wider;
+    }
     &control--menu-is-open #{select('input')}::before {
       @apply bg-gray-400;
     }

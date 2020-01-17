@@ -3,10 +3,14 @@ import Select, { Props } from 'react-select'
 
 import selectProps from './select.props'
 
-import { options, getColor, Option } from 'data/languages'
+import {
+  options,
+  getColor,
+  OptionType,
+} from 'data/languages'
 
 interface StyleProps {
-  data: Option
+  data: OptionType
 }
 
 type StyleFn = (
@@ -20,7 +24,7 @@ const dot: StyleFn = (initial, { data: { label } }) => ({
   },
 })
 
-const SelectLanguage: FC<Props<Option>> = props => (
+const SelectLanguage: FC<Props<OptionType>> = props => (
   <Select
     {...selectProps}
     {...props}
