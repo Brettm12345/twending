@@ -53,7 +53,7 @@ const getPage: GetPage = period => page =>
     map(value =>
       dayjs()
         .subtract(value, period)
-        .toISOString()
+        .format('YYYY-MM-DD')
     ),
     join('..'),
     param('created')
