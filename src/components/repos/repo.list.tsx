@@ -16,7 +16,7 @@ import Loading from 'components/loading'
 import { tw } from 'utils'
 
 const List = tw('ul')(
-  'sm:w-11/12',
+  'w-11/12',
   'md:w-10/12',
   'mt-6',
   'overflow-hidden',
