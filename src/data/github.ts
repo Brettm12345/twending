@@ -3,10 +3,8 @@ import { prop } from 'fp-ts-ramda'
 import { map } from 'fp-ts/lib/Array'
 import { flow } from 'fp-ts/lib/function'
 import * as t from 'io-ts'
+import { TypeOf } from 'io-ts'
 import { nullable } from 'utils'
-
-type TypeOf<A extends t.Any> = t.TypeOf<A>
-
 export interface User {
   avatar: string
   name: string
