@@ -8,6 +8,7 @@ module.exports = pipe(
     generateInDevMode: false,
     transformManifest: manifest => ['/'].concat(manifest),
     webpack: config => {
+      config.resolve.extensions.push('.jsx')
       if (config.resolve.plugins) {
         config.resolve.plugins.push(
           new TsconfigPathsPlugin()
@@ -39,7 +40,6 @@ module.exports = pipe(
       swDest: 'static/service-worker.js',
     },
   },
-  require('@zeit/next-typescript'),
   require('next-offline'),
   require('next-fonts'),
   require('@zeit/next-css'),

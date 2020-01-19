@@ -1,4 +1,7 @@
 import NextHead from 'next/head'
+import * as R from 'fp-ts/lib/Record'
+import { map } from 'fp-ts/lib/Array'
+import { pipe } from 'fp-ts/lib/pipeable'
 import React, { FC, LinkHTMLAttributes } from 'react'
 
 import theme from 'data/theme'
@@ -46,12 +49,16 @@ const meta = {
 
 const Head: FC = () => (
   <NextHead>
-    {links.map(props => (
-      <link {...props} key={props.href} />
-    ))}
-    {Object.entries(meta).map(([name, content]) => (
-      <meta content={content} key={name} name={name} />
-    ))}
+    {pipe(
+      links,
+      map(props => <link {...props} key={props.href} />)
+    )}
+    {pipe(
+      R.toArray(meta),
+      map(([name, content]) => (
+        <meta content={content} key={name} name={name} />
+      ))
+    )}
     <title>
       {name} - {description}
     </title>

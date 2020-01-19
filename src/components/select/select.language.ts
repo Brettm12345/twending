@@ -1,6 +1,4 @@
-import React, { CSSProperties, FC } from 'react'
-import { pipe } from 'fp-ts/lib/pipeable'
-import { Props } from 'react-select'
+import { CSSProperties } from 'react'
 
 import Select from './select'
 
@@ -25,18 +23,13 @@ const dot: StyleFn = (initial, { data: { label } }) => ({
   },
 })
 
-const SelectLanguage: FC<Props<OptionType>> = extra =>
-  pipe(
-    {
-      ...extra,
-      id: 'language-select',
-      options,
-      styles: {
-        option: dot,
-        singleValue: dot,
-      },
-    },
-    props => <Select {...props} />
-  )
+const SelectLanguage = Select({
+  id: 'language-select',
+  options,
+  styles: {
+    option: dot,
+    singleValue: dot,
+  },
+})
 
 export default SelectLanguage

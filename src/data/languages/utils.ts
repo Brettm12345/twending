@@ -28,10 +28,11 @@ export const getColor: GetColor = flow(
 type MakeGroup = (
   a: [string, string[]]
 ) => GroupType<OptionType>
-const makeGroup: MakeGroup = ([label, values]) => ({
-  label,
-  options: values.map(makeOption),
-})
+const makeGroup: MakeGroup = ([label, values]) =>
+  pipe(values, map(makeOption), options => ({
+    label,
+    options,
+  }))
 
 export const allLanguages = makeOption(all)
 
