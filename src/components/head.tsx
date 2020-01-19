@@ -34,6 +34,10 @@ const links: Array<LinkHTMLAttributes<HTMLLinkElement>> = [
     href: '/safari-pinned-tab.svg',
     rel: 'mask-icon',
   },
+  {
+    href: 'https://api.github.com',
+    rel: 'preconnect',
+  },
 ]
 
 const description =
