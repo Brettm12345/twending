@@ -1,1 +1,1 @@
-export { default } from './repo.list'
+export { default } from './repos'

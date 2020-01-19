@@ -1,23 +1,22 @@
 import dayjs from 'dayjs'
+
 import * as RD from '@devexperts/remote-data-ts'
 import * as T from 'fp-ts/lib/Task'
 import * as TE from 'fp-ts/lib/TaskEither'
-import { RemoteData } from '@devexperts/remote-data-ts'
 import { Task, task } from 'fp-ts/lib/Task'
-import { TaskEither } from 'fp-ts/lib/TaskEither'
 import { map, array } from 'fp-ts/lib/Array'
 import { constant, flow } from 'fp-ts/lib/function'
 import { fold, toError } from 'fp-ts/lib/Either'
 import { pipe } from 'fp-ts/lib/pipeable'
+import type { TaskEither } from 'fp-ts/lib/TaskEither'
 import { useEffect, useState } from 'react'
-import { useBoolean, useNumber } from 'react-hanger'
 import Octokit, {
   SearchReposResponse,
   Response,
 } from '@octokit/rest'
 
-import { Value as Period } from 'data/period'
-import { Repo, handleResponse } from 'data/github'
+import type { Value as Period } from 'data/period'
+import { RemoteRepos, RepoTask, handleResponse } from 'data/github'
 import { SpecificLanguage } from 'data/languages'
 import { join, joinRD } from 'utils'
 
@@ -46,8 +45,7 @@ const getLanguage: GetLanguage = flow(
   fold(constant(''), param('language'))
 )
 
-type GetPage = (period: Period) => (value: number) => string
-const getPage: GetPage = period => page =>
+const getPage = (period: Period, page: number): string =>
   pipe(
     [page + 1, page],
     map(value =>
@@ -60,30 +58,23 @@ const getPage: GetPage = period => page =>
   )
 
 interface QueryOptions {
-  /** @default month */
-  period?: Period
-
-  /** @default 0 */
-  page?: number
-
-  /** @default "All Languages" */
-  language?: string
+  period: Period
+  page: number
+  language: string
 }
 
 type QueryFn<T> = (o: QueryOptions) => T
 
 const buildQuery: QueryFn<string> = ({
-  period = 'month',
-  page = 0,
-  language = 'All Languages',
+  period,
+  page,
+  language,
 }) =>
   pipe(
-    [getLanguage(language), getPage(period)(page)],
+    [getLanguage(language), getPage(period, page)],
     join('+')
   )
 
-type RemoteRepos = RemoteData<Error, Repo[]>
-type RepoTask = Task<RemoteRepos>
 
 export const fetchRepos: QueryFn<RepoTask> = flow(
   buildQuery,
@@ -95,15 +86,18 @@ export const fetchRepos: QueryFn<RepoTask> = flow(
 interface UseReposResult {
   repos: RemoteRepos
   loading: boolean
-  fetchMore: Task<void>
+  nextPage: () => Promise<void>
 }
 
 type UseRepos = (
   o: Omit<QueryOptions, 'page'>
 ) => UseReposResult
-export const useRepos: UseRepos = (o = {}) => {
-  const page = useNumber(0)
-  const loading = useBoolean(false)
+export const useRepos: UseRepos = ({
+  language,
+  period,
+}) => {
+  const [loading, setLoading] = useState(false)
+  const [page, setPage] = useState(0)
   const [repos, setRepos] = useState<RemoteRepos>(
     RD.initial
   )
@@ -111,34 +105,35 @@ export const useRepos: UseRepos = (o = {}) => {
   type SetWith = (fn: RepoTask) => Task<void>
   const setWith: SetWith = T.map(setRepos)
 
-  const getRepos: RepoTask = fetchRepos({
-    ...o,
-    page: page.value,
-  })
+  const getRepos = (page = 0): RepoTask =>
+    fetchRepos({
+      language,
+      page,
+      period,
+    })
 
-  const getMore: RepoTask = pipe(
-    getRepos,
-    T.map(joinRD(repos))
-  )
-
-  const fetchMore: Task<void> = async () => {
-    loading.setTrue()
-    page.increase()
-    await setWith(getMore)()
-    loading.setFalse()
+  const nextPage = async () => {
+    const current = page + 1
+    setLoading(true)
+    await setWith(
+      pipe(getRepos(current), T.map(joinRD(repos)))
+    )()
+    setLoading(false)
+    setPage(current)
   }
 
   useEffect(() => {
     pipe(
-      [T.of(RD.pending), getRepos],
+      [T.of(RD.pending), getRepos()],
       map(setWith),
       array.sequence(task)
     )()
-  }, [o.language, o.period])
+    setPage(0)
+  }, [language, period])
 
   return {
-    fetchMore,
-    loading: loading.value,
+    loading,
+    nextPage,
     repos,
   }
 }

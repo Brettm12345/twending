@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "baseUrl": ".",
     "checkJs": true,
@@ -17,7 +16,7 @@
       "*": ["./src/*"]
     },
     "preserveConstEnums": true,
-    "removeComments": false,
+    "removeComments": true,
     "strict": true,
     "strictNullChecks": true,
     "skipLibCheck": true,

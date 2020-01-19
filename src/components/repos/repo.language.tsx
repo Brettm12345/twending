@@ -1,10 +1,10 @@
-import { getColor } from 'data/languages/utils'
 import styled from '@emotion/styled'
 import cn from 'ts-classnames'
 import { flow } from 'fp-ts/lib/function'
 import { prop } from 'fp-ts-ramda'
 import React, { FC } from 'react'
 
+import { getColor } from 'data/languages/utils'
 interface LanguageProps {
   children: string
 }

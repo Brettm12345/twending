@@ -1,17 +1,13 @@
-import { toError } from 'fp-ts/lib/Either'
+import * as RD from '@devexperts/remote-data-ts'
 import { map } from 'fp-ts/lib/Array'
 import { constant, flow } from 'fp-ts/lib/function'
 import { prop } from 'fp-ts-ramda'
 import React, { FC } from 'react'
-import {
-  RemoteData,
-  fold,
-} from '@devexperts/remote-data-ts'
 
-import Item from './repo.item'
+import Repo from './repo'
 
-import { Repo } from 'data/github'
 import Loading from 'components/loading'
+import type { RemoteRepos } from 'data/github'
 import { tw } from 'utils'
 
 const List = tw('ul')(
@@ -26,29 +22,23 @@ const List = tw('ul')(
   'rounded-lg',
   'shadow-xl'
 )
-export interface RepoListProps {
-  repos: RemoteData<Error, Repo[]>
-}
 
-const handleError = flow(
-  JSON.stringify,
-  toError,
-  console.error
-)
-const error = constant(<div>Failed to fetch repos</div>)
 const loading = constant(<Loading />)
 
-const RepoList: FC<RepoListProps> = flow(
+const Repos: FC<Record<'repos', RemoteRepos>> = flow(
   prop('repos'),
-  fold(
+  RD.fold(
     loading,
     loading,
-    flow(handleError, error),
     flow(
-      map(({ id, ...repo }) => <Item key={id} {...repo} />),
+      console.error,
+      constant(<div>Failed to fetch repos</div>)
+    ),
+    flow(
+      map(({ id, ...repo }) => <Repo key={id} {...repo} />),
       items => <List>{items}</List>
     )
   )
 )
 
-export default RepoList
+export default Repos

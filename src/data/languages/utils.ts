@@ -4,12 +4,13 @@ import { constant, flow } from 'fp-ts/lib/function'
 import { map } from 'fp-ts/lib/Array'
 import { pipe } from 'fp-ts/lib/pipeable'
 
+import { all } from './constants'
 import {
   colors,
   everythingElse,
   popular,
 } from './list.json'
-import { Language, OptionType, all } from './types'
+import { Language, OptionType } from './types'
 
 import { makeOption, find } from 'utils'
 import theme from 'data/theme'
@@ -31,6 +32,8 @@ const makeGroup: MakeGroup = ([label, values]) => ({
   label,
   options: values.map(makeOption),
 })
+
+export const allLanguages = makeOption(all)
 
 export const options: GroupedOptionsType<OptionType> = pipe(
   [

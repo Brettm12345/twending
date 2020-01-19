@@ -79,7 +79,7 @@
 
     "jsx-a11y/label-has-associated-control": "off",
 
-    "prettier/prettier": "error",
+    "prettier/prettier": "off",
 
     "react/jsx-fragments": ["error", "syntax"],
     "react/jsx-sort-props": [

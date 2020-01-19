@@ -1,6 +1,6 @@
 import * as t from 'io-ts'
 import * as RD from '@devexperts/remote-data-ts'
-import { RemoteData } from '@devexperts/remote-data-ts'
+import type { RemoteData } from '@devexperts/remote-data-ts'
 import fetch from 'unfetch'
 import {
   flow,
@@ -17,7 +17,7 @@ import {
   isEmpty,
 } from 'fp-ts/lib/Array'
 import * as T from 'fp-ts/lib/Task'
-import { Task } from 'fp-ts/lib/Task'
+import type { Task } from 'fp-ts/lib/Task'
 import { FC, createElement } from 'react'
 import { pipe } from 'fp-ts/lib/pipeable'
 import { Option } from 'fp-ts/lib/Option'

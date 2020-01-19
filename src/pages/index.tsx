@@ -11,10 +11,9 @@ import Head from 'components/head'
 import Loading from 'components/loading'
 import Repos from 'components/repos'
 import * as Select from 'components/select'
-import { OptionType as Period } from 'data/period'
-import { OptionType as Language } from 'data/languages'
+import type { OptionType as Period } from 'data/period'
+import { OptionType as Language, allLanguages } from 'data/languages'
 import { useRepos } from 'hooks/useRepos'
-import { makeOption } from 'utils'
 
 const usePeriod = createPersistedState('period')
 const useLanguage = createPersistedState('language')
@@ -26,10 +25,10 @@ const Home: FC = () => {
   })
 
   const [language, setLanguage] = useLanguage<Language>(
-    makeOption('All Languages')
+    allLanguages
   )
 
-  const { repos, fetchMore, loading } = useRepos({
+  const { repos, nextPage, loading } = useRepos({
     language: language.value,
     period: period.value,
   })
@@ -54,7 +53,7 @@ const Home: FC = () => {
           {loading ? (
             <Loading />
           ) : (
-            <button onClick={fetchMore}>
+            <button onClick={nextPage}>
               Load next {period.value}
             </button>
           )}

@@ -1,28 +1,19 @@
-/* eslint-disable sort-keys-fix/sort-keys-fix */
-import { pipe } from 'fp-ts/lib/pipeable'
 import React, { FC } from 'react'
-import { collect } from 'fp-ts/lib/Record'
-import Select, { Props } from 'react-select'
+import type { Props } from 'react-select'
+import { pipe } from 'fp-ts/lib/pipeable'
 
-import selectProps from './select.props'
+import Select from './select'
 
-import { Label, Value, OptionType } from 'data/period'
+import { options, OptionType } from 'data/period'
 
-const SelectPeriod: FC<Props<OptionType>> = props => (
-  <Select
-    {...selectProps}
-    {...props}
-    isSearchable={false}
-    options={pipe<Record<Value, Label>, OptionType[]>(
-      {
-        day: 'Daily',
-        week: 'Weekly',
-        month: 'Monthly',
-        year: 'Annually',
-      },
-      collect((value, label) => ({ label, value }))
-    )}
-  />
-)
+const SelectPeriod: FC<Props<OptionType>> = extra =>
+  pipe(
+    {
+      ...extra,
+      isSearchable: false,
+      options,
+    },
+    props => <Select {...props} />
+  )
 
 export default SelectPeriod

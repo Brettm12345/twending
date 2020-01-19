@@ -2,7 +2,9 @@
 import { prop } from 'fp-ts-ramda'
 import { map } from 'fp-ts/lib/Array'
 import { flow } from 'fp-ts/lib/function'
-import {
+import type { Task } from 'fp-ts/lib/Task'
+import type { RemoteData } from '@devexperts/remote-data-ts'
+import type {
   SearchReposResponse as GithubResponse,
   SearchReposResponseItemsItem as GithubRepo,
   SearchReposResponseItemsItemOwner as GithubUser,
@@ -20,6 +22,7 @@ const handleUser: HandleUser = u => ({
   name: u.login,
   url: u.url,
 })
+
 
 export interface Repo {
   author: User
@@ -61,3 +64,6 @@ export const handleResponse: HandleResponse = flow(
   prop('items'),
   map(handleRepo)
 )
+
+export type RemoteRepos = RemoteData<Error, Repo[]>
+export type RepoTask = Task<RemoteRepos>

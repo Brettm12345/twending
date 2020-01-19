@@ -1,12 +1,13 @@
 import React, { FC } from 'react'
 import { pipe } from 'fp-ts/lib/pipeable'
 import { map } from 'fp-ts/lib/Array'
+import * as R from 'fp-ts/lib/Record'
 
 import Avatar from './repo.avatar'
 import Language from './repo.language'
 import Icon, { IconName } from './repo.icon'
 
-import { Repo } from 'data/github'
+import type { Repo as RepoType } from 'data/github'
 import { tw } from 'utils'
 
 const Li = tw('li')(
@@ -41,11 +42,9 @@ const Info = tw('div')(
 
 const InfoItem = tw('span')('inline-flex', 'mr-4')
 
-type RepoItemProps = Omit<Repo, 'id'>
-
-const RepoItem: FC<RepoItemProps> = ({
+const Repo: FC<Omit<RepoType, 'id'>> = ({
   author,
-  description = 'No description given',
+  description,
   forks,
   issues,
   language,
@@ -65,11 +64,11 @@ const RepoItem: FC<RepoItemProps> = ({
       <Info>
         <Language>{language ?? 'Unknown'}</Language>
         {pipe(
-          { forks, issues, stars },
-          Object.entries,
+          { forks, issues, stars } as Record<IconName, number>,
+          R.toArray,
           map(([key, value]) => (
             <InfoItem key={key}>
-              <Icon name={key as IconName} /> &nbsp;{value}
+              <Icon name={key} /> &nbsp;{value}
             </InfoItem>
           ))
         )}
@@ -78,4 +77,4 @@ const RepoItem: FC<RepoItemProps> = ({
   </Li>
 )
 
-export default RepoItem
+export default Repo

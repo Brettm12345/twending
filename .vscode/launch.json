@@ -9,7 +9,7 @@
       "request": "launch",
       "name": "Launch Chrome against localhost",
       "url": "http://localhost:3000",
-      "runtimeExecutable": "/nix/store/glas9fvg3pivdsm0hlf0hpq9aipn52cz-user-environment/bin/chromium",
+      "runtimeExecutable": "/nix/store/d3z5qic12m5n4m9snxx0v6zdv8n6w8fc-user-environment/bin/chromium",
       "runtimeArgs": [
         "--new-window",
         "-user-data-dir=\"/${workspaceFolder}/DevProfile\"",
