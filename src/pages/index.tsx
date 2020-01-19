@@ -11,8 +11,11 @@ import Head from 'components/head'
 import Loading from 'components/loading'
 import Repos from 'components/repos'
 import * as Select from 'components/select'
-import type { OptionType as Period } from 'data/period'
-import { OptionType as Language, allLanguages } from 'data/languages'
+import { OptionType as Period } from 'data/period'
+import {
+  OptionType as Language,
+  allLanguages,
+} from 'data/languages'
 import { useRepos } from 'hooks/useRepos'
 
 const usePeriod = createPersistedState('period')

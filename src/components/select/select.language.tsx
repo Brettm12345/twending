@@ -1,6 +1,6 @@
 import React, { CSSProperties, FC } from 'react'
 import { pipe } from 'fp-ts/lib/pipeable'
-import type { Props } from 'react-select'
+import { Props } from 'react-select'
 
 import Select from './select'
 

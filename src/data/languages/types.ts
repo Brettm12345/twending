@@ -1,5 +1,5 @@
 import * as t from 'io-ts'
-import type { TypeOf } from 'io-ts'
+import { TypeOf } from 'io-ts'
 
 import { all } from './constants'
 

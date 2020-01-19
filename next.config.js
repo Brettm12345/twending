@@ -39,6 +39,7 @@ module.exports = pipe(
       swDest: 'static/service-worker.js',
     },
   },
+  require('@zeit/next-typescript'),
   require('next-offline'),
   require('next-fonts'),
   require('@zeit/next-css'),

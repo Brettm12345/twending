@@ -1,31 +1,32 @@
 {
   "compilerOptions": {
+    "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "baseUrl": ".",
     "checkJs": true,
     "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
     "jsx": "preserve",
     "lib": ["dom", "es2015", "es2017"],
     "module": "esnext",
+    "moduleResolution": "node",
     "noEmit": true,
     "noImplicitAny": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "resolveJsonModule": true,
     "paths": {
       "*": ["./src/*"]
     },
     "preserveConstEnums": true,
     "removeComments": true,
-    "strict": true,
-    "strictNullChecks": true,
+    "resolveJsonModule": true,
     "skipLibCheck": true,
     "sourceMap": true,
+    "strict": true,
+    "strictNullChecks": true,
     "target": "esnext",
-    "typeRoots": ["./node_modules/@types"],
-    "forceConsistentCasingInFileNames": true,
-    "moduleResolution": "node",
-    "isolatedModules": true
+    "typeRoots": ["./node_modules/@types"]
   },
   "include": [
     "./src/**/*",

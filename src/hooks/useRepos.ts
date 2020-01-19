@@ -8,15 +8,19 @@ import { map, array } from 'fp-ts/lib/Array'
 import { constant, flow } from 'fp-ts/lib/function'
 import { fold, toError } from 'fp-ts/lib/Either'
 import { pipe } from 'fp-ts/lib/pipeable'
-import type { TaskEither } from 'fp-ts/lib/TaskEither'
+import { TaskEither } from 'fp-ts/lib/TaskEither'
 import { useEffect, useState } from 'react'
 import Octokit, {
   SearchReposResponse,
   Response,
 } from '@octokit/rest'
 
-import type { Value as Period } from 'data/period'
-import { RemoteRepos, RepoTask, handleResponse } from 'data/github'
+import { Value as Period } from 'data/period'
+import {
+  RemoteRepos,
+  RepoTask,
+  handleResponse,
+} from 'data/github'
 import { SpecificLanguage } from 'data/languages'
 import { join, joinRD } from 'utils'
 
@@ -74,7 +78,6 @@ const buildQuery: QueryFn<string> = ({
     [getLanguage(language), getPage(period, page)],
     join('+')
   )
-
 
 export const fetchRepos: QueryFn<RepoTask> = flow(
   buildQuery,

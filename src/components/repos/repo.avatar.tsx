@@ -1,6 +1,6 @@
 import React, { FC } from 'react'
 
-import type { User } from 'data/github'
+import { User } from 'data/github'
 import { tw } from 'utils'
 
 const A = tw('a')(

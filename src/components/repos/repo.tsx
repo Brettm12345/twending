@@ -7,7 +7,7 @@ import Avatar from './repo.avatar'
 import Language from './repo.language'
 import Icon, { IconName } from './repo.icon'
 
-import type { Repo as RepoType } from 'data/github'
+import { Repo as RepoType } from 'data/github'
 import { tw } from 'utils'
 
 const Li = tw('li')(
@@ -64,7 +64,10 @@ const Repo: FC<Omit<RepoType, 'id'>> = ({
       <Info>
         <Language>{language ?? 'Unknown'}</Language>
         {pipe(
-          { forks, issues, stars } as Record<IconName, number>,
+          { forks, issues, stars } as Record<
+            IconName,
+            number
+          >,
           R.toArray,
           map(([key, value]) => (
             <InfoItem key={key}>

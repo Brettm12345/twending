@@ -7,7 +7,7 @@ import React, { FC } from 'react'
 import Repo from './repo'
 
 import Loading from 'components/loading'
-import type { RemoteRepos } from 'data/github'
+import { RemoteRepos } from 'data/github'
 import { tw } from 'utils'
 
 const List = tw('ul')(

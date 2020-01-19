@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import type { Props } from 'react-select'
+import { Props } from 'react-select'
 import { pipe } from 'fp-ts/lib/pipeable'
 
 import Select from './select'

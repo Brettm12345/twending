@@ -18,10 +18,10 @@ import { FC, createElement } from 'react'
 import { pipe } from 'fp-ts/lib/pipeable'
 import { getLastSemigroup } from 'fp-ts/lib/Semigroup'
 import cn from 'ts-classnames'
-import type { Mixed } from 'io-ts'
-import type { RemoteData } from '@devexperts/remote-data-ts'
-import type { Option } from 'fp-ts/lib/Option'
-import type { PropsOf } from '@emotion/styled-base/types/helper'
+import { Mixed } from 'io-ts'
+import { RemoteData } from '@devexperts/remote-data-ts'
+import { Option } from 'fp-ts/lib/Option'
+import { PropsOf } from '@emotion/styled-base/types/helper'
 
 type JoinRD = <E, A>(
   a: RemoteData<E, A[]>

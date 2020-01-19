@@ -2,7 +2,7 @@
 import { collect } from 'fp-ts/lib/Record'
 import { pipe } from 'fp-ts/lib/pipeable'
 
-import type { Value, Label, OptionType } from './types'
+import { Value, Label, OptionType } from './types'
 
 export const options = pipe<
   Record<Value, Label>,
