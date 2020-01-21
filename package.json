@@ -1,22 +1,18 @@
 {
   "name": "twending",
   "version": "1.0.0",
-  "scripts": {
-    "dev": "next",
-    "build": "next build",
-    "start": "next start"
-  },
-  "browserslist": "last 2 versions",
   "description": "A react application for github trending",
-  "main": "index.js",
-  "license": "MIT",
   "homepage": "https://twending.now.sh/",
-  "engines": {
-    "node": "10.x"
-  },
   "repository": {
     "url": "https://github.com/brettm12345/twending"
   },
+  "license": "MIT",
+  "scripts": {
+    "build": "next build",
+    "dev": "next",
+    "start": "next start"
+  },
+  "browserslist": "last 2 versions",
   "dependencies": {
     "@babel/core": "^7.8.3",
     "@devexperts/remote-data-ts": "^2.0.2",
@@ -84,5 +80,8 @@
     "eslint-plugin-standard": "^4.0.1",
     "eslint-plugin-unicorn": "^15.0.1",
     "prettier": "^1.19.1"
+  },
+  "engines": {
+    "node": "10.x"
   }
 }

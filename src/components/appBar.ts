@@ -3,7 +3,7 @@ import * as Feather from 'react-feather'
 import njsx from 'njsx'
 import { header, div, a } from 'njsx-react'
 
-import { productionLink } from 'data/constants'
+import { repoLink } from 'data/constants'
 import { tw } from 'utils'
 
 const GitHub = njsx(Feather.GitHub)
@@ -11,7 +11,7 @@ const GitHub = njsx(Feather.GitHub)
 const Logo = a(
   tw('mr-auto', 'opacity-75', 'transition-opacity')
 )({
-  href: productionLink,
+  href: repoLink,
 })(GitHub({ size: '3em', strokeWidth: 1 }))
 
 const AppBar = (children: ReactNode[]) =>
