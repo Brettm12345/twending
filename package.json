@@ -62,7 +62,6 @@
     "tsconfig-paths-webpack-plugin": "^3.2.0",
     "typescript": "^3.7.5",
     "typescript-require": "^0.2.10",
-    "use-lazyload-ref": "^0.1.3",
     "use-persisted-state": "^0.3.0",
     "use-state-with-callback": "^1.0.18",
     "webpack": "^4.41.5"
