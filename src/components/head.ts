@@ -1,6 +1,6 @@
 import NextHead from 'next/head'
 import njsx from 'njsx'
-import * as R from 'fp-ts/lib/Record'
+import { toArray as entries } from 'fp-ts/lib/Record'
 import { map } from 'fp-ts/lib/Array'
 import { pipe } from 'fp-ts/lib/pipeable'
 import { meta, title } from 'njsx-react'
@@ -64,7 +64,7 @@ const createMeta = ([name, content]: [string, string]) =>
 
 const Head = njsx(NextHead)([
   pipe(links, map(createLink)),
-  pipe(R.toArray(metaData), map(createMeta)),
+  pipe(entries(metaData), map(createMeta)),
   title(`${name} - ${description}`),
 ])
 

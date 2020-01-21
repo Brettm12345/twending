@@ -1,13 +1,7 @@
 import * as t from 'io-ts'
 import * as RD from '@devexperts/remote-data-ts'
 import * as R from 'fp-ts/lib/Record'
-import {
-  flow,
-  not,
-  Endomorphism,
-  FunctionN as FN,
-} from 'fp-ts/lib/function'
-import { lookup } from 'fp-ts/lib/Record'
+import { flow, not } from 'fp-ts/lib/function'
 import {
   filter,
   flatten,
@@ -21,47 +15,37 @@ import { Mixed } from 'io-ts'
 import { RemoteData } from '@devexperts/remote-data-ts'
 import { Option } from 'fp-ts/lib/Option'
 
-type JoinRD = <E, A>(
-  a: RemoteData<E, A[]>
-) => Endomorphism<RemoteData<E, A[]>>
-export const joinRD: JoinRD = a => b =>
+export const joinRD = <E, A>(a: RemoteData<E, A[]>) => (
+  b: RemoteData<E, A[]>
+): RemoteData<E, A[]> =>
   pipe(RD.combine(a, b), RD.map(flatten))
 
-interface SelectOption<L extends string> {
-  label: L
-  value: string
-}
-
-type MakeOption = <L extends string>(
-  label: L
-) => SelectOption<L>
-export const makeOption: MakeOption = label => ({
+export const makeOption = <L extends string>(label: L) => ({
   label,
   value: label,
 })
 
-type Join = <A>(s?: string) => FN<[Array<A>], string>
-export const join: Join = s => a => a.join(s)
+export const join = (x = '') => (a: any[]) => a.join(x)
 
-type Has = <A>(x: A) => FN<[Array<A>], boolean>
+type Has = <A>(x: A) => (xs: A[]) => boolean
 export const has: Has = x =>
   flow(
     filter(a => a !== x),
     not(isEmpty)
   )
 
-type Any = FN<[Array<boolean>], boolean>
+type Any = (xs: boolean[]) => boolean
 export const any: Any = has(true as boolean)
 
-type Concat = <A>(x: A) => Endomorphism<A[]>
-export const concat: Concat = x => xs => [...xs, x]
+export const concat = <A>(x: A) => (xs: A[]): A[] => [
+  ...xs,
+  x,
+]
 
-type InAny = <A>(xs: A[][]) => FN<[A], boolean>
-export const inAny: InAny = xs => x =>
+export const inAny = <A>(xs: A[][]) => (x: A): boolean =>
   pipe(flatten(xs), has(x))
 
-type OneOf = FN<[Array<string>], Mixed>
-export const oneOf: OneOf = xs =>
+export const oneOf = (xs: string[]): Mixed =>
   pipe(
     R.fromFoldableMap(getLastSemigroup<string>(), array)(
       xs,
@@ -70,10 +54,9 @@ export const oneOf: OneOf = xs =>
     t.keyof
   )
 
-type Find = <A>(
-  r: Record<string, A>
-) => FN<[string], Option<A>>
-export const find: Find = r => k => lookup(k, r)
+export const lookup = <A>(r: Record<string, A>) => (
+  k: string
+): Option<A> => R.lookup(k, r)
 
 export const tw = (...c: ClassNames[]) => ({
   className: cn(...c),

@@ -12,7 +12,7 @@ import {
 } from './list.json'
 import { Language, OptionType } from './types'
 
-import { makeOption, find } from 'utils'
+import { makeOption, lookup } from 'utils'
 import theme from 'data/theme'
 
 const {
@@ -21,7 +21,7 @@ const {
 
 type GetColor = (l: Language) => string
 export const getColor: GetColor = flow(
-  find(colors),
+  lookup(colors),
   getOrElse(constant(gray[400]))
 )
 
