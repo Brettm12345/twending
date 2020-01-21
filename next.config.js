@@ -1,4 +1,3 @@
-/* eslint-disable fp/no-mutation, fp/no-mutating-methods */
 const {
   TsconfigPathsPlugin,
 } = require('tsconfig-paths-webpack-plugin')
@@ -8,17 +7,16 @@ module.exports = pipe(
   {
     generateInDevMode: false,
     transformManifest: manifest => ['/'].concat(manifest),
-    webpack: config => {
-      config.resolve.extensions.push('.jsx')
-      if (config.resolve.plugins) {
-        config.resolve.plugins.push(
-          new TsconfigPathsPlugin()
-        )
-      } else {
-        config.resolve.plugins = [new TsconfigPathsPlugin()]
-      }
-      return config
-    },
+    webpack: config => ({
+      ...config,
+      resolve: {
+        ...config.resolve,
+        plugins: [
+          ...config.resolve.plugins,
+          new TsconfigPathsPlugin(),
+        ],
+      },
+    }),
     workboxOpts: {
       clientsClaim: true,
       runtimeCaching: [
