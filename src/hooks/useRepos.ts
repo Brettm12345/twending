@@ -1,9 +1,8 @@
 import dayjs from 'dayjs'
-
+import createPersistedState from 'use-persisted-state'
 import * as RD from '@devexperts/remote-data-ts'
 import * as T from 'fp-ts/lib/Task'
 import * as TE from 'fp-ts/lib/TaskEither'
-import createPersistedState from 'use-persisted-state'
 import { Task, task } from 'fp-ts/lib/Task'
 import { map, array } from 'fp-ts/lib/Array'
 import { constant, flow } from 'fp-ts/lib/function'
@@ -12,7 +11,7 @@ import { pipe } from 'fp-ts/lib/pipeable'
 import { TaskEither } from 'fp-ts/lib/TaskEither'
 import { useEffect, useState } from 'react'
 import Octokit, {
-  SearchReposResponse,
+  SearchReposResponse as SearchResponse,
   Response,
 } from '@octokit/rest'
 
@@ -36,7 +35,7 @@ const octokit = new Octokit()
 
 type GH = (
   q: string
-) => TaskEither<Error, Response<SearchReposResponse>>
+) => TaskEither<Error, Response<SearchResponse>>
 const gh: GH = q =>
   TE.tryCatch(
     () =>
@@ -111,7 +110,6 @@ export const useRepos = (): UseReposResult => {
     label: 'Monthly',
     value: 'month',
   })
-
   const language = useLanguage<LanguageType>(allLanguages)
   const [loading, setLoading] = useState(false)
   const [page, setPage] = useState(0)

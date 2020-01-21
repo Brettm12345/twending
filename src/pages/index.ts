@@ -29,7 +29,7 @@ const Home: FC = () => {
       'mb-10'
     )
   )([
-    Head,
+    Head(),
     AppBar([Language(language), Period(period)]),
     h1(tw('mt-6', 'text-2xl', 'text-center'))(
       'Trending Repositories'

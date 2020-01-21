@@ -1,3 +1,4 @@
+/* eslint-disable fp/no-mutation, fp/no-mutating-methods */
 const {
   TsconfigPathsPlugin,
 } = require('tsconfig-paths-webpack-plugin')

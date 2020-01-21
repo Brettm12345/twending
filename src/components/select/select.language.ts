@@ -1,4 +1,5 @@
-import { CSSProperties } from 'react'
+import { CSSProperties as CSS } from 'react'
+import { FunctionN as FN } from 'fp-ts/lib/function'
 
 import Select from './select'
 
@@ -12,11 +13,10 @@ interface StyleProps {
   data: OptionType
 }
 
-type StyleFn = (
-  initial: CSSProperties,
-  props: StyleProps
-) => CSSProperties
-const dot: StyleFn = (initial, { data: { label } }) => ({
+const dot: FN<[CSS, StyleProps], CSS> = (
+  initial,
+  { data: { label } }
+) => ({
   ...initial,
   '&::before': {
     backgroundColor: getColor(label),

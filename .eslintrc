@@ -1,18 +1,12 @@
 {
   "$schema": "http://json.schemastore.org/eslintrc",
-  "globals": {
-    "__PATH_PREFIX__": true
-  },
   "env": {
     "es6": true,
     "node": true
   },
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "sourceType": "module",
-    "ecmaFeatures": {
-      "jsx": true
-    }
+    "sourceType": "module"
   },
   "plugins": [
     "@typescript-eslint",
@@ -20,6 +14,7 @@
     "import",
     "jsx-a11y",
     "prettier",
+    "prefer-arrow",
     "sort-keys-fix",
     "standard",
     "unicorn"
@@ -30,11 +25,9 @@
     "plugin:import/errors",
     "plugin:import/warnings",
     "plugin:jsx-a11y/recommended",
-    "plugin:react/recommended",
     "plugin:unicorn/recommended",
     "standard",
     "prettier",
-    "prettier/react",
     "prettier/standard"
   ],
   "rules": {
@@ -44,7 +37,6 @@
     "indent": "off",
     "no-case-declarations": "off",
     "no-unexpected-multiline": "off",
-    "lines-between-class-members": "off",
     "no-console": [
       "warn",
       {
@@ -52,12 +44,6 @@
       }
     ],
     "quotes": ["error", "single"],
-    "func-style": [
-      "error",
-      "declaration",
-      { "allowArrowFunctions": true }
-    ],
-    "prefer-arrow-callback": "error",
 
     "import/default": "off",
     "import/no-duplicates": "off",
@@ -71,27 +57,29 @@
     "fp/no-delete": "error",
     "fp/no-events": "error",
     "fp/no-get-set": "error",
+    "fp/no-let": "error",
     "fp/no-loops": "error",
+    "fp/no-mutating-assign": "error",
     "fp/no-mutating-methods": "error",
+    "fp/no-mutation": ["error", { "commonjs": true }],
     "fp/no-proxy": "error",
+    "fp/no-rest-parameters": "off",
     "fp/no-this": "error",
+    "fp/no-throw": "error",
     "fp/no-valueof-field": "error",
 
     "jsx-a11y/label-has-associated-control": "off",
 
-    "prettier/prettier": "off",
+    "prettier/prettier": "error",
 
-    "react/jsx-fragments": ["error", "syntax"],
-    "react/jsx-sort-props": [
+    "prefer-arrow/prefer-arrow-functions": [
       "error",
       {
-        "shorthandFirst": true
+        "disallowPrototype": true,
+        "singleReturnOnly": false,
+        "classPropertiesAllowed": false
       }
     ],
-    "react/prefer-stateless-function": "warn",
-    "react/prop-types": "off",
-    "react/display-name": "off",
-    "react/sort-prop-types": "error",
 
     "sort-keys-fix/sort-keys-fix": "error",
 
@@ -105,19 +93,6 @@
     "unicorn/prevent-abbreviations": "off"
   },
   "settings": {
-    "react": {
-      "createClass": "createReactClass",
-      "pragma": "React",
-      "version": "detect",
-      "propWrapperFunctions": [
-        "forbidExtraProps",
-        { "property": "freeze", "object": "Object" },
-        { "property": "myFavoriteWrapper" }
-      ],
-      "linkComponents": [
-        { "name": "Link", "linkAttribute": "to" }
-      ]
-    },
     "import/parsers": {
       "@typescript-eslint/parser": [".ts", ".tsx"]
     },
@@ -127,9 +102,14 @@
   },
   "overrides": [
     {
+      "files": ["next-env.d.ts"],
+      "rules": {
+        "unicorn/filename-case": "off"
+      }
+    },
+    {
       "files": ["*.js"],
       "rules": {
-        "fp/no-mutating-methods": "off",
         "@typescript-eslint/no-var-requires": "off"
       }
     }
