@@ -12,8 +12,8 @@ import {
 } from './list.json'
 import { Language, OptionType } from './types'
 
-import { makeOption, lookup } from 'utils'
-import theme from 'data/theme'
+import { makeOption, lookup } from 'src/utils'
+import theme from 'src/data/theme'
 
 const {
   colors: { gray },

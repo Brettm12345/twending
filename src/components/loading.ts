@@ -1,9 +1,9 @@
-import { svg, animate, circle, g } from 'njsx-react'
-import { pipe } from 'fp-ts/lib/pipeable'
 import { map } from 'fp-ts/lib/Array'
+import { pipe } from 'fp-ts/lib/pipeable'
+import { svg, animate, circle, g } from 'njsx-react'
 
-import theme from 'data/theme'
-import { concat } from 'utils'
+import theme from 'src/data/theme'
+import { concat } from 'src/utils'
 
 const size = 80
 const color = theme.colors.primary

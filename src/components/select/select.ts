@@ -1,7 +1,7 @@
-import ReactSelect from 'react-select'
 import njsx from 'njsx'
+import ReactSelect from 'react-select'
 
-import theme from 'data/theme'
+import theme from 'src/data/theme'
 
 const {
   colors: { blue },

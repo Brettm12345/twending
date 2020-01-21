@@ -1,5 +1,5 @@
-import { CSSProperties as CSS } from 'react'
 import { FunctionN as FN } from 'fp-ts/lib/function'
+import { CSSProperties as CSS } from 'react'
 
 import Select from './select'
 
@@ -7,7 +7,7 @@ import {
   options,
   getColor,
   OptionType,
-} from 'data/languages'
+} from 'src/data/languages'
 
 interface StyleProps {
   data: OptionType

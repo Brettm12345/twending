@@ -1,6 +1,6 @@
 import Select from './select'
 
-import { options, OptionType } from 'data/period'
+import { options, OptionType } from 'src/data/period'
 
 const SelectPeriod = ([value, onChange]: [
   OptionType,

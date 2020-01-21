@@ -1,7 +1,7 @@
 import { a, img } from 'njsx-react'
 
-import { tw } from 'utils'
-import { User } from 'data/github'
+import { User } from 'src/data/github'
+import { tw } from 'src/utils'
 
 const Avatar = ({ url, avatar }: User) =>
   a({ href: url })(

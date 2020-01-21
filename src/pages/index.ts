@@ -1,15 +1,15 @@
-import 'styles/global.scss'
+import 'src/styles/global.scss'
 
 import { button, div, h1, main } from 'njsx-react'
 import { FC } from 'react'
 
-import Head from 'components/head'
-import AppBar from 'components/appBar'
-import Loading from 'components/loading'
-import Repos from 'components/repos'
-import { Language, Period } from 'components/select'
-import { useRepos } from 'hooks/useRepos'
-import { tw } from 'utils'
+import AppBar from 'src/components/appBar'
+import Head from 'src/components/head'
+import Loading from 'src/components/loading'
+import Repos from 'src/components/repos'
+import { Language, Period } from 'src/components/select'
+import { useRepos } from 'src/hooks/useRepos'
+import { tw } from 'src/utils'
 
 const Home: FC = () => {
   const {

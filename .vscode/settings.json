@@ -6,12 +6,6 @@
   "importSorter.importStringConfiguration.trailingComma": "multiLine",
   "importSorter.sortConfiguration.customOrderingRules.rules": [
     {
-      "regex": "^React",
-      "orderLevel": 5,
-      "numberOfEmptyLinesAfterGroup": 0,
-      "disableSort": true
-    },
-    {
       "type": "importMember",
       "regex": "^$",
       "orderLevel": 10,
@@ -23,12 +17,9 @@
       "orderLevel": 40
     },
     {
-      "regex": "^(assets|components|data|hooks|pages|types|theme)",
+      "regex": "^src",
       "orderLevel": 50
     }
   ],
-  "cSpell.words": [
-    "Twending",
-    "octokit"
-  ]
+  "cSpell.words": ["Twending", "octokit"]
 }

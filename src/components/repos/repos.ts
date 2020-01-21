@@ -6,13 +6,13 @@ import { ul, div } from 'njsx-react'
 
 import Repo from './repo'
 
-import Loading from 'components/loading'
-import { Repo as RepoType } from 'data/github'
-import { tw } from 'utils'
+import Loading from 'src/components/loading'
+import { Repo as RepoType } from 'src/data/github'
+import { tw } from 'src/utils'
 
 const loading = constant(Loading)
 
-const Repos = RD.fold<Error, RepoType[], Builder<any>>(
+const Repos = RD.fold<Error, RepoType[], Builder<unknown>>(
   loading,
   loading,
   flow(

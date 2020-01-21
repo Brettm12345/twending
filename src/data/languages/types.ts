@@ -4,7 +4,7 @@ import { TypeOf } from 'io-ts'
 import { all } from './constants'
 
 import { everythingElse, popular } from './list.json'
-import { oneOf } from 'utils'
+import { oneOf } from 'src/utils'
 
 export const AllLanguages = t.literal(all)
 export type AllLanguages = typeof all

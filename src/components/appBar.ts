@@ -1,10 +1,10 @@
-import { ReactNode } from 'react'
-import * as Feather from 'react-feather'
 import njsx from 'njsx'
 import { header, div, a } from 'njsx-react'
+import { ReactNode } from 'react'
+import * as Feather from 'react-feather'
 
-import { repoLink } from 'data/constants'
-import { tw } from 'utils'
+import { repoLink } from 'src/data/constants'
+import { tw } from 'src/utils'
 
 const GitHub = njsx(Feather.GitHub)
 

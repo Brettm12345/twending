@@ -4,9 +4,9 @@ import { toArray as entries } from 'fp-ts/lib/Record'
 import { svg, path, span } from 'njsx-react'
 import { ReactNode } from 'react'
 
-import { tw } from 'utils'
+import { tw } from 'src/utils'
 
-const icons = {
+const paths = {
   forks:
     'M8 1a1.993 1.993 0 00-1 3.72V6L5 8 3 6V4.72A1.993 1.993 0 002 1a1.993 1.993 0 00-1 3.72V6.5l3 3v1.78A1.993 1.993 0 005 15a1.993 1.993 0 001-3.72V9.5l3-3V4.72A1.993 1.993 0 008 1zM2 4.2C1.34 4.2.8 3.65.8 3c0-.65.55-1.2 1.2-1.2.65 0 1.2.55 1.2 1.2 0 .65-.55 1.2-1.2 1.2zm3 10c-.66 0-1.2-.55-1.2-1.2 0-.65.55-1.2 1.2-1.2.65 0 1.2.55 1.2 1.2 0 .65-.55 1.2-1.2 1.2zm3-10c-.66 0-1.2-.55-1.2-1.2 0-.65.55-1.2 1.2-1.2.65 0 1.2.55 1.2 1.2 0 .65-.55 1.2-1.2 1.2z',
   issues:
@@ -16,7 +16,7 @@ const icons = {
 }
 
 const Icons = (
-  dict: Record<keyof typeof icons, ReactNode>
+  dict: Record<keyof typeof paths, ReactNode>
 ) =>
   pipe(
     entries(dict),
@@ -26,7 +26,7 @@ const Icons = (
           height: '1.3em',
           viewBox: '0 0 14 16',
           width: '1.3em',
-        })(path({ d: icons[key], fillRule: 'evenodd' })),
+        })(path({ d: paths[key], fillRule: 'evenodd' })),
         value,
       ])
     )

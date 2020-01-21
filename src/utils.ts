@@ -1,19 +1,19 @@
-import * as t from 'io-ts'
 import * as RD from '@devexperts/remote-data-ts'
-import * as R from 'fp-ts/lib/Record'
-import { flow, not } from 'fp-ts/lib/function'
+import { RemoteData } from '@devexperts/remote-data-ts'
 import {
   filter,
   flatten,
   array,
   isEmpty,
 } from 'fp-ts/lib/Array'
-import { cn } from 'ts-classnames'
+import { flow, not } from 'fp-ts/lib/function'
+import { Option } from 'fp-ts/lib/Option'
 import { pipe } from 'fp-ts/lib/pipeable'
+import * as R from 'fp-ts/lib/Record'
 import { getLastSemigroup } from 'fp-ts/lib/Semigroup'
 import { Mixed } from 'io-ts'
-import { RemoteData } from '@devexperts/remote-data-ts'
-import { Option } from 'fp-ts/lib/Option'
+import * as t from 'io-ts'
+import { cn } from 'ts-classnames'
 
 export const joinRD = <E, A>(a: RemoteData<E, A[]>) => (
   b: RemoteData<E, A[]>
@@ -25,7 +25,7 @@ export const makeOption = <L extends string>(label: L) => ({
   value: label,
 })
 
-export const join = (x = '') => (a: any[]) => a.join(x)
+export const join = (x = '') => (a: unknown[]) => a.join(x)
 
 type Has = <A>(x: A) => (xs: A[]) => boolean
 export const has: Has = x =>

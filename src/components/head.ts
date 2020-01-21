@@ -1,13 +1,13 @@
-import NextHead from 'next/head'
-import njsx from 'njsx'
-import { toArray as entries } from 'fp-ts/lib/Record'
 import { map } from 'fp-ts/lib/Array'
 import { pipe } from 'fp-ts/lib/pipeable'
+import { toArray as entries } from 'fp-ts/lib/Record'
+import NextHead from 'next/head'
+import njsx from 'njsx'
 import { meta, title } from 'njsx-react'
 import { createElement, LinkHTMLAttributes } from 'react'
 
-import { name, description } from 'data/constants'
-import theme from 'data/theme'
+import { name, description } from 'src/data/constants'
+import theme from 'src/data/theme'
 
 const {
   colors: { primary, gray },

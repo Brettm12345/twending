@@ -1,35 +1,35 @@
-import dayjs from 'dayjs'
-import createPersistedState from 'use-persisted-state'
 import * as RD from '@devexperts/remote-data-ts'
-import * as T from 'fp-ts/lib/Task'
-import * as TE from 'fp-ts/lib/TaskEither'
-import { Task, task } from 'fp-ts/lib/Task'
-import { map, array } from 'fp-ts/lib/Array'
-import { constant, flow } from 'fp-ts/lib/function'
-import { fold, toError } from 'fp-ts/lib/Either'
-import { pipe } from 'fp-ts/lib/pipeable'
-import { TaskEither } from 'fp-ts/lib/TaskEither'
-import { useEffect, useState } from 'react'
 import Octokit, {
   SearchReposResponse as SearchResponse,
   Response,
 } from '@octokit/rest'
+import dayjs from 'dayjs'
+import { map, array } from 'fp-ts/lib/Array'
+import { fold, toError } from 'fp-ts/lib/Either'
+import { constant, flow } from 'fp-ts/lib/function'
+import { pipe } from 'fp-ts/lib/pipeable'
+import * as T from 'fp-ts/lib/Task'
+import { Task, task } from 'fp-ts/lib/Task'
+import * as TE from 'fp-ts/lib/TaskEither'
+import { TaskEither } from 'fp-ts/lib/TaskEither'
+import { useEffect, useState } from 'react'
+import createPersistedState from 'use-persisted-state'
 
-import {
-  Value as Period,
-  OptionType as PeriodType,
-} from 'data/period'
 import {
   RemoteRepos,
   RepoTask,
   handleResponse,
-} from 'data/github'
+} from 'src/data/github'
 import {
   SpecificLanguage,
   allLanguages,
   OptionType as LanguageType,
-} from 'data/languages'
-import { join, joinRD } from 'utils'
+} from 'src/data/languages'
+import {
+  Value as Period,
+  OptionType as PeriodType,
+} from 'src/data/period'
+import { join, joinRD } from 'src/utils'
 
 const octokit = new Octokit()
 
@@ -50,8 +50,7 @@ const gh: GH = q =>
 const param = (k: string) => (v: string): string =>
   pipe([k, v], join(':'))
 
-type GetLanguage = (l: string) => string
-const getLanguage: GetLanguage = flow(
+const getLanguage = flow(
   SpecificLanguage.decode,
   fold(constant(''), param('language'))
 )
