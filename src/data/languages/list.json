@@ -1,11 +1,9 @@
 {
   "popular": [
-    "ActionScript",
     "C",
     "C#",
     "C++",
     "Clojure",
-    "CoffeeScript",
     "CSS",
     "Go",
     "Haskell",
@@ -24,12 +22,14 @@
     "Shell",
     "Swift",
     "TeX",
+    "TypeScript",
     "Vim script"
   ],
   "everythingElse": [
     "1C Enterprise",
     "ABAP",
     "ABNF",
+    "ActionScript",
     "Ada",
     "Adobe Font Metrics",
     "Agda",
@@ -96,6 +96,7 @@
     "Common Lisp",
     "Common Workflow Language",
     "Component Pascal",
+    "CoffeeScript",
     "CoNLL-U",
     "Cool",
     "Coq",
@@ -486,7 +487,6 @@
     "Twig",
     "TXL",
     "Type Language",
-    "TypeScript",
     "Unified Parallel C",
     "Unity3D Asset",
     "Unix Assembly",

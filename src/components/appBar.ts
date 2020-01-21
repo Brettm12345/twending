@@ -1,10 +1,18 @@
 import { ReactNode } from 'react'
 import * as Feather from 'react-feather'
-import { tw } from 'utils'
 import njsx from 'njsx'
 import { header, div, a } from 'njsx-react'
 
+import { productionLink } from 'data/constants'
+import { tw } from 'utils'
+
 const GitHub = njsx(Feather.GitHub)
+
+const Logo = a(
+  tw('mr-auto', 'opacity-75', 'transition-opacity')
+)({
+  href: productionLink,
+})(GitHub({ size: '3em', strokeWidth: 1 }))
 
 const AppBar = (children: ReactNode[]) =>
   header(
@@ -28,12 +36,7 @@ const AppBar = (children: ReactNode[]) =>
         'h-20',
         'px-4'
       )
-    )([
-      a(tw('mr-auto', 'opacity-75', 'transition-opacity'))({
-        href: 'https://github.com/brettm12345/twending',
-      })(GitHub({ size: '3em', strokeWidth: 1 })),
-      ...children,
-    ])
+    )([Logo(), ...children])
   )
 
 export default AppBar

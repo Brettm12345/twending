@@ -1,11 +1,10 @@
-import { flow } from 'fp-ts/lib/function'
-import { svg, path, span } from 'njsx-react'
 import * as R from 'fp-ts/lib/Record'
-import { FunctionN as FN } from 'fp-ts/lib/function'
+import { ReactNode } from 'react'
+import { svg, path, span } from 'njsx-react'
+import { flow, FunctionN as FN } from 'fp-ts/lib/function'
+import { map } from 'fp-ts/lib/Array'
 
 import { tw } from 'utils'
-import { ReactNode } from 'react'
-import { map } from 'fp-ts/lib/Array'
 
 const icons = {
   forks:
@@ -16,23 +15,21 @@ const icons = {
     'M14 6l-4.9-.64L7 1 4.9 5.36 0 6l3.6 3.26L2.67 14 7 11.67 11.33 14l-.93-4.74L14 6z',
 }
 
-export type IconName = keyof typeof icons
-
-const Icon = (name: IconName) =>
-  svg(tw('fill-current', 'mr-1'))({
-    height: '1.3em',
-    viewBox: '0 0 14 16',
-    width: '1.3em',
-  })(path({ d: icons[name], fillRule: 'evenodd' }))
-
 type Icons = FN<
-  [Record<IconName, ReactNode>],
+  [Record<keyof typeof icons, ReactNode>],
   Array<typeof span>
 >
 const Icons: Icons = flow(
   R.toArray,
   map(([key, value]) =>
-    span(tw('inline-flex', 'mr-4'))([Icon(key), value])
+    span({ key })(tw('inline-flex', 'mr-4'))([
+      svg(tw('fill-current', 'mr-1'))({
+        height: '1.3em',
+        viewBox: '0 0 14 16',
+        width: '1.3em',
+      })(path({ d: icons[key], fillRule: 'evenodd' })),
+      value,
+    ])
   )
 )
 

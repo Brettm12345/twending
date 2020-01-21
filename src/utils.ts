@@ -14,9 +14,9 @@ import {
   array,
   isEmpty,
 } from 'fp-ts/lib/Array'
+import { cn } from 'ts-classnames'
 import { pipe } from 'fp-ts/lib/pipeable'
 import { getLastSemigroup } from 'fp-ts/lib/Semigroup'
-import cn from 'ts-classnames'
 import { Mixed } from 'io-ts'
 import { RemoteData } from '@devexperts/remote-data-ts'
 import { Option } from 'fp-ts/lib/Option'

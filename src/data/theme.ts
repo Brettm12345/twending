@@ -1,3 +1,5 @@
+import { fontFamily } from './constants'
+
 const blue = {
   100: '#EEF2FD',
   200: '#D5E0FA',
@@ -33,7 +35,7 @@ const theme = {
   },
   fontFamily: {
     sans: [
-      'Futura PT',
+      fontFamily,
       '-apple-system',
       'BlinkMacSystemFont',
       'Segoe UI',

@@ -3,7 +3,8 @@ import njsx from 'njsx'
 import * as R from 'fp-ts/lib/Record'
 import { map } from 'fp-ts/lib/Array'
 import { pipe } from 'fp-ts/lib/pipeable'
-import React, { FC, LinkHTMLAttributes } from 'react'
+import { meta, title } from 'njsx-react'
+import React, { LinkHTMLAttributes } from 'react'
 
 import theme from 'data/theme'
 
@@ -36,6 +37,11 @@ const links: Array<LinkHTMLAttributes<HTMLLinkElement>> = [
     rel: 'mask-icon',
   },
   {
+    href:
+      'https://fonts.googleapis.com/css?family=Work+Sans:400,500,600&display=swap',
+    rel: 'stylesheet',
+  },
+  {
     href: 'https://api.github.com',
     rel: 'preconnect',
   },
@@ -45,29 +51,25 @@ const description =
   'Yet another GitHub trending application'
 const name = 'Twending'
 
-const meta = {
+const metaData = {
   description,
   'msapplication-TitleColor': theme.colors.primary,
   'theme-color': theme.colors.gray[300],
   viewport: 'initial-scale=1.0, width=device-width',
 }
 
-const Head: FC = () => (
-  <NextHead>
-    {pipe(
-      links,
-      map(props => <link {...props} key={props.href} />)
-    )}
-    {pipe(
-      R.toArray(meta),
-      map(([name, content]) => (
-        <meta content={content} key={name} name={name} />
-      ))
-    )}
-    <title>
-      {name} - {description}
-    </title>
-  </NextHead>
-)
+const Head = njsx(NextHead)([
+  pipe(
+    links,
+    map(props => <link {...props} key={props.href} />) // I gotta use jsx here because links can't have children
+  ),
+  pipe(
+    R.toArray(metaData),
+    map(([name, content]) =>
+      meta({ content, key: name, name })
+    )
+  ),
+  title(`${name} - ${description}`),
+])
 
-export default njsx(Head)
+export default Head

@@ -7,6 +7,7 @@ const SelectPeriod = ([value, onChange]: [
   (a: OptionType) => void
 ]) =>
   Select({
+    id: 'select-period',
     isSearchable: false,
     onChange: onChange as VoidFunction,
     options,
