@@ -1,9 +1,6 @@
-/* eslint-disable @typescript-eslint/camelcase */
 import { prop } from 'fp-ts-ramda'
 import { map } from 'fp-ts/lib/Array'
 import { flow } from 'fp-ts/lib/function'
-import { Task } from 'fp-ts/lib/Task'
-import { RemoteData } from '@devexperts/remote-data-ts'
 import {
   SearchReposResponse as GithubResponse,
   SearchReposResponseItemsItem as GithubRepo,
@@ -11,38 +8,21 @@ import {
   Response,
 } from '@octokit/rest'
 
-export interface User {
-  avatar: string
-  name: string
-  url: string
-}
-type HandleUser = (u: GithubUser) => User
-const handleUser: HandleUser = u => ({
+import { User, Repo } from './types'
+
+const handleUser = (u: GithubUser): User => ({
   avatar: u.avatar_url,
   name: u.login,
   url: u.url,
 })
 
-export interface Repo {
-  author: User
-  createdAt: string
-  description: string | null
-  forks: number
-  issues: number
-  id: string
-  language: string | null
-  name: string
-  stars: number
-  url: string
-}
-type HandleRepo = (a: GithubRepo) => Repo
-export const handleRepo: HandleRepo = ({
+const handleRepo = ({
   description,
   language,
   owner,
   name,
   ...repo
-}) => ({
+}: GithubRepo): Repo => ({
   author: handleUser(owner),
   createdAt: repo.created_at,
   description,
@@ -63,6 +43,3 @@ export const handleResponse: HandleResponse = flow(
   prop('items'),
   map(handleRepo)
 )
-
-export type RemoteRepos = RemoteData<Error, Repo[]>
-export type RepoTask = Task<RemoteRepos>

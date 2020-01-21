@@ -12,7 +12,7 @@ import { tw } from 'utils'
 
 const loading = constant(Loading)
 
-const Repos = RD.fold<any, RepoType[], Builder<any>>(
+const Repos = RD.fold<Error, RepoType[], Builder<any>>(
   loading,
   loading,
   flow(

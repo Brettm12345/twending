@@ -3,8 +3,7 @@ require('typescript-require')
 module.exports = {
   plugins: [
     'transitions',
-    'typography',
-    'touch',
+    'typography'
   ].map(str => require(`tailwindcss-${str}`)()),
   theme: require('./src/data/theme').default,
   variants: {

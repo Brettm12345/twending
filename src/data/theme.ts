@@ -1,5 +1,3 @@
-import { fontFamily } from './constants'
-
 const blue = {
   100: '#EEF2FD',
   200: '#D5E0FA',
@@ -32,23 +30,6 @@ const theme = {
     gray,
     primary: blue[500],
     white: '#ffffff',
-  },
-  fontFamily: {
-    sans: [
-      fontFamily,
-      '-apple-system',
-      'BlinkMacSystemFont',
-      'Segoe UI',
-      'Roboto',
-      'Helvetica Neue',
-      'Arial',
-      'Noto Sans',
-      'sans-serif',
-      'Apple Color Emoji',
-      'Segoe UI Emoji',
-      'Segoe UI Symbol',
-      'Noto Color Emoji',
-    ],
   },
   /* eslint-disable sort-keys-fix/sort-keys-fix */
   screens: {

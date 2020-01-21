@@ -4,11 +4,17 @@ import * as R from 'fp-ts/lib/Record'
 import { map } from 'fp-ts/lib/Array'
 import { pipe } from 'fp-ts/lib/pipeable'
 import { meta, title } from 'njsx-react'
-import React, { LinkHTMLAttributes } from 'react'
+import { createElement, LinkHTMLAttributes } from 'react'
 
+import { name, description } from 'data/constants'
 import theme from 'data/theme'
 
-const links: Array<LinkHTMLAttributes<HTMLLinkElement>> = [
+const {
+  colors: { primary, gray },
+} = theme
+
+type LinkProps = LinkHTMLAttributes<HTMLLinkElement>
+const links: LinkProps[] = [
   {
     href: '/apple-touch-icon.png',
     rel: 'apple-touch-icon',
@@ -32,14 +38,9 @@ const links: Array<LinkHTMLAttributes<HTMLLinkElement>> = [
     rel: 'manifest',
   },
   {
-    color: theme.colors.primary,
+    color: primary,
     href: '/safari-pinned-tab.svg',
     rel: 'mask-icon',
-  },
-  {
-    href:
-      'https://fonts.googleapis.com/css?family=Work+Sans:400,500,600&display=swap',
-    rel: 'stylesheet',
   },
   {
     href: 'https://api.github.com',
@@ -47,28 +48,23 @@ const links: Array<LinkHTMLAttributes<HTMLLinkElement>> = [
   },
 ]
 
-const description =
-  'Yet another GitHub trending application'
-const name = 'Twending'
-
 const metaData = {
   description,
-  'msapplication-TitleColor': theme.colors.primary,
-  'theme-color': theme.colors.gray[300],
+  'msapplication-TitleColor': primary,
+  'theme-color': gray[300],
   viewport: 'initial-scale=1.0, width=device-width',
 }
 
+// I have to use createElement here because njsx doesn't work
+const createLink = (props: LinkProps) =>
+  createElement('link', props)
+
+const createMeta = ([name, content]: [string, string]) =>
+  meta({ content, name })
+
 const Head = njsx(NextHead)([
-  pipe(
-    links,
-    map(props => <link {...props} key={props.href} />) // I gotta use jsx here because links can't have children
-  ),
-  pipe(
-    R.toArray(metaData),
-    map(([name, content]) =>
-      meta({ content, key: name, name })
-    )
-  ),
+  pipe(links, map(createLink)),
+  pipe(R.toArray(metaData), map(createMeta)),
   title(`${name} - ${description}`),
 ])
 

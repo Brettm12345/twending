@@ -3,12 +3,15 @@ import { pipe } from 'fp-ts/lib/pipeable'
 import { map } from 'fp-ts/lib/Array'
 
 import theme from 'data/theme'
+import { concat } from 'utils'
+
+const size = 80
+const color = theme.colors.primary
 
 const Circle = circle({
   cx: 22,
   cy: 22,
   r: 6,
-  strokeOpacity: 0,
 })
 
 const Animate = animate({
@@ -16,9 +19,6 @@ const Animate = animate({
   dur: '3s',
   repeatCount: 'indefinite',
 })
-
-const size = 80
-const color = theme.colors.primary
 
 const Loading = svg({
   'aria-label': 'Loading',
@@ -35,37 +35,34 @@ const Loading = svg({
   })(
     pipe(
       [1.5, 3],
-      map(x => `${x}s`),
-      map(begin =>
-        Circle([
-          Animate({
-            attributeName: 'r',
-            begin,
-            values: '6;12',
-          }),
-          Animate({
-            attributeName: 'stroke-opacity',
-            begin,
-            values: '1;0',
-          }),
-          Animate({
-            attributeName: 'stroke-width',
-            begin,
-            values: '2;0',
-          }),
-        ])
+      map(x =>
+        Circle({ strokeOpacity: 0 })(
+          pipe(
+            [
+              ['r', '6;12'],
+              ['stoke-opacity', '1;0'],
+              ['stroke-width', '2;0'],
+            ],
+            map(([attributeName, values]) =>
+              Animate({
+                attributeName,
+                begin: `${x}s`,
+                values,
+              })
+            )
+          )
+        )
       ),
-      xs => [
-        ...xs,
-        Circle({ r: 8, strokeOpacity: undefined })(
+      concat(
+        Circle({ r: 8 })(
           Animate({
             attributeName: 'r',
             begin: '0s',
             dur: '1.5s',
             values: '6;1;2;3;4;5;6',
           })
-        ),
-      ]
+        )
+      )
     )
   )
 )

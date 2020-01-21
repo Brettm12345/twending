@@ -3,13 +3,14 @@ import njsx from 'njsx'
 import { flow } from 'fp-ts/lib/function'
 import { prop } from 'fp-ts-ramda'
 
-import { getColor } from 'data/languages/utils'
+import { getColor } from 'data/languages'
 import { tw } from 'utils'
-interface LanguageProps {
+
+interface Props {
   children: string
 }
 
-const Language = njsx(styled('span')<LanguageProps>`
+const Language = njsx(styled('span')<Props>`
   &::before {
     background-color: ${flow(prop('children'), getColor)};
   }

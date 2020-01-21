@@ -3,6 +3,7 @@ import dayjs from 'dayjs'
 import * as RD from '@devexperts/remote-data-ts'
 import * as T from 'fp-ts/lib/Task'
 import * as TE from 'fp-ts/lib/TaskEither'
+import createPersistedState from 'use-persisted-state'
 import { Task, task } from 'fp-ts/lib/Task'
 import { map, array } from 'fp-ts/lib/Array'
 import { constant, flow } from 'fp-ts/lib/function'
@@ -15,13 +16,20 @@ import Octokit, {
   Response,
 } from '@octokit/rest'
 
-import { Value as Period } from 'data/period'
+import {
+  Value as Period,
+  OptionType as PeriodType,
+} from 'data/period'
 import {
   RemoteRepos,
   RepoTask,
   handleResponse,
 } from 'data/github'
-import { SpecificLanguage } from 'data/languages'
+import {
+  SpecificLanguage,
+  allLanguages,
+  OptionType as LanguageType,
+} from 'data/languages'
 import { join, joinRD } from 'utils'
 
 const octokit = new Octokit()
@@ -86,19 +94,25 @@ export const fetchRepos: QueryFn<RepoTask> = flow(
   T.map(RD.fromEither)
 )
 
+const usePeriod = createPersistedState('period')
+const useLanguage = createPersistedState('language')
+
+type SelectInput<T> = [T, (value: T) => void]
 interface UseReposResult {
   repos: RemoteRepos
   loading: boolean
   nextPage: () => Promise<void>
+  language: SelectInput<LanguageType>
+  period: SelectInput<PeriodType>
 }
 
-type UseRepos = (
-  o: Omit<QueryOptions, 'page'>
-) => UseReposResult
-export const useRepos: UseRepos = ({
-  language,
-  period,
-}) => {
+export const useRepos = (): UseReposResult => {
+  const period = usePeriod<PeriodType>({
+    label: 'Monthly',
+    value: 'month',
+  })
+
+  const language = useLanguage<LanguageType>(allLanguages)
   const [loading, setLoading] = useState(false)
   const [page, setPage] = useState(0)
   const [repos, setRepos] = useState<RemoteRepos>(
@@ -110,9 +124,9 @@ export const useRepos: UseRepos = ({
 
   const getRepos = (page = 0): RepoTask =>
     fetchRepos({
-      language,
+      language: language[0].value,
       page,
-      period,
+      period: period[0].value,
     })
 
   const nextPage = async () => {
@@ -132,11 +146,13 @@ export const useRepos: UseRepos = ({
       array.sequence(task)
     )()
     setPage(0)
-  }, [language, period])
+  }, [language[0].value, period[0].value])
 
   return {
+    language,
     loading,
     nextPage,
+    period,
     repos,
   }
 }

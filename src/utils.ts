@@ -53,6 +53,9 @@ export const has: Has = x =>
 type Any = FN<[Array<boolean>], boolean>
 export const any: Any = has(true as boolean)
 
+type Concat = <A>(x: A) => Endomorphism<A[]>
+export const concat: Concat = x => xs => [...xs, x]
+
 type InAny = <A>(xs: A[][]) => FN<[A], boolean>
 export const inAny: InAny = xs => x =>
   pipe(flatten(xs), has(x))

@@ -17,23 +17,3 @@ html {
 body {
   @apply font-sans text-white bg-gray-700 leading-normal;
 }
-
-.center {
-  @apply justify-center items-center;
-}
-
-button,
-button:focus {
-  @apply px-4 py-2 outline-none font-semibold rounded text-white bg-blue-500 transition-bg;
-  &:hover {
-    @apply bg-blue-400;
-  }
-}
-
-h1 {
-  @apply mt-6 text-2xl text-center;
-}
-
-main {
-  @apply center flex flex-col pt-24 mb-10;
-}
