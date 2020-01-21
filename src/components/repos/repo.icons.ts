@@ -1,4 +1,11 @@
-import React, { FC, SVGProps } from 'react'
+import { flow } from 'fp-ts/lib/function'
+import { svg, path, span } from 'njsx-react'
+import * as R from 'fp-ts/lib/Record'
+import { FunctionN as FN } from 'fp-ts/lib/function'
+
+import { tw } from 'utils'
+import { ReactNode } from 'react'
+import { map } from 'fp-ts/lib/Array'
 
 const icons = {
   forks:
@@ -11,20 +18,22 @@ const icons = {
 
 export type IconName = keyof typeof icons
 
-interface IconProps extends SVGProps<SVGSVGElement> {
-  name: IconName
-}
+const Icon = (name: IconName) =>
+  svg(tw('fill-current', 'mr-1'))({
+    height: '1.3em',
+    viewBox: '0 0 14 16',
+    width: '1.3em',
+  })(path({ d: icons[name], fillRule: 'evenodd' }))
 
-const Icon: FC<IconProps> = ({ name, ...rest }) => (
-  <svg
-    fill="currentColor"
-    height="1.3em"
-    viewBox="0 0 14 16"
-    width="1.3em"
-    {...rest}
-  >
-    <path d={icons[name]} fillRule="evenodd" />
-  </svg>
+type Icons = FN<
+  [Record<IconName, ReactNode>],
+  Array<typeof span>
+>
+const Icons: Icons = flow(
+  R.toArray,
+  map(([key, value]) =>
+    span(tw('inline-flex', 'mr-4'))([Icon(key), value])
+  )
 )
 
-export default Icon
+export default Icons

@@ -23,13 +23,19 @@ const dot: StyleFn = (initial, { data: { label } }) => ({
   },
 })
 
-const SelectLanguage = Select({
-  id: 'language-select',
-  options,
-  styles: {
-    option: dot,
-    singleValue: dot,
-  },
-})
+const SelectLanguage = ([value, onChange]: [
+  OptionType,
+  (a: OptionType) => void
+]) =>
+  Select({
+    id: 'language-select',
+    onChange: onChange as VoidFunction,
+    options,
+    styles: {
+      option: dot,
+      singleValue: dot,
+    },
+    value,
+  })
 
 export default SelectLanguage

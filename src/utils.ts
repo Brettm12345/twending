@@ -14,14 +14,12 @@ import {
   array,
   isEmpty,
 } from 'fp-ts/lib/Array'
-import { FC, createElement } from 'react'
 import { pipe } from 'fp-ts/lib/pipeable'
 import { getLastSemigroup } from 'fp-ts/lib/Semigroup'
 import cn from 'ts-classnames'
 import { Mixed } from 'io-ts'
 import { RemoteData } from '@devexperts/remote-data-ts'
 import { Option } from 'fp-ts/lib/Option'
-import { PropsOf } from '@emotion/styled-base/types/helper'
 
 type JoinRD = <E, A>(
   a: RemoteData<E, A[]>
@@ -74,17 +72,6 @@ type Find = <A>(
 ) => FN<[string], Option<A>>
 export const find: Find = r => k => lookup(k, r)
 
-type Tag = keyof import('@emotion/styled').StyledTags<
-  unknown
->
-type TW = <T extends Tag>(
-  t: T
-) => FN<ClassNames[], FC<PropsOf<T>>>
-export const tw: TW = t => (...c) => ({
-  className = '',
-  ...p
-}) =>
-  createElement(t, {
-    className: `${cn(...c)} ${className}`,
-    ...p,
-  })
+export const tw = (...c: ClassNames[]) => ({
+  className: cn(...c),
+})

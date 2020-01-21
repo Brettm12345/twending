@@ -1,4 +1,5 @@
 import NextHead from 'next/head'
+import njsx from 'njsx'
 import * as R from 'fp-ts/lib/Record'
 import { map } from 'fp-ts/lib/Array'
 import { pipe } from 'fp-ts/lib/pipeable'
@@ -69,4 +70,4 @@ const Head: FC = () => (
   </NextHead>
 )
 
-export default Head
+export default njsx(Head)
