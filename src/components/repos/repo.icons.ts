@@ -1,9 +1,8 @@
-import { toArray as entries } from 'fp-ts/lib/Record'
-import { ReactNode } from 'react'
-import { Builder } from 'njsx'
-import { svg, path, span } from 'njsx-react'
-import { flow } from 'fp-ts/lib/function'
 import { map } from 'fp-ts/lib/Array'
+import { pipe } from 'fp-ts/lib/pipeable'
+import { toArray as entries } from 'fp-ts/lib/Record'
+import { svg, path, span } from 'njsx-react'
+import { ReactNode } from 'react'
 
 import { tw } from 'utils'
 
@@ -16,21 +15,21 @@ const icons = {
     'M14 6l-4.9-.64L7 1 4.9 5.36 0 6l3.6 3.26L2.67 14 7 11.67 11.33 14l-.93-4.74L14 6z',
 }
 
-type IconName = keyof typeof icons
-
-const Icon = ([key, value]: [IconName, ReactNode]) =>
-  span({ key })(tw('inline-flex', 'mr-4'))([
-    svg(tw('fill-current', 'mr-1'))({
-      height: '1.3em',
-      viewBox: '0 0 14 16',
-      width: '1.3em',
-    })(path({ d: icons[key], fillRule: 'evenodd' })),
-    value,
-  ])
-
-type Icons = (
-  dict: Record<IconName, ReactNode>
-) => Array<Builder<any>>
-const Icons: Icons = flow(entries, map(Icon))
+const Icons = (
+  dict: Record<keyof typeof icons, ReactNode>
+) =>
+  pipe(
+    entries(dict),
+    map(([key, value]) =>
+      span({ key })(tw('inline-flex', 'mr-4'))([
+        svg(tw('fill-current', 'mr-1'))({
+          height: '1.3em',
+          viewBox: '0 0 14 16',
+          width: '1.3em',
+        })(path({ d: icons[key], fillRule: 'evenodd' })),
+        value,
+      ])
+    )
+  )
 
 export default Icons
