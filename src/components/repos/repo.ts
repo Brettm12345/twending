@@ -18,12 +18,13 @@ const Repo = ({
   createdAt,
   ...info
 }: RepoType) =>
-  li(
+  li({ key: id })(
     tw(
       'flex',
+      'p-5',
       'sm:p-6',
       'md:p-8',
-      'p-8',
+      'md:pb-5',
       'pb-4',
       'hover:bg-gray-900',
       'transition-bg',
@@ -31,9 +32,7 @@ const Repo = ({
       'border-gray-900',
       'last:border-b-0'
     )
-  )({
-    key: id,
-  })([
+  )([
     Avatar(author),
     a(tw('flex', 'flex-col', 'flex-grow'))({
       href: url,

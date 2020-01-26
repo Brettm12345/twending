@@ -12,6 +12,7 @@ const Avatar = ({ url, avatar }: User) =>
       'pt-1',
       'mr-4',
       'md:mr-8',
+      'p-0',
       'w-16',
       'sm:w-20',
       'md:w-24'
