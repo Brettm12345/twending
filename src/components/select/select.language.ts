@@ -33,7 +33,12 @@ const SelectLanguage = ([value, onChange]: [
     options,
     styles: {
       option: dot,
-      singleValue: dot,
+      singleValue: initial => ({
+        ...initial,
+        '&::before': {
+          backgroundColor: getColor(value.label),
+        },
+      }),
     },
     value,
   })

@@ -1,10 +1,9 @@
 import { map } from 'fp-ts/lib/Array'
 import { pipe } from 'fp-ts/lib/pipeable'
 import { toArray as entries } from 'fp-ts/lib/Record'
-import { svg, path, span } from 'njsx-react'
+import { path } from 'njsx-react'
 import { ReactNode } from 'react'
-
-import { tw } from 'src/utils'
+import { item, icon } from './repo.icons.styles'
 
 const paths = {
   forks:
@@ -21,12 +20,8 @@ const Icons = (
   pipe(
     entries(dict),
     map(([key, value]) =>
-      span({ key })(tw('inline-flex', 'mr-4'))([
-        svg(tw('fill-current', 'mr-1', '-mt-px'))({
-          height: '1.3em',
-          viewBox: '0 0 14 16',
-          width: '1.3em',
-        })(path({ d: paths[key], fillRule: 'evenodd' })),
+      item({ key })([
+        icon(path({ d: paths[key], fillRule: 'evenodd' })),
         value,
       ])
     )

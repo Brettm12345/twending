@@ -1,8 +1,8 @@
-import { GroupedOptionsType, GroupType } from 'react-select'
-import { getOrElse } from 'fp-ts/lib/Option'
-import { constant, flow } from 'fp-ts/lib/function'
 import { map } from 'fp-ts/lib/Array'
+import { constant, flow } from 'fp-ts/lib/function'
+import { getOrElse } from 'fp-ts/lib/Option'
 import { pipe } from 'fp-ts/lib/pipeable'
+import { GroupedOptionsType, GroupType } from 'react-select'
 
 import { all } from './constants'
 import {
@@ -12,8 +12,8 @@ import {
 } from './list.json'
 import { Language, OptionType } from './types'
 
-import { makeOption, lookup } from 'src/utils'
 import theme from 'src/data/theme'
+import { makeOption, lookup } from 'src/utils'
 
 const {
   colors: { gray },

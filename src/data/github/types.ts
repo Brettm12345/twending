@@ -1,5 +1,5 @@
-import { Task } from 'fp-ts/lib/Task'
 import { RemoteData } from '@devexperts/remote-data-ts'
+import { Task } from 'fp-ts/lib/Task'
 
 export interface Repo {
   author: User

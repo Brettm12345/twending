@@ -1,8 +1,12 @@
 @mixin dot {
   &::before {
-    @apply inline-block relative mr-1 rounded-full;
     content: ' ';
-    bottom: -0.18em;
+    display: inline-block;
+    position: relative;
+    margin-right: theme('spacing.1');
+    border-radius: theme('borderRadius.full');
+    vertical-align: baseline;
+    bottom: -0.15em;
     height: 1em;
     width: 1em;
   }
