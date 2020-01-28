@@ -1,12 +1,12 @@
-import { prop } from 'fp-ts-ramda'
-import { map } from 'fp-ts/lib/Array'
-import { flow } from 'fp-ts/lib/function'
 import {
   SearchReposResponse as GithubResponse,
   SearchReposResponseItemsItem as GithubRepo,
   SearchReposResponseItemsItemOwner as GithubUser,
   Response,
 } from '@octokit/rest'
+import { prop } from 'fp-ts-ramda'
+import { map } from 'fp-ts/lib/Array'
+import { flow } from 'fp-ts/lib/function'
 
 import { User, Repo } from './types'
 

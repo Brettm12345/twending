@@ -1,6 +1,6 @@
 /* eslint-disable sort-keys-fix/sort-keys-fix */
-import { collect } from 'fp-ts/lib/Record'
 import { pipe } from 'fp-ts/lib/pipeable'
+import { collect } from 'fp-ts/lib/Record'
 
 import { Value, Label, OptionType } from './types'
 
