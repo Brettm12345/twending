@@ -6,6 +6,8 @@ export const repo = li(
     'flex',
     'p-5',
     'pb-4',
+    'hover:bg-gray-900',
+    'cursor-pointer',
     'transition-bg',
     'border-b',
     'border-gray-900',
