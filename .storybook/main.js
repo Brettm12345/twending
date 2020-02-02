@@ -1,6 +1,6 @@
 module.exports = {
   addons: [
-    'storybook-addon-paddings/register',
     '@storybook/addon-viewport/register',
   ],
+  stories: ['../src/stories/*.stories.ts'],
 }

@@ -11,6 +11,7 @@ import { Option } from 'fp-ts/lib/Option'
 import { pipe } from 'fp-ts/lib/pipeable'
 import * as R from 'fp-ts/lib/Record'
 import { getLastSemigroup } from 'fp-ts/lib/Semigroup'
+import * as T from 'fp-ts/lib/Task'
 import { Mixed } from 'io-ts'
 import * as t from 'io-ts'
 import { cn } from 'ts-classnames'
@@ -19,6 +20,9 @@ export const joinRD = <E, A>(a: RemoteData<E, A[]>) => (
   b: RemoteData<E, A[]>
 ): RemoteData<E, A[]> =>
   pipe(RD.combine(a, b), RD.map(flatten))
+
+export const joinRDWith = <E, A>(a: RemoteData<E, A[]>) =>
+  T.map(joinRD(a))
 
 export const makeOption = <L extends string>(label: L) => ({
   label,

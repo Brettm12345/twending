@@ -3,6 +3,7 @@ import { pipe } from 'fp-ts/lib/pipeable'
 import { toArray as entries } from 'fp-ts/lib/Record'
 import { path } from 'njsx-react'
 import { ReactNode } from 'react'
+
 import { item, icon } from './repo.icons.styles'
 
 const paths = {

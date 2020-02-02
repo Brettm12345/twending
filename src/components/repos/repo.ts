@@ -2,7 +2,6 @@ import dayjs from 'dayjs'
 
 import Avatar from './repo.avatar'
 import Icons from './repo.icons'
-import Language from './repo.language'
 import {
   repo,
   link,
@@ -11,6 +10,8 @@ import {
   description as Description,
   info as Info,
 } from './repo.styles'
+
+import Language from 'src/components/language'
 import { Repo as RepoType } from 'src/data/github'
 
 const Repo = ({

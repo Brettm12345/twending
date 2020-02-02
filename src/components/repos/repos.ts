@@ -15,10 +15,7 @@ const loading = constant(Loading)
 const Repos = RD.fold<Error, RepoType[], Builder<unknown>>(
   loading,
   loading,
-  flow(
-    console.error,
-    constant(div('failed to fetch repos'))
-  ),
+  flow(console.error, constant(div('Error fetching data'))),
   flow(map(Repo), list)
 )
 

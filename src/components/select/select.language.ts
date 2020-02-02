@@ -1,20 +1,17 @@
+import { FC } from 'react'
+
 import Select from './select'
 
-import Language from 'src/components/repos/repo.language'
+import language from 'src/components/language'
 import { options, OptionType } from 'src/data/languages'
 
-const SelectLanguage = ([initialValue, onOptionChange]: [
-  OptionType,
-  (a: OptionType) => void
-]) =>
-  typeof window !== 'undefined' &&
-  Select({
-    blurInputOnSelect: true,
-    initialValue,
-    onOptionChange,
-    options,
-    renderOptionLabel: ({ label }: OptionType) =>
-      Language(label)(),
-  })
+const renderOptionLabel: FC<OptionType> = ({ label }) =>
+  language(label)()
+
+const SelectLanguage = Select({
+  blurInputOnSelect: true,
+  options,
+  renderOptionLabel,
+})
 
 export default SelectLanguage

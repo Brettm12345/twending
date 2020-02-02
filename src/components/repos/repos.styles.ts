@@ -6,6 +6,7 @@ export const list = ul(
     'w-11/12',
     'md:w-10/12',
     'mt-6',
+    'mx-auto',
     'overflow-hidden',
     'list-none',
     'bg-gray-800',
