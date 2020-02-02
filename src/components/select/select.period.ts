@@ -2,16 +2,16 @@ import Select from './select'
 
 import { options, OptionType } from 'src/data/period'
 
-const SelectPeriod = ([value, onChange]: [
+const SelectPeriod = ([initialValue, onOptionChange]: [
   OptionType,
-  (a: OptionType) => void
+  (data: OptionType) => void
 ]) =>
+  typeof window !== 'undefined' &&
   Select({
-    id: 'select-period',
+    initialValue,
     isSearchable: false,
-    onChange: onChange as VoidFunction,
+    onOptionChange,
     options,
-    value,
   })
 
 export default SelectPeriod

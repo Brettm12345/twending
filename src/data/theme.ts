@@ -39,6 +39,11 @@ const theme = {
     lg: '1024px',
     xl: '1280px',
   },
+  rotate: {
+    '90': '90deg',
+    '180': '180deg',
+    '270': '270deg',
+  },
 }
 
 export default theme

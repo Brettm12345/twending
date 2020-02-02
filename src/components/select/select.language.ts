@@ -1,46 +1,19 @@
-import { FunctionN as FN } from 'fp-ts/lib/function'
-import { CSSProperties as CSS } from 'react'
-
 import Select from './select'
 
-import {
-  options,
-  getColor,
-  OptionType,
-} from 'src/data/languages'
+import Language from 'src/components/repos/repo.language'
+import { options, OptionType } from 'src/data/languages'
 
-interface StyleProps {
-  data: OptionType
-}
-
-const dot: FN<[CSS, StyleProps], CSS> = (
-  initial,
-  { data: { label } }
-) => ({
-  ...initial,
-  '&::before': {
-    backgroundColor: getColor(label),
-  },
-})
-
-const SelectLanguage = ([value, onChange]: [
+const SelectLanguage = ([initialValue, onOptionChange]: [
   OptionType,
   (a: OptionType) => void
 ]) =>
   Select({
-    id: 'language-select',
-    onChange: onChange as VoidFunction,
-    options,
-    styles: {
-      option: dot,
-      singleValue: initial => ({
-        ...initial,
-        '&::before': {
-          backgroundColor: getColor(value.label),
-        },
-      }),
-    },
-    value,
+    blurInputOnSelect: true,
+    initialValue,
+    onOptionChange,
+    options: options.flatMap(a => a.options),
+    renderOptionLabel: ({ label }: OptionType) =>
+      Language(label)(),
   })
 
 export default SelectLanguage
