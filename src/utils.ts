@@ -58,6 +58,4 @@ export const lookup = <A>(r: Record<string, A>) => (
   k: string
 ): Option<A> => R.lookup(k, r)
 
-export const tw = (...c: ClassNames[]) => ({
-  className: cn(...c),
-})
+export const tw = flow(cn, className => ({ className }))

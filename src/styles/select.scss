@@ -50,6 +50,23 @@
   }
 }
 
+input#language {
+  @include dot;
+  &::before {
+    @apply transition-bg;
+  }
+}
+
+.rfs-select-container {
+  min-width: 8rem;
+  max-width: 12rem;
+  @apply mx-2 flex-grow text-gray-200;
+  .rfs- {
+    &control-container {
+      @apply bg-gray-700 shadow-none;
+    }
+  }
+}
 .select-container {
   min-width: 8rem;
   max-width: 12rem;
