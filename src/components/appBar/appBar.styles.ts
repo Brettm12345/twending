@@ -27,6 +27,7 @@ export const Toolbar = div(
   tw(
     'relative',
     'flex',
+    'justify-between',
     'items-center',
     'w-full',
     'h-20',
