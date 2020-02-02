@@ -40,7 +40,5 @@ module.exports = pipe(
     },
   },
   require('next-offline'),
-  require('next-fonts'),
   require('@zeit/next-css'),
-  require('@zeit/next-sass')
 )

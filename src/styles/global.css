@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@tailwind screens;
+
+* {
+  scrollbar-width: none;
+}
+
+html {
+  @apply antialiased;
+}
+
+body {
+  @apply font-sans text-white bg-gray-700 leading-normal;
+}
+
+.rfs-select-container {
+  min-width: 8rem;
+  max-width: 12rem;
+  @apply mx-2 flex-grow text-gray-200;
+}
+
+.rfs-select-container .rfs-control-container {
+  @apply bg-gray-700 shadow-none;
+}
+
+.rfs-select-container input {
+  margin-left: 1.2em;
+}

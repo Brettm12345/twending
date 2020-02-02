@@ -12,5 +12,4 @@ module.exports = {
     require('cssnano'),
     require('postcss-ts-classnames'),
   ],
-  syntax: 'postcss-scss',
 }

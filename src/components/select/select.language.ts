@@ -1,4 +1,4 @@
-import Select from './select.new'
+import Select from './select'
 
 import Language from 'src/components/repos/repo.language'
 import { options, OptionType } from 'src/data/languages'

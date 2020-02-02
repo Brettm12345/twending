@@ -1,4 +1,4 @@
-import Select from './select.new'
+import Select from './select'
 
 import { options, OptionType } from 'src/data/period'
 

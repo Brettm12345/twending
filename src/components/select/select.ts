@@ -1,25 +1,47 @@
 import njsx from 'njsx'
-import ReactSelect from 'react-select'
+import { FC, useState } from 'react'
+import { Select as FunctionalSelect } from 'react-functional-select'
 
+import { SelectProps } from 'react-functional-select/dist/Select'
+import caret from './select.caret'
 import theme from 'src/data/theme'
 
 const {
-  colors: { blue },
+  colors: { gray, blue },
 } = theme
 
-const Select = njsx(ReactSelect)({
-  className: 'select-container',
-  classNamePrefix: 'select',
-  theme: initial => ({
-    ...initial,
-    colors: {
-      ...initial.colors,
-      primary: blue[500],
-      primary25: blue[400],
-      primary50: blue[600],
-      primary75: blue[700],
+const Select: FC<SelectProps> = props => {
+  const [isOpen, setOpen] = useState(false)
+  return njsx(FunctionalSelect)({
+    ...props,
+    addClassNames: true,
+    caretIcon: caret(isOpen)(),
+    onMenuClose: () => setOpen(false),
+    onMenuOpen: () => setOpen(true),
+    themeConfig: {
+      color: {
+        border: gray[700],
+        iconSeparator: gray[500],
+        primary: blue[500],
+      },
+      control: {
+        boxShadow: 'none',
+        focusedBorderColor: blue[500],
+      },
+      icon: {
+        color: gray[400],
+        colorHover: gray[300],
+        padding: '8px',
+      },
+      menu: {
+        backgroundColor: gray[700],
+        option: {
+          focusedBgColor: gray[600],
+          selectedBgColor: gray[500],
+        },
+      },
     },
-  }),
-})
+  })()
+}
 
-export default Select
+export default njsx(Select)
