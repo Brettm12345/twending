@@ -27,7 +27,6 @@ const SelectLanguage = ([value, onChange]: [
   OptionType,
   (a: OptionType) => void
 ]) =>
-  typeof window !== 'undefined' &&
   Select({
     id: 'language-select',
     onChange: onChange as VoidFunction,
