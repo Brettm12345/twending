@@ -29,7 +29,7 @@ const Home: FC = () => {
       loading
         ? Loading()
         : Button({ onClick: nextPage })(
-            `Load Next ${period[0].value}`
+            `Load next ${period[0].value}`
           )
     ),
   ])()
