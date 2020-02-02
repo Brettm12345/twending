@@ -2,7 +2,13 @@ import { header, div, a } from 'njsx-react'
 import { tw } from 'src/utils'
 
 export const Logo = a(
-  tw('mr-auto', 'opacity-75', 'transition-opacity')
+  tw(
+    'mr-auto',
+    'opacity-75',
+    'transition-opacity',
+    'hidden',
+    'sm:flex'
+  )
 )
 export const Header = header(
   tw(
