@@ -8,12 +8,12 @@ import { tw } from 'src/utils'
 
 const dot = pipe(
   styled.span.attrs(
-    tw('inline-block', 'relative', 'mr-1', 'rounded-full')
+    tw('inline-block', 'mr-1', 'relative', 'rounded-full')
   )`
     content: ' ';
-    bottom: -0.15em;
-    height: 1em;
-    width: 1em;
+    height: 2ex;
+    width: 2ex;
+    bottom: -0.2ex;
   `,
   njsx
 )
