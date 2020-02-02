@@ -20,7 +20,6 @@
     "@octokit/rest": "^16.38.3",
     "@types/node": "^13.5.0",
     "@types/react": "^16.9.19",
-    "@types/react-select": "^3.0.10",
     "@types/styled-components": "^4.4.2",
     "@types/use-persisted-state": "^0.3.0",
     "@zeit/next-css": "^1.0.1",
