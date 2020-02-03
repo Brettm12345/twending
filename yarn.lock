@@ -7236,6 +7236,11 @@ lines-and-columns@^1.1.6:
   resolved "https://registry.yarnpkg.com/lines-and-columns/-/lines-and-columns-1.1.6.tgz#1c00c743b433cd0a4e80758f7b64a57440d9ff00"
   integrity sha1-HADHQ7QzzQpOgHWPe2SldEDZ/wA=
 
+list@^2.0.19:
+  version "2.0.19"
+  resolved "https://registry.yarnpkg.com/list/-/list-2.0.19.tgz#370a3d7d3e24cfd5ced2c89cda2baf28e31e2830"
+  integrity sha512-nnVaRp4RaMAQkCpypTThsdxKqgPMiSwJq93eAm2/IbpUa8sd04XKBhkKu+bMk63HmdjK8b8Cuh4xARHWX2ye/Q==
+
 load-json-file@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/load-json-file/-/load-json-file-2.0.0.tgz#7947e42149af80d696cbf797bcaabcfe1fe29ca8"
@@ -8305,6 +8310,11 @@ open@^7.0.0:
   dependencies:
     is-wsl "^2.1.0"
 
+optics-ts@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/optics-ts/-/optics-ts-0.1.0.tgz#392e17d8577ced0a8d0d5593e9c6ae43a9c9c33e"
+  integrity sha512-wg0CYwMYZPPjnmEQqs+R6MKqqNyzsSxIkQ9ygDoY1jfR7v1tjL/9Z8AeQE6t33udIQDlfr3iirQ/Q7kJdK3V9g==
+
 optionator@^0.8.3:
   version "0.8.3"
   resolved "https://registry.yarnpkg.com/optionator/-/optionator-0.8.3.tgz#84fa1d036fe9d3c7e21d99884b601167ec8fb495"
@@ -8509,6 +8519,13 @@ parse5@^5.1.0:
   version "5.1.1"
   resolved "https://registry.yarnpkg.com/parse5/-/parse5-5.1.1.tgz#f68e4e5ba1852ac2cadc00f4555fff6c2abb6178"
   integrity sha512-ugq4DFI0Ptb+WWjAdOK16+u/nHfiIrcE+sh8kZMaM0WllQKLI9rOUq6c2b7cwPkXdzfQESqvoqK6ug7U/Yyzug==
+
+parser-ts@^0.6.2:
+  version "0.6.2"
+  resolved "https://registry.yarnpkg.com/parser-ts/-/parser-ts-0.6.2.tgz#8ea2fbf86196919733c0fdc1541bf1417565e8b2"
+  integrity sha512-NXrAluQ5HUyP29v3DKJ3jOxMuzac2Nlr6eZrRc0+a5rTDV8T2sFO41FCKWl4uceXIk+JEhKGK7UzlJ0nejAADQ==
+  dependencies:
+    "@babel/code-frame" "^7.0.0"
 
 parseurl@~1.3.2, parseurl@~1.3.3:
   version "1.3.3"

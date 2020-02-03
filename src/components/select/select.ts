@@ -3,7 +3,7 @@ import { Select as FunctionalSelect } from 'react-functional-select'
 import { SelectProps } from 'react-functional-select/dist/Select'
 import { useBoolean } from 'react-hanger'
 
-import caret from './select.caret'
+import caret from './select.icon.caret'
 
 import theme from 'src/data/theme'
 

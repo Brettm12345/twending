@@ -1,6 +1,8 @@
+import { pipe } from 'fp-ts/lib/pipeable'
 import * as t from 'io-ts'
 import { TypeOf } from 'io-ts'
 
+import * as L from 'list/curried'
 import { all } from './constants'
 
 import { everythingElse, popular } from './list.json'
@@ -10,7 +12,7 @@ export const AllLanguages = t.literal(all)
 export type AllLanguages = typeof all
 
 export const SpecificLanguage = oneOf(
-  popular.concat(everythingElse)
+  pipe(L.from(popular), L.concat(L.from(everythingElse)))
 )
 
 export type SpecificLanguage = TypeOf<

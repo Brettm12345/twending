@@ -1,6 +1,6 @@
 import * as RD from '@devexperts/remote-data-ts'
-import { map } from 'fp-ts/lib/Array'
 import { constant, flow } from 'fp-ts/lib/function'
+import * as L from 'list/curried'
 import { Builder } from 'njsx'
 import { div } from 'njsx-react'
 
@@ -12,11 +12,15 @@ import { Repo as RepoType } from 'src/data/github'
 
 const loading = constant(Loading)
 
-const Repos = RD.fold<Error, RepoType[], Builder<unknown>>(
+const Repos = RD.fold<
+  Error,
+  L.List<RepoType>,
+  Builder<unknown>
+>(
   loading,
   loading,
   flow(console.error, constant(div('Error fetching data'))),
-  flow(map(Repo), list)
+  flow(L.map(Repo), L.toArray, list)
 )
 
 export default Repos

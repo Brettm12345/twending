@@ -1,4 +1,4 @@
-import { h1, main, button } from 'njsx-react'
+import { h1, main, button, div } from 'njsx-react'
 import { tw } from 'src/utils'
 
 export const heading = h1(
@@ -29,3 +29,5 @@ export const Button = button(
     'focus:outline-none'
   )
 )
+
+export const footer = div(tw('mt-6'))

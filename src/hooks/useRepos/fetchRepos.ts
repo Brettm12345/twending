@@ -1,39 +1,22 @@
 import * as RD from '@devexperts/remote-data-ts'
-import Octokit, {
-  SearchReposResponse as SearchResponse,
-  Response,
-} from '@octokit/rest'
 import dayjs from 'dayjs'
-import { map } from 'fp-ts/lib/Array'
-import { fold, toError } from 'fp-ts/lib/Either'
+import { fold } from 'fp-ts/lib/Either'
 import { constant, flow } from 'fp-ts/lib/function'
 import { pipe } from 'fp-ts/lib/pipeable'
 import * as T from 'fp-ts/lib/Task'
 import * as TE from 'fp-ts/lib/TaskEither'
-import { TaskEither } from 'fp-ts/lib/TaskEither'
+import { list, map } from 'list/curried'
 
-import { RepoTask, handleResponse } from 'src/data/github'
+import {
+  RepoTask,
+  handleResponse,
+  query,
+} from 'src/data/github'
 import { SpecificLanguage } from 'src/data/languages'
 import { Value as Period } from 'src/data/period'
 import { join } from 'src/utils'
 
-const octokit = new Octokit()
-
-const gh = (
-  q: string
-): TaskEither<Error, Response<SearchResponse>> =>
-  TE.tryCatch(
-    () =>
-      octokit.search.repos({
-        order: 'desc',
-        q,
-        sort: 'stars',
-      }),
-    toError
-  )
-
-const param = (k: string) => (v: string): string =>
-  pipe([k, v], join(':'))
+const param = (k: string) => (v: string) => `${k}:${v}`
 
 const getLanguage = flow(
   SpecificLanguage.decode,
@@ -42,7 +25,7 @@ const getLanguage = flow(
 
 const getPage = (period: Period, page: number): string =>
   pipe(
-    [page + 1, page],
+    list(page + 1, page),
     map(value =>
       dayjs()
         .subtract(value, period)
@@ -61,15 +44,12 @@ const buildQuery: QueryFN<string> = ({
   period,
   language,
 }) => (page = 0) =>
-  pipe(
-    [getLanguage(language), getPage(period, page)],
-    join('+')
-  )
+  `${getLanguage(language)}+${getPage(period, page)}`
 
 const fetchRepos: QueryFN<RepoTask> = options =>
   flow(
     buildQuery(options),
-    gh,
+    query,
     TE.map(handleResponse),
     T.map(RD.fromEither)
   )

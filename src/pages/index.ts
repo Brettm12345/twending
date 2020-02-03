@@ -1,4 +1,3 @@
-import { div } from 'njsx-react'
 import { FC } from 'react'
 
 import 'src/styles/global.css'
@@ -9,8 +8,12 @@ import Loading from 'src/components/loading'
 import Repos from 'src/components/repos'
 import { Language, Period } from 'src/components/select'
 import { useRepos } from 'src/hooks/useRepos'
-import { app, heading, Button } from 'src/styles/home'
-import { tw } from 'src/utils'
+import {
+  app,
+  heading,
+  Button,
+  footer,
+} from 'src/styles/home'
 
 const Home: FC = () => {
   const {
@@ -25,7 +28,7 @@ const Home: FC = () => {
     AppBar([Language(language), Period(period)]),
     heading('Trending Repositories'),
     Repos(repos),
-    div(tw('mt-6'))(
+    footer(
       loading
         ? Loading()
         : Button({ onClick: nextPage })(
