@@ -51,7 +51,7 @@ const links: LinkProps[] = [
 const metaData = {
   description,
   'msapplication-TitleColor': primary,
-  'theme-color': gray[300],
+  'theme-color': gray[800],
   viewport: 'initial-scale=1.0, width=device-width',
 }
 
