@@ -10,7 +10,7 @@
   "scripts": {
     "build": "next build",
     "dev": "next",
-    "codechecks": "codechecks -x",
+    "codechecks": "codechecks",
     "start": "next start",
     "storybook": "start-storybook -p 6006 -c .storybook"
   },
