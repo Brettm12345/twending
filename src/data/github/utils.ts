@@ -6,26 +6,27 @@ import { flow } from 'fp-ts/lib/function'
 
 import { User, Repo } from './types'
 
-const handleUser = (
-  u: Octokit.SearchReposResponseItemsItemOwner
-): User => ({
+type GithubRepo = Octokit.SearchReposResponseItemsItem
+type GithubUser = Octokit.ActivityListReposStarredByUserResponseItemOwner
+type GithubResponse = Octokit.Response<
+  Octokit.SearchReposResponse
+>
+
+const handleUser: (u: GithubUser) => User = u => ({
   avatar: u.avatar_url,
   name: u.login,
-  url: u.url,
+  url: u.html_url,
 })
 
-const handleRepo = ({
+const handleRepo: (r: GithubRepo) => Repo = ({
   description,
   language,
   owner,
   name,
   html_url: url,
   ...repo
-}: Octokit.SearchReposResponseItemsItem): Repo => ({
-  author: handleUser({
-    ...owner,
-    url: url.replace(/\/.*$/, ''),
-  }),
+}) => ({
+  author: handleUser(owner as GithubUser),
   createdAt: repo.created_at,
   description,
   forks: repo.forks_count,
@@ -37,10 +38,9 @@ const handleRepo = ({
   url,
 })
 
-type HandleResponse = (
-  r: Octokit.Response<Octokit.SearchReposResponse>
-) => Repo[]
-export const handleResponse: HandleResponse = flow(
+export const handleResponse: (
+  r: GithubResponse
+) => Repo[] = flow(
   prop('data'),
   prop('items'),
   map(handleRepo)
