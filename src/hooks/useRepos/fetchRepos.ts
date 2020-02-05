@@ -37,7 +37,9 @@ const param = (k: string) => (v: string): string =>
 
 const getLanguage = flow(
   SpecificLanguage.decode,
-  fold(constant(''), param('language'))
+  fold(constant(''), (str: string) =>
+    pipe(str.replace('#', 'sharp'), param('language'))
+  )
 )
 
 const getPage = (period: Period, page: number): string =>
