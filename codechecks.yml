@@ -4,11 +4,9 @@ checks:
       files:
         - path: './.next/static/_buildManifest.js'
           maxSize: 1MB
-
   - name: typecov
     options:
       atLeast: 99
-
   - name: lighthouse-keeper
     options:
       buildPath: ./.next
