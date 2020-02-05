@@ -1,10 +1,33 @@
-# Twending [![Code Checks](https://raw.githubusercontent.com/codechecks/docs/master/images/badges/badge-default.svg?sanitize=true)](https://codechecks.io) [![Maintainability](https://api.codeclimate.com/v1/badges/072e2e327dabeef158a6/maintainability)](https://codeclimate.com/github/Brettm12345/twending/maintainability)
+<h1 align="center">
+  Twending
+</h1>
+
+<p align="center">
+  <a href="https://codechecks.io">
+    <img
+      alt="Code Checks"
+      src="https://raw.githubusercontent.com/codechecks/docs/master/images/badges/badge-default.svg?sanitize=true"
+    />
+  </a>
+  <a href="https://codeclimate.com/github/Brettm12345/twending/maintainability">
+    <img
+      alt="Maintainability"
+      src="https://api.codeclimate.com/v1/badges/072e2e327dabeef158a6/maintainability"
+    />
+  </a>
+</p>
 
 <p align="center">
   Yet another github trending web application.
 </p>
 
-[![Screenshot](https://raw.githubusercontent.com/Brettm12345/twending/master/public/screenshot.png)](https://twending.now.sh)
+<a href="https://twending.now.sh">
+  <img
+    align="center"
+    alt="Screenshot"
+    src="https://raw.githubusercontent.com/Brettm12345/twending/master/public/screenshot.png"
+  />
+</a>
 
 ## Development
 
