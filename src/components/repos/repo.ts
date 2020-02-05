@@ -1,4 +1,5 @@
 import dayjs from 'dayjs'
+import memoize from 'fast-memoize'
 
 import Avatar from './repo.avatar'
 import Icons from './repo.icons'
@@ -38,4 +39,4 @@ const Repo = ({
     ]),
   ])
 
-export default Repo
+export default memoize(Repo)

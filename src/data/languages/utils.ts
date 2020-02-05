@@ -1,3 +1,4 @@
+import memoize from 'fast-memoize'
 import { map } from 'fp-ts/lib/Array'
 import { constant, flow } from 'fp-ts/lib/function'
 import { getOrElse } from 'fp-ts/lib/Option'
@@ -18,10 +19,14 @@ const {
   colors: { gray },
 } = theme
 
+export const replace = (
+  pattern: string | RegExp,
+  replacement: string
+) => (str: string) => str.replace(pattern, replacement)
+
 type GetColor = (l: Language) => string
-export const getColor: GetColor = flow(
-  lookup(colors),
-  getOrElse(constant(gray[400]))
+export const getColor: GetColor = memoize(
+  flow(lookup(colors), getOrElse(constant(gray[400])))
 )
 
 export const allLanguages = makeOption(all)

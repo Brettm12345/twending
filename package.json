@@ -19,6 +19,7 @@
     "@devexperts/remote-data-ts": "^2.0.3",
     "@octokit/rest": "^16.43.1",
     "dayjs": "^1.8.20",
+    "fast-memoize": "^2.5.1",
     "fp-ts": "^2.4.4",
     "fp-ts-ramda": "^0.1.7",
     "io-ts": "^2.0.6",

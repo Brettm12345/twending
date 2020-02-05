@@ -10,7 +10,10 @@ import * as TE from 'fp-ts/lib/TaskEither'
 import { TaskEither } from 'fp-ts/lib/TaskEither'
 
 import { RepoTask, handleResponse } from 'src/data/github'
-import { SpecificLanguage } from 'src/data/languages'
+import {
+  SpecificLanguage,
+  replace,
+} from 'src/data/languages'
 import { Value as Period } from 'src/data/period'
 import { join } from 'src/utils'
 
@@ -37,8 +40,13 @@ const param = (k: string) => (v: string): string =>
 
 const getLanguage = flow(
   SpecificLanguage.decode,
-  fold(constant(''), (str: string) =>
-    pipe(str.replace('#', 'sharp'), param('language'))
+  fold(
+    constant(''),
+    flow(
+      replace('#', 'sharp'),
+      replace('+', '%2B'),
+      param('language')
+    )
   )
 )
 
