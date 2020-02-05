@@ -1,4 +1,4 @@
-import { li, a, h3, span, p, div } from 'njsx-react'
+import { li, a, h3, p, div, time } from 'njsx-react'
 import { tw } from 'src/utils'
 
 export const repo = li(
@@ -25,7 +25,7 @@ export const link = a({
 
 export const title = h3(tw('text-lg', 'text-white'))
 
-export const date = span(
+export const date = time(
   tw('text-xs', 'text-gray-400', 'mb-1')
 )
 
