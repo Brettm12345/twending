@@ -1,16 +1,14 @@
-import {
-  SearchReposResponse as GithubResponse,
-  SearchReposResponseItemsItem as GithubRepo,
-  SearchReposResponseItemsItemOwner as GithubUser,
-  Response,
-} from '@octokit/rest'
+/* eslint-disable @typescript-eslint/naming-convention */
+import { Octokit } from '@octokit/rest'
 import { prop } from 'fp-ts-ramda'
 import { map } from 'fp-ts/lib/Array'
 import { flow } from 'fp-ts/lib/function'
 
 import { User, Repo } from './types'
 
-const handleUser = (u: GithubUser): User => ({
+const handleUser = (
+  u: Octokit.SearchReposResponseItemsItemOwner
+): User => ({
   avatar: u.avatar_url,
   name: u.login,
   url: u.url,
@@ -21,9 +19,13 @@ const handleRepo = ({
   language,
   owner,
   name,
+  html_url: url,
   ...repo
-}: GithubRepo): Repo => ({
-  author: handleUser(owner),
+}: Octokit.SearchReposResponseItemsItem): Repo => ({
+  author: handleUser({
+    ...owner,
+    url: url.replace(/\/.*$/, ''),
+  }),
   createdAt: repo.created_at,
   description,
   forks: repo.forks_count,
@@ -32,11 +34,11 @@ const handleRepo = ({
   language,
   name,
   stars: repo.stargazers_count,
-  url: repo.html_url,
+  url,
 })
 
 type HandleResponse = (
-  r: Response<GithubResponse>
+  r: Octokit.Response<Octokit.SearchReposResponse>
 ) => Repo[]
 export const handleResponse: HandleResponse = flow(
   prop('data'),

@@ -1,8 +1,5 @@
 import * as RD from '@devexperts/remote-data-ts'
-import Octokit, {
-  SearchReposResponse as SearchResponse,
-  Response,
-} from '@octokit/rest'
+import { Octokit } from '@octokit/rest'
 import dayjs from 'dayjs'
 import { map } from 'fp-ts/lib/Array'
 import { fold, toError } from 'fp-ts/lib/Either'
@@ -21,7 +18,10 @@ const octokit = new Octokit()
 
 const gh = (
   q: string
-): TaskEither<Error, Response<SearchResponse>> =>
+): TaskEither<
+  Error,
+  Octokit.Response<Octokit.SearchReposResponse>
+> =>
   TE.tryCatch(
     () =>
       octokit.search.repos({
