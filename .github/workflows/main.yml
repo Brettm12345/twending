@@ -1,0 +1,21 @@
+name: Codechecks
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v1.3.0
+      
+    - name: Install dependencies
+      uses: bahmutov/npm-install@v1.1.0
+    
+    - name: Build
+      run: yarn build
+      
+    - name: Run codechecks
+      run: codechecks -x
