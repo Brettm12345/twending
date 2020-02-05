@@ -1,6 +1,4 @@
-# Twending
-
-<a href="https://codechecks.io"><img src="https://raw.githubusercontent.com/codechecks/docs/master/images/badges/badge-default.svg?sanitize=true" alt="codechecks.io"></a>
+# Twending [![Code Checks](https://raw.githubusercontent.com/codechecks/docs/master/images/badges/badge-default.svg?sanitize=true)](https://codechecks.io) [![Maintainability](https://api.codeclimate.com/v1/badges/072e2e327dabeef158a6/maintainability)](https://codeclimate.com/github/Brettm12345/twending/maintainability)
 
 Yet another github trending web application.
 
