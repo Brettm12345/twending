@@ -34,7 +34,7 @@ const links: LinkProps[] = [
     type: 'image/png',
   },
   {
-    href: '/manifest.json',
+    href: '/site.webmanifest',
     rel: 'manifest',
   },
   {
