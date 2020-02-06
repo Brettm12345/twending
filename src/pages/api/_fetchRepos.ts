@@ -7,8 +7,7 @@ import * as TE from 'fp-ts/lib/TaskEither'
 import { TaskEither } from 'fp-ts/lib/TaskEither'
 import { Errors } from 'io-ts'
 import { stringifyUrl } from 'query-string'
-
-import fetch from 'unfetch'
+import fetch from 'isomorphic-unfetch'
 
 import { Repo, GithubResponse } from './_types'
 import { handleResponse } from './_util'

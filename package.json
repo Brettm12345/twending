@@ -25,6 +25,7 @@
     "fp-ts": "^2.4.4",
     "fp-ts-ramda": "^0.1.7",
     "io-ts": "^2.0.6",
+    "isomorphic-unfetch": "^3.0.0",
     "monocle-ts": "^2.1.0",
     "newtype-ts": "^0.3.3",
     "njsx": "^3.0.1",
