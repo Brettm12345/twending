@@ -20,7 +20,7 @@ const handler = (req: NowRequest, res: NowResponse) => {
     period = 'month',
     language = all,
     page = 0,
-  }: Query = req.query
+  }: Query = req.query ?? {}
 
   pipe(
     fetchRepos({ language, period })(page),
