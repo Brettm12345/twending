@@ -8,8 +8,8 @@ import * as T from 'fp-ts/lib/Task'
 import * as TE from 'fp-ts/lib/TaskEither'
 import { TaskEither } from 'fp-ts/lib/TaskEither'
 import { Errors } from 'io-ts'
-
 import { formatValidationError } from 'io-ts-reporters'
+
 import { Repo, GithubResponse } from './_types'
 import { handleResponse } from './_util'
 import {
@@ -19,6 +19,7 @@ import {
 import { Value as Period } from 'src/data/period'
 import { join } from 'src/utils'
 
+console.log(process.env)
 const octokit = new Octokit({
   auth: `token ${process.env.GITHUB_TOKEN}`,
 })
