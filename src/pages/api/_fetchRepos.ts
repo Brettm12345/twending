@@ -6,8 +6,8 @@ import { pipe } from 'fp-ts/lib/pipeable'
 import * as TE from 'fp-ts/lib/TaskEither'
 import { TaskEither } from 'fp-ts/lib/TaskEither'
 import { Errors } from 'io-ts'
-import { stringifyUrl } from 'query-string'
 import fetch from 'isomorphic-unfetch'
+import { stringifyUrl } from 'query-string'
 
 import { Repo, GithubResponse } from './_types'
 import { handleResponse } from './_util'
@@ -23,9 +23,10 @@ const gh = (
 ): TaskEither<Errors, GithubResponse> =>
   pipe(
     stringifyUrl({
-      query: { order: 'desc', q, sort: 'stars' },
+      query: { order: 'desc', sort: 'stars' },
       url: 'https://api.github.com/search/repositories',
     }),
+    x => x + q,
     q => () =>
       fetch(q).then(res =>
         res.json().then(GithubResponse.decode)
