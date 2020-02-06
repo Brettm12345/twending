@@ -17,6 +17,7 @@
   "browserslist": "last 2 versions",
   "dependencies": {
     "@devexperts/remote-data-ts": "^2.0.3",
+    "axios": "^0.19.2",
     "dayjs": "^1.8.20",
     "fast-memoize": "^2.5.1",
     "fp-ts": "^2.4.4",
