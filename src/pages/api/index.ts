@@ -52,6 +52,7 @@ const handler = async (
               'public',
               'max-age=0',
               's-maxage=31536000',
+              'stale-while-revalidate',
               'immutable',
             ].join(',')
           ),
