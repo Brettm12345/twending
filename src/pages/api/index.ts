@@ -34,8 +34,7 @@ const handler = (req: NowRequest, res: NowResponse) => {
         return T.of(res.status(200).send(data))
       }
     )
-  )
-  res.end()
+  )()
 }
 
 export default handler
