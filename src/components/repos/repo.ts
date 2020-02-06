@@ -13,7 +13,7 @@ import {
 } from './repo.styles'
 
 import Language from 'src/components/language'
-import { Repo as RepoType } from 'src/data/github'
+import { Repo as RepoType } from 'src/pages/api'
 
 const Repo = ({
   author,

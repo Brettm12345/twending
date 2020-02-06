@@ -16,6 +16,7 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "paths": {
+      "api/*": ["./src/pages/api/*"],
       "src/*": ["./src/*"]
     },
     "preserveConstEnums": true,

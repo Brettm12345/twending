@@ -2,7 +2,7 @@
 import { RemoteData } from '@devexperts/remote-data-ts'
 import { Task } from 'fp-ts/lib/Task'
 import * as t from 'io-ts'
-import { TypeOf } from 'io-ts'
+import { Errors, TypeOf } from 'io-ts'
 
 export const GithubUser = t.type({
   /** Link to the users avatar */
@@ -21,7 +21,7 @@ const GithubRepo = t.type({
   /** The number of forks a repository has */
   forks_count: t.number,
   html_url: t.string,
-  language: t.string,
+  language: t.union([t.null, t.string]),
   name: t.string,
   node_id: t.string,
   open_issues_count: t.number,
@@ -33,7 +33,9 @@ const GithubRepo = t.type({
 export type GithubRepo = TypeOf<typeof GithubRepo>
 
 export const GithubResponse = t.type({
+  incomplete_results: t.boolean,
   items: t.array(GithubRepo),
+  total_count: t.number,
 })
 export type GithubResponse = TypeOf<typeof GithubResponse>
 
@@ -49,6 +51,7 @@ export const Repo = t.type({
   createdAt: t.string,
   description: t.union([t.string, t.null]),
   forks: t.number,
+  id: t.string,
   issues: t.number,
   language: t.union([t.string, t.null]),
   name: t.string,
@@ -56,10 +59,8 @@ export const Repo = t.type({
   url: t.string,
 })
 export type Repo = TypeOf<typeof Repo>
-export type RemoteRepos = RemoteData<Error, Repo[]>
+export type RemoteRepos = RemoteData<Errors, Repo[]>
 export type RepoTask = Task<RemoteRepos>
 
-export const CachedResponse = t.type({
-  items: t.array(Repo),
-})
-export type CachedResponse = TypeOf<typeof CachedResponse>
+export const ApiResponse = t.array(Repo)
+export type ApiResponse = TypeOf<typeof ApiResponse>

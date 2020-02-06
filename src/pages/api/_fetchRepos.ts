@@ -1,13 +1,14 @@
+import { Octokit } from '@octokit/rest'
 import dayjs from 'dayjs'
 import { map } from 'fp-ts/lib/Array'
 import { fold } from 'fp-ts/lib/Either'
 import { constant, flow } from 'fp-ts/lib/function'
 import { pipe } from 'fp-ts/lib/pipeable'
+import * as T from 'fp-ts/lib/Task'
 import * as TE from 'fp-ts/lib/TaskEither'
 import { TaskEither } from 'fp-ts/lib/TaskEither'
 import { Errors } from 'io-ts'
-import fetch from 'isomorphic-unfetch'
-import { stringifyUrl } from 'query-string'
+import { formatValidationError } from 'io-ts-reporters'
 
 import { Repo, GithubResponse } from './_types'
 import { handleResponse } from './_util'
@@ -18,19 +19,27 @@ import {
 import { Value as Period } from 'src/data/period'
 import { join } from 'src/utils'
 
-const gh = (
-  q: string
-): TaskEither<Errors, GithubResponse> =>
+const octokit = new Octokit({
+  auth: `token ${process.env.GITHUB_TOKEN}`,
+})
+
+const gh = (q: string): TaskEither<Errors, Repo[]> =>
   pipe(
-    stringifyUrl({
-      query: { order: 'desc', sort: 'stars' },
-      url: 'https://api.github.com/search/repositories',
-    }),
-    x => x + q,
-    q => () =>
-      fetch(q).then(res =>
-        res.json().then(GithubResponse.decode)
+    () =>
+      octokit.search.repos({
+        order: 'desc',
+        q,
+        sort: 'stars',
+      }),
+    T.map(({ data }) => GithubResponse.decode(data)),
+    TE.mapLeft(errors => {
+      console.error(
+        'Failed to decode github response',
+        errors.map(formatValidationError)
       )
+      return errors
+    }),
+    TE.map(handleResponse)
   )
 
 const param = (k: string) => (v: string): string =>
@@ -77,7 +86,6 @@ const buildQuery: QueryFN<string> = ({
 const fetchRepos: QueryFN<TaskEither<
   Errors,
   Repo[]
->> = options =>
-  flow(buildQuery(options), gh, TE.map(handleResponse))
+>> = options => flow(buildQuery(options), gh)
 
 export default fetchRepos
