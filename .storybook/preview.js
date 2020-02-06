@@ -1,4 +1,4 @@
-import '../src/styles/global.css'
+import '../src/styles/global.pcss'
 
 import {
   addParameters,

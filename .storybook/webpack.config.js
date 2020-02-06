@@ -7,7 +7,7 @@ module.exports = ({ config }) => {
     f => f.test.toString() !== '/\\.css$/'
   );
   config.module.rules.push({
-    test: /\.css$/,
+    test: /\.(css|pcss|sss)$/,
     use: [
       'style-loader',
       'css-loader',

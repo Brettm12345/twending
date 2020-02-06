@@ -18,8 +18,12 @@ const Select = <T>({
   initialValue,
   onOptionChange,
 ]: [T, (data: T) => void]) => {
-  const open = useBoolean(false)
-  const renderCaret = caret(open.value)
+  const {
+    setFalse: onMenuClose,
+    setTrue: onMenuOpen,
+    value: isOpen,
+  } = useBoolean(false)
+  const renderCaret = caret(isOpen)
   return (
     typeof window !== 'undefined' &&
     njsx(FunctionalSelect)({
@@ -27,8 +31,8 @@ const Select = <T>({
       addClassNames: true,
       caretIcon: renderCaret(),
       initialValue,
-      onMenuClose: open.setFalse,
-      onMenuOpen: open.setTrue,
+      onMenuClose,
+      onMenuOpen,
       onOptionChange,
       options,
       themeConfig: {

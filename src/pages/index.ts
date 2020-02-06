@@ -1,7 +1,7 @@
 import { div } from 'njsx-react'
 import { FC } from 'react'
 
-import 'src/styles/global.css'
+import 'src/styles/global.pcss'
 
 import AppBar from 'src/components/appBar/appBar'
 import Head from 'src/components/head'

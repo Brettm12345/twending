@@ -27,16 +27,16 @@ module.exports = pipe(
         {
           handler: 'StaleWhileRevalidate',
           options: {
-            cacheName: 'https-calls',
+            cacheName: 'avatars',
             cacheableResponse: {
               statuses: [0, 200],
             },
             expiration: {
               maxAgeSeconds: 30 * 24 * 60 * 60, // 1 month
-              maxEntries: 150,
+              maxEntries: 20,
             },
           },
-          urlPattern: /^https?.*/,
+          urlPattern: /^github?.*/,
         },
       ],
       skipWaiting: true,

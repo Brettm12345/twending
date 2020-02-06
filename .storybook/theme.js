@@ -4,7 +4,7 @@ export default create({
   base: 'dark',
 
   colorPrimary: '#5881EA',
-  colorSecondary: '#4F74D3',
+  colorSecondary: '#363C57',
 
   // UI
   appBg: '#24283A',
@@ -17,12 +17,12 @@ export default create({
   fontCode: 'monospace',
 
   // Text colors
-  textColor: '#ECECEF',
+  textColor: '#CED0D8',
   textInverseColor: 'rgba(255,255,255,0.9)',
 
   // Toolbar default and active colors
-  barTextColor: '#ECECEF',
-  barSelectedColor: 'white',
+  barTextColor: '#CED0D8',
+  barSelectedColor: '#fff',
   barBg: '#1B1E2C',
 
   // Form colors
