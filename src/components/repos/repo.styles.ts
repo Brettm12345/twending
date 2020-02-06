@@ -30,7 +30,7 @@ export const date = time(
 )
 
 export const description = p(
-  tw('max-w-3xl', 'mb-4', 'text-gray-300')
+  tw('max-w-3xl', 'mb-4', 'text-gray-300', 'w-10/12')
 )
 
 export const info = div(
