@@ -5,8 +5,10 @@
       "use": "@now/next"
     }
   ],
-  "env": {
-    "GITHUB_TOKEN": "@github-token"
+  "build": {
+    "env": {
+      "GITHUB_TOKEN": "@github-token"
+    }
   },
   "routes": [
     {

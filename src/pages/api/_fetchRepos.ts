@@ -19,7 +19,6 @@ import {
 import { Value as Period } from 'src/data/period'
 import { join } from 'src/utils'
 
-console.log(process.env)
 const octokit = new Octokit({
   auth: `token ${process.env.GITHUB_TOKEN}`,
 })
