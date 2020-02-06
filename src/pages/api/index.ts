@@ -25,13 +25,13 @@ const handler = (req: NowRequest, res: NowResponse) => {
   pipe(
     fetchRepos({ language, period })(page),
     TE.fold<unknown, unknown, NowResponse>(
-      flow(res.status(200).send, T.of),
+      flow(res.status(500).send, T.of),
       data => {
         res.setHeader(
           'Cache-Control',
           'max-age=0, s-maxage=31536000'
         )
-        return T.of(res.status(500).send(data))
+        return T.of(res.status(200).send(data))
       }
     )
   )
