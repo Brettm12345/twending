@@ -35,6 +35,7 @@ const handler = (req: NowRequest, res: NowResponse) => {
       }
     )
   )
+  res.end()
 }
 
 export default handler
