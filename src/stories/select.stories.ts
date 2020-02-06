@@ -1,12 +1,13 @@
 import { storiesOf } from '@storybook/react'
 import { useState } from 'react'
-import { OptionType as PeriodType } from 'src/data/period'
+import { div } from 'njsx-react'
+
 import { Period, Language } from 'src/components/select'
 import {
   allLanguages,
   OptionType as LanguageType,
 } from 'src/data/languages'
-import { div } from 'njsx-react'
+import { OptionType as PeriodType } from 'src/data/period'
 import { tw } from 'src/utils'
 
 storiesOf('Select', module)
@@ -32,9 +33,11 @@ storiesOf('Select', module)
       label: 'Monthly',
       value: 'month',
     })
+    // @ts-ignore
     return Period(period)()
   })
   .add('Language', () => {
     const language = useState<LanguageType>(allLanguages)
+    // @ts-ignore
     return Language(language)()
   })
