@@ -42,10 +42,6 @@ const links: LinkProps[] = [
     href: '/safari-pinned-tab.svg',
     rel: 'mask-icon',
   },
-  {
-    href: 'https://api.github.com',
-    rel: 'preconnect',
-  },
 ]
 
 const metaData = {
