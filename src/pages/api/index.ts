@@ -31,7 +31,9 @@ const handler = (req: NowRequest, res: NowResponse) => {
           'Cache-Control',
           'max-age=0, s-maxage=31536000'
         )
-        return T.of(res.status(200).send(data))
+        return T.of(
+          res.status(200).send(JSON.stringify(data))
+        )
       }
     )
   )()
