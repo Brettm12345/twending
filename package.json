@@ -17,7 +17,9 @@
   "browserslist": "last 2 versions",
   "dependencies": {
     "@devexperts/remote-data-ts": "^2.0.3",
+    "@now/node": "^1.4.1",
     "@octokit/rest": "^16.43.1",
+    "@types/query-string": "^6.3.0",
     "dayjs": "^1.8.20",
     "fast-memoize": "^2.5.1",
     "fp-ts": "^2.4.4",
@@ -27,6 +29,7 @@
     "newtype-ts": "^0.3.3",
     "njsx": "^3.0.1",
     "njsx-react": "^1.0.1",
+    "query-string": "^6.10.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-feather": "^2.0.3",
@@ -36,6 +39,7 @@
     "react-window": "^1.8.5",
     "styled-components": "^5.0.1",
     "ts-classnames": "^0.1.1",
+    "unfetch": "^4.1.0",
     "use-persisted-state": "^0.3.0"
   },
   "devDependencies": {
