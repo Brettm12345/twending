@@ -1,6 +1,6 @@
 import * as RD from '@devexperts/remote-data-ts'
 
-import { RemoteRepos } from 'src/data/github'
+import { RemoteRepos } from 'src/pages/api'
 
 export const repos: RemoteRepos = RD.success([
   {

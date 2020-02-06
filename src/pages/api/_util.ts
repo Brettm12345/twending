@@ -1,8 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { prop } from 'fp-ts-ramda'
 import { map } from 'fp-ts/lib/Array'
-import { flow } from 'fp-ts/lib/function'
-
+import { pipe } from 'fp-ts/lib/pipeable'
 import {
   User,
   Repo,
@@ -37,6 +35,5 @@ const handleRepo: (r: GithubRepo) => Repo = ({
   url,
 })
 
-export const handleResponse: (
-  r: GithubResponse
-) => Repo[] = flow(prop('items'), map(handleRepo))
+export const handleResponse = (r: GithubResponse): Repo[] =>
+  pipe(r.items, map(handleRepo))

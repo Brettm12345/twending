@@ -145,7 +145,7 @@
     "import/parsers": {
       "@typescript-eslint/parser": [".ts", ".tsx"]
     },
-    "import/internal-regex": "^src/",
+    "import/internal-regex": "^(src/|api/)",
     "import/resolver": {
       "typescript": {}
     }

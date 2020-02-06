@@ -1,3 +1,4 @@
+require('dotenv').config()
 const {
   TsconfigPathsPlugin,
 } = require('tsconfig-paths-webpack-plugin')
@@ -5,6 +6,9 @@ const { pipe } = require('fp-ts/lib/pipeable')
 
 module.exports = pipe(
   {
+    env: {
+      GITHUB_TOKEN: process.env.GITHUB_TOKEN,
+    },
     generateInDevMode: false,
     transformManifest: manifest => ['/'].concat(manifest),
     webpack: config => ({
@@ -40,5 +44,5 @@ module.exports = pipe(
     },
   },
   require('next-offline'),
-  require('@zeit/next-css'),
+  require('@zeit/next-css')
 )
