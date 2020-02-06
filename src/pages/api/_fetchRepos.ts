@@ -1,5 +1,6 @@
 import { Octokit } from '@octokit/rest'
 import dayjs from 'dayjs'
+import memoize from 'fast-memoize'
 import { map } from 'fp-ts/lib/Array'
 import { fold } from 'fp-ts/lib/Either'
 import { constant, flow } from 'fp-ts/lib/function'
@@ -24,22 +25,24 @@ const octokit = new Octokit({
 })
 
 const gh = (q: string): TaskEither<Errors, Repo[]> =>
-  pipe(
-    () =>
-      octokit.search.repos({
-        order: 'desc',
-        q,
-        sort: 'stars',
+  memoize(
+    pipe(
+      () =>
+        octokit.search.repos({
+          order: 'desc',
+          q,
+          sort: 'stars',
+        }),
+      T.map(({ data }) => GithubResponse.decode(data)),
+      TE.mapLeft(errors => {
+        console.error(
+          'Failed to decode github response',
+          errors.map(formatValidationError)
+        )
+        return errors
       }),
-    T.map(({ data }) => GithubResponse.decode(data)),
-    TE.mapLeft(errors => {
-      console.error(
-        'Failed to decode github response',
-        errors.map(formatValidationError)
-      )
-      return errors
-    }),
-    TE.map(handleResponse)
+      TE.map(handleResponse)
+    )
   )
 
 const param = (k: string) => (v: string): string =>
