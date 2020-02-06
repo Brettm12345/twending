@@ -10,8 +10,8 @@ import { stringifyUrl } from 'query-string'
 
 import fetch from 'unfetch'
 
-import { Repo, GithubResponse } from './types'
-import { handleResponse } from './util'
+import { Repo, GithubResponse } from './_types'
+import { handleResponse } from './_util'
 import {
   SpecificLanguage,
   replace,

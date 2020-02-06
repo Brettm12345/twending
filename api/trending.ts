@@ -4,7 +4,7 @@ import { pipe } from 'fp-ts/lib/pipeable'
 import * as T from 'fp-ts/lib/Task'
 import * as TE from 'fp-ts/lib/TaskEither'
 
-import fetchRepos from './fetchRepos'
+import fetchRepos from './_fetchRepos'
 import { all } from 'src/data/constants'
 import { Language } from 'src/data/languages/types'
 import { Value as Period } from 'src/data/period/types'

@@ -9,7 +9,7 @@ import {
   GithubUser,
   GithubRepo,
   GithubResponse,
-} from './types'
+} from './_types'
 
 const handleUser: (u: GithubUser) => User = u => ({
   avatar: u.avatar_url,
