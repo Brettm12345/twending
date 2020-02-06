@@ -14,7 +14,7 @@
     {
       "dest": "/_next/static/service-worker.js",
       "headers": {
-        "cache-control": "public, max-age=43200, immutable",
+        "cache-control": "public, max-age=0, s-maxage=43200, immutable",
         "Service-Worker-Allowed": "/"
       },
       "src": "^/service-worker.js$"
