@@ -7,6 +7,7 @@ import * as IO from 'fp-ts/lib/IO'
 import { pipe } from 'fp-ts/lib/pipeable'
 
 import { formatValidationError } from 'io-ts-reporters'
+import { calculateMaxAge } from './_cache'
 import fetchRepos from './_fetchRepos'
 import { all } from 'src/data/constants'
 import { Language } from 'src/data/languages/types'
@@ -16,7 +17,7 @@ export * from './_types'
 export interface Query {
   period?: Period
   language?: Language
-  page?: number
+  page?: string
 }
 
 const handler = async (
@@ -26,7 +27,7 @@ const handler = async (
   const {
     period = 'month',
     language = all,
-    page = 0,
+    page = '0',
   }: Query = req.query ?? {}
 
   const setHeader = (name: string) => (
@@ -42,7 +43,7 @@ const handler = async (
   )
 
   const handleResponse: IO.IO<void> = pipe(
-    await fetchRepos({ language, period })(page)(),
+    await fetchRepos({ language, period })(+page)(),
     E.fold(
       flow(map(formatValidationError), handleError),
       data =>
@@ -51,8 +52,7 @@ const handler = async (
             [
               'public',
               'max-age=0',
-              's-maxage=31536000',
-              'stale-while-revalidate',
+              `s-maxage=${calculateMaxAge(period)}`,
               'immutable',
             ].join(',')
           ),

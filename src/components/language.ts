@@ -19,15 +19,7 @@ const dot = pipe(
 )
 
 const Language = (language: string) =>
-  span(
-    tw(
-      'inline-flex',
-      'mr-4',
-      'whitespace-no-wrap',
-      'overflow-x-hidden',
-      'ellipsis'
-    )
-  )([
+  span(tw('inline-flex', 'mr-4', 'ellipsis'))([
     dot({ style: { backgroundColor: getColor(language) } }),
     language,
   ])

@@ -15,6 +15,11 @@ body {
   @apply font-sans text-white bg-gray-700 leading-normal;
 }
 
+.ellipsis {
+  text-overflow: ellipsis;
+  @apply whitespace-no-wrap overflow-x-hidden;
+}
+
 .rfs-select-container {
   min-width: 8rem;
   max-width: 12rem;

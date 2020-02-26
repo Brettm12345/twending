@@ -24,8 +24,13 @@ export const Button = button(
     'rounded',
     'text-white',
     'bg-blue-500',
-    'transition-bg',
-    'hover:bg-blue-500',
+    'duration-300',
+    'ease-in-out',
+    'transition-all',
+    'hover:bg-blue-600',
+    'transform',
+    'hover:shadow-xl',
+    'hover:-translate-y-1',
     'focus:outline-none'
   )
 )

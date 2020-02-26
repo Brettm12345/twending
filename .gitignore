@@ -40,3 +40,7 @@ jspm_packages
 tmp/
 storybook-static/
 .now
+
+# Dotenv files
+.env
+.env.*

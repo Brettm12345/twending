@@ -60,7 +60,7 @@ export const useRepos = (): UseReposResult => {
   const getRepos = (page?: number) =>
     fetchRepos({
       language: language[0].value,
-      page,
+      page: page?.toString(),
       period: period[0].value,
     })
 
