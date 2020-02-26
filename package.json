@@ -9,7 +9,7 @@
   "license": "MIT",
   "scripts": {
     "build": "next build",
-    "dev": "now dev",
+    "dev": "now dev -l 3000",
     "codechecks": "codechecks codechecks.yml",
     "start": "next start",
     "storybook": "start-storybook -p 6006 -c .storybook"

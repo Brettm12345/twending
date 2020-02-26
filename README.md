@@ -38,3 +38,5 @@ git clone https://github.com/brettm12345/twending
 yarn install
 yarn dev
 ```
+
+Then rename [`.env.sample`](./.env.sample) to `.env.build` and [create a personal access token](https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line)
