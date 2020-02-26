@@ -8,7 +8,14 @@ import { tw } from 'src/utils'
 
 const dot = pipe(
   styled.span.attrs(
-    tw('inline-block', 'mr-1', 'relative', 'rounded-full')
+    tw(
+      'inline-block',
+      'mr-1',
+      'border',
+      'relative',
+      'rounded-full',
+      'border-gray-700'
+    )
   )`
     content: ' ';
     height: 2ex;
