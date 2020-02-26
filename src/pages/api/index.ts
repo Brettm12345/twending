@@ -3,66 +3,79 @@ import { map } from 'fp-ts/lib/Array'
 import * as Console from 'fp-ts/lib/Console'
 import * as E from 'fp-ts/lib/Either'
 import { flow } from 'fp-ts/lib/function'
-import * as IO from 'fp-ts/lib/IO'
+import { chain } from 'fp-ts/lib/IO'
 import { pipe } from 'fp-ts/lib/pipeable'
+import * as T from 'fp-ts/lib/Task'
 
+import { ValidationError } from 'io-ts'
 import { formatValidationError } from 'io-ts-reporters'
 import { calculateMaxAge } from './_cache'
 import fetchRepos from './_fetchRepos'
+import { Repo } from './_types'
 import { all } from 'src/data/constants'
 import { Language } from 'src/data/languages/types'
 import { Value as Period } from 'src/data/period/types'
 
 export * from './_types'
+
 export interface Query {
   period?: Period
   language?: Language
   page?: string
 }
 
-const handler = async (
+const handler = (
   req: NowRequest,
   res: NowResponse
-) => {
+): Promise<void> => {
   const {
     period = 'month',
     language = all,
     page = '0',
   }: Query = req.query ?? {}
 
-  const setHeader = (name: string) => (
-    value: string | number | string[]
-  ): IO.IO<void> => () => res.setHeader(name, value)
+  const end = <A>(
+    status: number,
+    data: A
+  ): IO<void> => () => res.status(status).end(data)
 
-  const setCache = setHeader('Cache-Control')
-
-  const handleError = flow(E.toError, error =>
-    flow(Console.error(error), () =>
-      res.status(500).end(error)
-    )
+  const handleErr: (
+    errors: ValidationError[]
+  ) => IO<void> = flow(
+    map(formatValidationError),
+    E.toError,
+    err =>
+      pipe(
+        Console.error(err),
+        chain(() => end(500, err))
+      )
   )
 
-  const handleResponse: IO.IO<void> = pipe(
-    await fetchRepos({ language, period })(+page)(),
-    E.fold(
-      flow(map(formatValidationError), handleError),
-      data =>
-        flow(
-          setCache(
-            [
-              'public',
-              'max-age=0',
-              `s-maxage=${calculateMaxAge(period)}`,
-              'immutable',
-            ].join(',')
-          ),
-          setHeader('Content-Type')('application-json'),
-          () => res.status(200).end(JSON.stringify(data))
-        )
-    )
-  )
+  const setHeader = (
+    ...a: Parameters<typeof res.setHeader>
+  ): IO<void> => () => res.setHeader(...a)
 
-  return handleResponse()
+  const handleRes = (data: Repo[]): IO<void> =>
+    pipe(
+      setHeader(
+        'Cache-Control',
+        [
+          'public',
+          'max-age=0',
+          `s-maxage=${calculateMaxAge(period)}`,
+          'immutable',
+        ].join(',')
+      ),
+      chain(() =>
+        setHeader('Content-Type', 'application-json')
+      ),
+      chain(() => end(200, JSON.stringify(data)))
+    )
+
+  return pipe(
+    fetchRepos({ language, period })(+page),
+    T.chainIOK(E.fold(handleErr, handleRes))
+  )()
 }
 
 export default handler
