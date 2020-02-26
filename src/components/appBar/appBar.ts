@@ -1,4 +1,3 @@
-import memoize from 'fast-memoize'
 import njsx from 'njsx'
 import { ReactNode } from 'react'
 import * as Feather from 'react-feather'
@@ -18,4 +17,4 @@ const AppBar = (children: ReactNode[]) =>
     ])
   )
 
-export default memoize(AppBar)
+export default AppBar

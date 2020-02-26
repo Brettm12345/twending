@@ -60,7 +60,7 @@ const gh = (q: string): TaskEither<Errors, Repo[]> =>
 const param = (k: string) => (v: string): string =>
   pipe([k, v], join(':'))
 
-const getLanguage = flow(
+const getLanguage: (a: unknown) => string = flow(
   SpecificLanguage.decode,
   fold(
     constant(''),
