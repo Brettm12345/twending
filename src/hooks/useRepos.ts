@@ -19,7 +19,7 @@ import {
   RemoteRepos,
   ApiResponse,
 } from 'src/pages/api'
-import { joinRDWith } from 'src/utils'
+import { joinRD } from 'src/utils'
 
 const fetchRepos = (params: Query) =>
   pipe(
@@ -39,7 +39,7 @@ type SelectInput<T> = [T, (value: T) => void]
 interface UseReposResult {
   repos: RemoteRepos
   loading: boolean
-  nextPage: () => Promise<void>
+  loadNextPage: IO<void>
   language: SelectInput<LanguageType>
   period: SelectInput<PeriodType>
 }
@@ -64,32 +64,39 @@ export const useRepos = (): UseReposResult => {
       period: period[0].value,
     })
 
-  const fetchMore = pipe(
-    getRepos(page.value + 1),
-    joinRDWith(repos),
-    setWith
+  const fetchMore = getRepos(page.value + 1)
+
+  const [nextPage, setNextPage] = useState<RemoteRepos>(
+    RD.initial
   )
 
-  const nextPage = async () => {
+  const fetchNextPage = pipe(fetchMore, T.map(setNextPage))
+
+  const loadNextPage = () => {
     page.increase()
     loading.setTrue()
-    await fetchMore()
+    pipe(nextPage, joinRD(repos), setRepos)
     loading.setFalse()
   }
+
+  useEffect(() => {
+    fetchNextPage()
+  }, [page.value])
 
   useEffect(() => {
     pipe(
       [T.of(RD.pending), getRepos()],
       map(setWith),
-      array.sequence(task)
+      array.sequence(task),
+      T.chain(() => fetchNextPage)
     )()
     page.setValue(0)
   }, [language[0].value, period[0].value])
 
   return {
     language,
+    loadNextPage,
     loading: loading.value,
-    nextPage,
     period,
     repos,
   }

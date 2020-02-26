@@ -15,7 +15,7 @@ import { tw } from 'src/utils'
 const Home: FC = () => {
   const {
     repos,
-    nextPage,
+    loadNextPage,
     loading,
     language,
     period,
@@ -28,7 +28,7 @@ const Home: FC = () => {
     div(tw('mt-6'))(
       loading
         ? Loading()
-        : Button({ onClick: nextPage })(
+        : Button({ onClick: loadNextPage })(
             `Load next ${period[0].value}`
           )
     ),
