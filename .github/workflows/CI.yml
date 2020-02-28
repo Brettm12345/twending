@@ -9,13 +9,8 @@ jobs:
       - uses: borales/actions-yarn@v2.0.0
         with:
           cmd: install
-      - uses: borales/actions-yarn@v2.0.0
+      - uses: paambaati/codeclimate-action@v2.2.4
+        env:
+          CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}
         with:
-          cmd: build
-      - uses: borales/actions-yarn@v2.0.0
-        with:
-          cmd: test
-      - uses: ziishaned/jest-reporter-action@v0.0.1
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          test-command: 'yarn jest --coverage'
+          coverageCommand: yarn test:coverage

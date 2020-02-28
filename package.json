@@ -14,8 +14,8 @@
     "start": "next start",
     "storybook": "start-storybook -p 6006 -c .storybook",
     "test": "jest",
-    "test:watch": "jest — watch",
-    "test:coverage": "jest — coverage"
+    "test:watch": "jest -- --watch",
+    "test:coverage": "yarn test -- --coverage"
   },
   "husky": {
     "hooks": {
