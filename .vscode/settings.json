@@ -4,6 +4,7 @@
   },
   "eslint.enable": true,
   "importSorter.importStringConfiguration.trailingComma": "multiLine",
+  "markdownlint.ignore": ["MD033", "MD041"],
   "importSorter.sortConfiguration.customOrderingRules.rules": [
     {
       "type": "importMember",

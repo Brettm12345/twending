@@ -16,6 +16,7 @@
     "jsx-a11y",
     "prettier",
     "prefer-arrow",
+    "jest",
     "sort-keys-fix",
     "standard",
     "unicorn"
@@ -28,6 +29,7 @@
     "plugin:import/errors",
     "plugin:import/warnings",
     "plugin:import/typescript",
+    "plugin:jest/recommended",
     "plugin:jsx-a11y/recommended",
     "plugin:unicorn/recommended",
     "standard",
@@ -48,7 +50,6 @@
       }
     ],
     "quotes": ["error", "single"],
-
     "import/default": "off",
     "import/no-duplicates": "off",
     "import/order": [
@@ -60,7 +61,6 @@
         }
       }
     ],
-
     "@typescript-eslint/prefer-nullish-coalescing": "error",
     "@typescript-eslint/prefer-optional-chain": "error",
     "@typescript-eslint/no-explicit-any": "error",
@@ -68,39 +68,6 @@
     "@typescript-eslint/member-delimiter-style": "off",
     "@typescript-eslint/no-unnecessary-type-assertion": "error",
     "@typescript-eslint/unbound-method": "off",
-    "@typescript-eslint/naming-convention": [
-      "error",
-      {
-        "selector": "default",
-        "format": ["camelCase"]
-      },
-      {
-        "selector": "class",
-        "format": ["PascalCase"]
-      },
-      {
-        "selector": "variable",
-        "format": ["camelCase", "UPPER_CASE", "PascalCase"]
-      },
-      {
-        "selector": "parameter",
-        "format": ["camelCase"],
-        "leadingUnderscore": "allow"
-      },
-
-      {
-        "selector": "memberLike",
-        "modifiers": ["private"],
-        "format": ["camelCase"],
-        "leadingUnderscore": "require"
-      },
-
-      {
-        "selector": "typeLike",
-        "format": ["PascalCase"]
-      }
-    ],
-
     "fp/no-arguments": "error",
     "fp/no-class": "error",
     "fp/no-delete": "error",
@@ -110,17 +77,19 @@
     "fp/no-loops": "error",
     "fp/no-mutating-assign": "error",
     "fp/no-mutating-methods": "error",
-    "fp/no-mutation": ["error", { "commonjs": true }],
+    "fp/no-mutation": [
+      "error",
+      {
+        "commonjs": true
+      }
+    ],
     "fp/no-proxy": "error",
     "fp/no-rest-parameters": "off",
     "fp/no-this": "error",
     "fp/no-throw": "error",
     "fp/no-valueof-field": "error",
-
     "jsx-a11y/label-has-associated-control": "off",
-
     "prettier/prettier": "error",
-
     "prefer-arrow/prefer-arrow-functions": [
       "error",
       {
@@ -129,9 +98,7 @@
         "classPropertiesAllowed": false
       }
     ],
-
     "sort-keys-fix/sort-keys-fix": "error",
-
     "unicorn/consistent-function-scoping": "off",
     "unicorn/filename-case": [
       "error",
@@ -139,7 +106,8 @@
         "case": "camelCase"
       }
     ],
-    "unicorn/prevent-abbreviations": "off"
+    "unicorn/prevent-abbreviations": "off",
+    "@typescript-eslint/naming-convention": 0
   },
   "settings": {
     "import/parsers": {

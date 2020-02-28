@@ -1,8 +1,8 @@
 require('dotenv').config()
-const {
-  TsconfigPathsPlugin,
-} = require('tsconfig-paths-webpack-plugin')
 const { pipe } = require('fp-ts/lib/pipeable')
+const {
+  TsconfigPathsPlugin: TsconfigPaths,
+} = require('tsconfig-paths-webpack-plugin')
 
 module.exports = pipe(
   {
@@ -17,7 +17,7 @@ module.exports = pipe(
         ...config.resolve,
         plugins: [
           ...config.resolve.plugins,
-          new TsconfigPathsPlugin(),
+          new TsconfigPaths(),
         ],
       },
     }),
