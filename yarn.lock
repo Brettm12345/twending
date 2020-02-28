@@ -10378,6 +10378,11 @@ newtype-ts@^0.3.4:
   resolved "https://registry.yarnpkg.com/newtype-ts/-/newtype-ts-0.3.4.tgz#65c74b7d5195edaa9abfcdba6549a33a5c0e298d"
   integrity sha512-lFJnWAt0oXX1j1ErNy9RU5+FPNtVyzugHW2MchaaMiOeeS9LEmqAAOqyHPFQ0Uw895jStSYGSCslrByzYxFJYQ==
 
+next-cli@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/next-cli/-/next-cli-1.0.0.tgz#b054514639824e1baa369835999be6cd292cb659"
+  integrity sha1-sFRRRjmCThuqNpg1mZvmzSkstlk=
+
 next-offline@^5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/next-offline/-/next-offline-5.0.0.tgz#bd47a795965aceace38cdb60709c8ef980c49559"

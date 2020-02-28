@@ -23,23 +23,6 @@
       "pre-push": "yarn test"
     }
   },
-  "jest": {
-    "preset": "ts-jest/presets/js-with-babel",
-    "moduleFileExtensions": [
-      "js",
-      "ts",
-      "tsx",
-      "html"
-    ],
-    "transform": {
-      "^.+\\.[t|j]sx?$": "babel-jest"
-    },
-    "moduleNameMapper": {
-      "\\.(css|less|scss|sass)$": "identity-obj-proxy",
-      "^src/(.*)$": "<rootDir>/src/$1",
-      "^api/(.*)$": "<rootDir>/src/pages/api/$1"
-    }
-  },
   "browserslist": "last 2 versions",
   "dependencies": {
     "@devexperts/remote-data-ts": "^2.0.3",
@@ -121,6 +104,7 @@
     "identity-obj-proxy": "^3.0.0",
     "jest": "^25.1.0",
     "next": "^9.2.2",
+    "next-cli": "^1.0.0",
     "next-offline": "^5.0.0",
     "now": "^17.0.4",
     "postcss-loader": "^3.0.0",

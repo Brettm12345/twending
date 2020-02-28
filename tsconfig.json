@@ -35,5 +35,5 @@
     "./*.js",
     "./next-env.d.ts"
   ],
-  "exclude": ["*.test.*", "node_modules"]
+  "exclude": ["node_modules"]
 }

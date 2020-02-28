@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`App Renders without an error 1`] = `
+exports[`Renders without an error 1`] = `
 <main
   className="justify-center items-center flex flex-col pt-24 mb-10"
 >
