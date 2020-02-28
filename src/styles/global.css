@@ -8,11 +8,12 @@
 }
 
 html {
-  @apply antialiased;
+  @apply font-sans antialiased;
+  font-size: 14px;
 }
 
 body {
-  @apply font-sans text-white bg-gray-700 leading-normal;
+  @apply text-white bg-gray-700 leading-normal;
 }
 
 .ellipsis {

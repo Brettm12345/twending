@@ -39,6 +39,9 @@ const theme = {
     lg: '1024px',
     xl: '1280px',
   },
+  fontFamily: {
+    sans: ['Inter Var', 'Inter', 'Open Sans', 'sans-serif'],
+  },
   rotate: {
     '90': '90deg',
     '180': '180deg',

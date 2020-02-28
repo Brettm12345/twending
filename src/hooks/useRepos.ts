@@ -6,7 +6,7 @@ import * as T from 'fp-ts/lib/Task'
 
 import { task } from 'fp-ts/lib/Task'
 import { useEffect, useState } from 'react'
-import { useBoolean, useNumber } from 'react-hanger'
+import { useNumber } from 'react-hanger'
 import createPersistedState from 'use-persisted-state'
 
 import {
@@ -38,7 +38,6 @@ const useLanguage = createPersistedState('language')
 type SelectInput<T> = [T, (value: T) => void]
 interface UseReposResult {
   repos: RemoteRepos
-  loading: boolean
   loadNextPage: IO<void>
   language: SelectInput<LanguageType>
   period: SelectInput<PeriodType>
@@ -50,7 +49,6 @@ export const useRepos = (): UseReposResult => {
     value: 'month',
   })
   const language = useLanguage<LanguageType>(allLanguages)
-  const loading = useBoolean(false)
   const page = useNumber(0)
   const [repos, setRepos] = useState<RemoteRepos>(
     RD.initial
@@ -73,10 +71,8 @@ export const useRepos = (): UseReposResult => {
   const fetchNextPage = pipe(fetchMore, T.map(setNextPage))
 
   const loadNextPage = () => {
-    page.increase()
-    loading.setTrue()
     pipe(nextPage, joinRD(repos), setRepos)
-    loading.setFalse()
+    page.increase()
   }
 
   useEffect(() => {
@@ -96,7 +92,6 @@ export const useRepos = (): UseReposResult => {
   return {
     language,
     loadNextPage,
-    loading: loading.value,
     period,
     repos,
   }

@@ -42,6 +42,10 @@ const links: LinkProps[] = [
     href: '/safari-pinned-tab.svg',
     rel: 'mask-icon',
   },
+  {
+    href: 'https://rsms.me/inter/inter.css',
+    rel: 'stylesheet',
+  },
 ]
 
 const metaData = {
