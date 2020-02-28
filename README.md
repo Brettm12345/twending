@@ -36,6 +36,11 @@
   />
 </a>
 
+## Twending is
+
+- _instant_ by automatically fetches the next page while you're reading the current one
+- _lightweight_ the total build build under 100kB
+
 ## Development
 
 To get started with development use these commands
