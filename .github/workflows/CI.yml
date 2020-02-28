@@ -15,3 +15,7 @@ jobs:
       - uses: borales/actions-yarn@v2.0.0
         with:
           cmd: test
+      - uses: ziishaned/jest-reporter-action@v0.0.1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          test-command: 'yarn jest --coverage'
