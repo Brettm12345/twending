@@ -9,6 +9,13 @@
       src="https://raw.githubusercontent.com/codechecks/docs/master/images/badges/badge-default.svg?sanitize=true"
     />
   </a>
+  <a href="https://github.com/Brettm12345/twending/actions?query=workflow%3ACI">
+    <img
+      style="margin: 0px 2px;"
+      alt="CI Workflow Status"
+      src="https://github.com/Brettm12345/twending/workflows/CI/badge.svg"
+    />
+  </a>
   <a href="https://codeclimate.com/github/Brettm12345/twending/maintainability">
     <img
       alt="Maintainability"
