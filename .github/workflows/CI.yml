@@ -9,8 +9,9 @@ jobs:
       - uses: borales/actions-yarn@v2.0.0
         with:
           cmd: install
-      - uses: paambaati/codeclimate-action@v2.2.4
-        env:
-          CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}
+      - uses: borales/actions-yarn@v2.0.0
         with:
-          coverageCommand: yarn test:coverage
+          cmd: build
+      - uses: borales/actions-yarn@v2.0.0
+        with:
+          cmd: test:coverage
