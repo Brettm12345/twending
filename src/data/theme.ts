@@ -1,35 +1,29 @@
-const blue = {
-  100: '#EEF2FD',
-  200: '#D5E0FA',
-  300: '#BCCDF7',
-  400: '#8AA7F0',
-  500: '#5881EA',
-  600: '#4F74D3',
-  700: '#354D8C',
-  800: '#283A69',
-  900: '#1A2746',
-}
-
-const gray = {
-  100: '#ECECEF',
-  200: '#CED0D8',
-  300: '#B1B4C0',
-  400: '#777B90',
-  500: '#3C4361',
-  600: '#363C57',
-  700: '#24283A',
-  800: '#1B1E2C',
-  900: '#12141D',
-}
-
 const theme = {
   colors: {
-    black: '#000000',
-    blue,
-    border: '#161a2a',
-    gray,
-    primary: blue[500],
-    white: '#ffffff',
+    black: 'black',
+    blue: 'var(--blue)',
+    border: 'var(--border)',
+    gray: {
+      100: 'var(--gray-100)',
+      200: 'var(--gray-200)',
+      300: 'var(--gray-300)',
+      400: 'var(--gray-400)',
+      500: 'var(--gray-500)',
+      600: 'var(--gray-600)',
+      700: 'var(--gray-700)',
+      800: 'var(--gray-800)',
+      900: 'var(--gray-900)',
+    },
+    green: 'var(--green)',
+    indigo: 'var(--indigo)',
+    lightBlue: 'var(--light-blue)',
+    orange: 'var(--orange)',
+    pink: 'var(--pink)',
+    purple: 'var(--purple)',
+    red: 'var(--red)',
+    teal: 'var(--teal)',
+    white: 'white',
+    yellow: 'var(--yellow)',
   },
   /* eslint-disable sort-keys-fix/sort-keys-fix */
   screens: {

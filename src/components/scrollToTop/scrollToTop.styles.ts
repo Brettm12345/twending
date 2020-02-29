@@ -7,7 +7,7 @@ export const Button = njsx(styled.button.attrs(
     'fixed',
     'mr-auto',
     'mb-10',
-    'bg-blue-500',
+    'bg-blue',
     'p-4',
     'rounded-full'
   )

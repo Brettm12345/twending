@@ -31,9 +31,9 @@
   "include": [
     "./src/**/*",
     "./api/**/*",
+    "./next.env.d.ts",
     "./src/classnames.d.ts",
-    "./*.js",
-    "./next-env.d.ts"
+    "./*.js"
   ],
   "exclude": ["node_modules"]
 }

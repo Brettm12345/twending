@@ -10,7 +10,7 @@ import { name, description } from 'src/data/constants'
 import theme from 'src/data/theme'
 
 const {
-  colors: { primary, gray },
+  colors: { blue, gray },
 } = theme
 
 type LinkProps = LinkHTMLAttributes<HTMLLinkElement>
@@ -38,7 +38,7 @@ const links: LinkProps[] = [
     rel: 'manifest',
   },
   {
-    color: primary,
+    color: blue,
     href: '/safari-pinned-tab.svg',
     rel: 'mask-icon',
   },
@@ -50,7 +50,7 @@ const links: LinkProps[] = [
 
 const metaData = {
   description,
-  'msapplication-TitleColor': primary,
+  'msapplication-TitleColor': blue,
   'theme-color': gray[800],
   viewport: 'initial-scale=1.0, width=device-width',
 }

@@ -1,4 +1,4 @@
 {
-  "presets": ["next/babel", "proposal-typescript"],
+  "presets": ["next/babel"],
   "plugins": ["styled-components"]
 }
