@@ -1,6 +1,6 @@
 import './global.css'
 
-import { h1, main, button } from 'njsx-react'
+import { h1, main } from 'njsx-react'
 import { tw } from 'src/utils'
 
 export const heading = h1(
@@ -15,24 +15,5 @@ export const app = main(
     'flex-col',
     'pt-24',
     'mb-10'
-  )
-)
-
-export const Button = button(
-  tw(
-    'px-4',
-    'py-2',
-    'font-semibold',
-    'rounded',
-    'text-white',
-    'bg-blue',
-    'duration-300',
-    'ease-in-out',
-    'transition-all',
-    'hover:bg-lightBlue',
-    'transform',
-    'hover:shadow-xl',
-    'hover:-translate-y-1',
-    'focus:outline-none'
   )
 )

@@ -18,6 +18,7 @@ const dot = pipe(
   )`
     content: ' ';
     height: 2ex;
+    line-height: 1.3;
     width: 2ex;
     bottom: -0.2ex;
   `,
@@ -26,7 +27,13 @@ const dot = pipe(
 
 const Language = (language: string) =>
   span(
-    tw('inline-flex', 'mr-4', 'ellipsis', 'text-gray-100')
+    tw(
+      'inline-flex',
+      'mr-4',
+      'ellipsis',
+      'font-medium',
+      'leading-5'
+    )
   )([
     dot({ style: { backgroundColor: getColor(language) } }),
     language,

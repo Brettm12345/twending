@@ -13,7 +13,7 @@ import {
   Period,
   ScrollToTop,
 } from 'src/components'
-import { app, heading, Button } from 'src/styles'
+import { app, heading } from 'src/styles'
 import { tw } from 'src/utils'
 
 const Home: FC = () => {
@@ -31,11 +31,7 @@ const Home: FC = () => {
     heading('Trending Repositories'),
     Repos(repos),
     ScrollToTop(),
-    div(tw('mt-6'))(
-      Button({ onClick: loadNextPage, ref })(
-        `Load next ${period[0].value}`
-      )
-    ),
+    div(tw('mt-6'))({ ref }),
   ])()
 }
 
