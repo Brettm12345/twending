@@ -30,26 +30,28 @@ const octokit = new Octokit({
 const data = OP.optic<OctokitResponse<unknown>>().prop(
   'data'
 )
+
+const decode = flow(OP.get(data), GithubResponse.decode)
+
+const search = (q: string) => () =>
+  octokit.search.repos({ order: 'desc', q, sort: 'stars' })
+
+const logError: Endomorphism<Errors> = errors => {
+  console.error(
+    'Failed to decode github response',
+    errors.map(formatValidationError)
+  )
+  return errors
+}
 const gh = (q: string): TaskEither<Errors, Repo[]> =>
   pipe(
     cache.get(q),
     O.fold(
       () =>
         pipe(
-          () =>
-            octokit.search.repos({
-              order: 'desc',
-              q,
-              sort: 'stars',
-            }),
-          T.map(flow(OP.get(data), GithubResponse.decode)),
-          TE.mapLeft(errors => {
-            console.error(
-              'Failed to decode github response',
-              errors.map(formatValidationError)
-            )
-            return errors
-          }),
+          search(q),
+          T.map(decode),
+          TE.mapLeft(logError),
           TE.map(handleResponse),
           TE.chain(cache.set(q))
         ),
@@ -57,19 +59,17 @@ const gh = (q: string): TaskEither<Errors, Repo[]> =>
     )
   )
 
-const param = (k: string) => (v: string): string =>
-  pipe([k, v], join(':'))
+const param = (k: string): Endomorphism<string> => v =>
+  `${k}:${v}`
 
-const getLanguage: (a: unknown) => string = flow(
+const encode: Endomorphism<string> = flow(
+  replace('#', 'sharp'),
+  replace('+', '&2B')
+)
+
+const getLanguage = flow(
   SpecificLanguage.decode,
-  fold(
-    constant(''),
-    flow(
-      replace('#', 'sharp'),
-      replace('+', '%2B'),
-      param('language')
-    )
-  )
+  fold(constant(''), flow(encode, param('language')))
 )
 
 const getPage = (period: Period, page: number): string =>

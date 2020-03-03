@@ -42,4 +42,6 @@ export const cache: Cache = {
 }
 
 export const calculateMaxAge = (period: Period): number =>
-  dayjs().diff(dayjs().add(1, period), 'second')
+  dayjs()
+    .add(1, period)
+    .diff(dayjs(), 'second')
