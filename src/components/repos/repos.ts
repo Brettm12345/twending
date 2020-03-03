@@ -9,8 +9,8 @@ import { div } from 'njsx-react'
 import Repo from './repo'
 import { list } from './repos.styles'
 
+import { Repo as RepoType } from 'api'
 import Loading from 'src/components/loading'
-import { Repo as RepoType } from 'src/pages/api'
 
 const loading = constant(Loading)
 

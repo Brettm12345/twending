@@ -17,7 +17,9 @@
     "noUnusedParameters": true,
     "paths": {
       "api/*": ["./src/pages/api/*"],
-      "src/*": ["./src/*"]
+      "api": ["./src/pages/api"],
+      "src/*": ["./src/*"],
+      "fp/*": ["fp-ts/lib/*"]
     },
     "preserveConstEnums": true,
     "removeComments": true,
@@ -32,6 +34,7 @@
     "./src/**/*",
     "./api/**/*",
     "./next.env.d.ts",
+    "./src/global.d.ts",
     "./src/classnames.d.ts",
     "./*.js"
   ],

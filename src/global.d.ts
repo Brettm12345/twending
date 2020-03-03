@@ -1,6 +1,12 @@
 type Option<A> = import('fp-ts/lib/Option').Option<A>
 type OptionTuple<A, B> = Option<[A, B]>
 type Either<E, A> = import('fp-ts/lib/Either').Either<E, A>
+type Mixed = import('io-ts')
+type RemoteData<
+  E,
+  A
+> = import('@devexperts/remote-data-ts').RemoteData<E, A>
+type List<A> = import('list').List<A>
 type EitherOption<E, A> = Either<E, Option<A>>
 type These<E, A> = import('fp-ts/lib/These').These<E, A>
 type Task<A> = import('fp-ts/lib/Task').Task<A>

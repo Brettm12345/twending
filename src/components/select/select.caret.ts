@@ -1,5 +1,4 @@
 import { svg, path } from 'njsx-react'
-
 import { tw } from 'src/utils'
 
 const size = 20
@@ -11,6 +10,9 @@ const caret = (isMenuOpen: boolean) =>
       'stroke-current',
       'inline-block',
       'leading-none',
+      'transform',
+      'ease-in-out',
+      'duration-300',
       'transition-transform',
       { 'rotate-180': isMenuOpen }
     )

@@ -1,12 +1,11 @@
 import { map } from 'fp-ts/lib/Array'
 import { pipe } from 'fp-ts/lib/pipeable'
 import { svg, animate, circle, g } from 'njsx-react'
-
-import theme from 'src/data/theme'
+import { colors } from 'src/data/theme'
 import { concat } from 'src/utils'
 
 const size = 80
-const color = theme.colors.blue
+const color = colors.blue
 
 const Circle = circle({
   cx: 22,

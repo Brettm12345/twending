@@ -3,7 +3,6 @@ import { storiesOf } from '@storybook/react'
 import { ValidationError } from 'io-ts'
 
 import { repos } from './data'
-
 import Repos from 'src/components/repos'
 
 storiesOf('Repo List', module)

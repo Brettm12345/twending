@@ -3,6 +3,7 @@ import { ReactNode } from 'react'
 import * as Feather from 'react-feather'
 
 import { Header, Toolbar, Logo } from './appBar.styles'
+
 import { repoLink } from 'src/data/constants'
 
 const GitHub = njsx(Feather.GitHub)

@@ -1,8 +1,8 @@
 import { storiesOf } from '@storybook/react'
-import { useState } from 'react'
 import { div } from 'njsx-react'
-
-import { Period, Language } from 'src/components/select'
+import { useState } from 'react'
+import { SelectProps } from 'react-functional-select/dist/Select'
+import { Period, Language } from 'src/components'
 import {
   allLanguages,
   OptionType as LanguageType,

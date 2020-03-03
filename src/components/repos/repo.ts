@@ -11,7 +11,6 @@ import {
   description as Description,
   info as Info,
 } from './repo.styles'
-
 import Language from 'src/components/language'
 import { Repo as RepoType } from 'src/pages/api'
 

@@ -1,3 +1,5 @@
+import './global.css'
+
 import { h1, main, button } from 'njsx-react'
 import { tw } from 'src/utils'
 

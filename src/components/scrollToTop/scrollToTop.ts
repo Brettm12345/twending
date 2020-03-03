@@ -6,6 +6,7 @@ const UpArrow = njsx(ArrowUp)
 
 const ScrollToTop = () =>
   Button({
+    'aria-label': 'Scroll to top',
     onClick: () => {
       // eslint-disable-next-line no-unused-expressions
       window?.scrollTo({

@@ -111,7 +111,7 @@ exports[`Renders without an error 1`] = `
             >
               <svg
                 aria-hidden={true}
-                className="fill-current stroke-current inline-block leading-none transition-transform"
+                className="fill-current stroke-current inline-block leading-none transform ease-in-out duration-300 transition-transform"
                 focusable={false}
                 height={20}
                 strokeWidth={0}
@@ -229,7 +229,7 @@ exports[`Renders without an error 1`] = `
             >
               <svg
                 aria-hidden={true}
-                className="fill-current stroke-current inline-block leading-none transition-transform"
+                className="fill-current stroke-current inline-block leading-none transform ease-in-out duration-300 transition-transform"
                 focusable={false}
                 height={20}
                 strokeWidth={0}
@@ -377,6 +377,33 @@ exports[`Renders without an error 1`] = `
       </circle>
     </g>
   </svg>
+  <button
+    aria-label="Scroll to top"
+    className="scrollToTopstyles__Button-sc-173e06l-0 jOTcxu fixed mr-auto mb-10 bg-blue p-4 rounded-full"
+    onClick={[Function]}
+  >
+    <svg
+      fill="none"
+      height="24"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="2"
+      viewBox="0 0 24 24"
+      width="24"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <line
+        x1="12"
+        x2="12"
+        y1="19"
+        y2="5"
+      />
+      <polyline
+        points="5 12 12 5 19 12"
+      />
+    </svg>
+  </button>
   <div
     className="mt-6"
   >

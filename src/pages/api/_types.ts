@@ -1,6 +1,4 @@
 /* eslint-disable @typescript-eslint/camelcase, @typescript-eslint/naming-convention */
-import { RemoteData } from '@devexperts/remote-data-ts'
-import { Task } from 'fp-ts/lib/Task'
 import * as t from 'io-ts'
 import { Errors, TypeOf } from 'io-ts'
 

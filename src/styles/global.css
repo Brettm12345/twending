@@ -51,7 +51,13 @@ body {
   @apply mx-2 flex-grow text-gray-200;
 }
 
+.rfs-select-container:focus,
+.rfs-select-container:hover {
+  @apply border-blue;
+}
+
 .rfs-select-container .rfs-control-container {
+  border-color: transparent;
   @apply bg-gray-700 shadow-none;
 }
 

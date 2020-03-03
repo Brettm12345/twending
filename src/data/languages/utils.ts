@@ -11,8 +11,7 @@ import {
   popular,
 } from './list.json'
 import { Language, OptionType } from './types'
-
-import theme from 'src/data/theme'
+import * as theme from 'src/data/theme'
 import { makeOption, lookup } from 'src/utils'
 
 const {

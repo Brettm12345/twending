@@ -1,5 +1,4 @@
 import * as RD from '@devexperts/remote-data-ts'
-import { RemoteData } from '@devexperts/remote-data-ts'
 import {
   filter,
   flatten,
@@ -7,12 +6,10 @@ import {
   isEmpty,
 } from 'fp-ts/lib/Array'
 import { flow, not } from 'fp-ts/lib/function'
-import { Option } from 'fp-ts/lib/Option'
 import { pipe } from 'fp-ts/lib/pipeable'
 import * as R from 'fp-ts/lib/Record'
 import { getLastSemigroup } from 'fp-ts/lib/Semigroup'
 import * as T from 'fp-ts/lib/Task'
-import { Mixed } from 'io-ts'
 import * as t from 'io-ts'
 import { cn } from 'ts-classnames'
 

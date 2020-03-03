@@ -8,7 +8,6 @@ import { task } from 'fp-ts/lib/Task'
 import { useEffect, useState } from 'react'
 import { useNumber } from 'react-hanger'
 import createPersistedState from 'use-persisted-state'
-
 import {
   allLanguages,
   OptionType as LanguageType,
@@ -21,7 +20,7 @@ import {
 } from 'src/pages/api'
 import { joinRD } from 'src/utils'
 
-const fetchRepos = (params: Query) =>
+export const fetchRepos = (params: Query) =>
   pipe(
     () =>
       axios.get('/api', {
@@ -43,7 +42,7 @@ interface UseReposResult {
   period: SelectInput<PeriodType>
 }
 
-export const useRepos = (): UseReposResult => {
+const useRepos = (): UseReposResult => {
   const period = usePeriod<PeriodType>({
     label: 'Monthly',
     value: 'month',
@@ -80,6 +79,7 @@ export const useRepos = (): UseReposResult => {
   }, [page.value])
 
   useEffect(() => {
+    setNextPage(RD.initial)
     pipe(
       [T.of(RD.pending), getRepos()],
       map(setWith),
@@ -96,3 +96,5 @@ export const useRepos = (): UseReposResult => {
     repos,
   }
 }
+
+export default useRepos

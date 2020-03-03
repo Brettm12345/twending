@@ -2,7 +2,6 @@ import { pipe } from 'fp-ts/lib/pipeable'
 import njsx from 'njsx'
 import { span } from 'njsx-react'
 import styled from 'styled-components'
-
 import { getColor } from 'src/data/languages'
 import { tw } from 'src/utils'
 

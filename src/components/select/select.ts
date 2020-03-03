@@ -4,12 +4,9 @@ import { SelectProps } from 'react-functional-select/dist/Select'
 import { useBoolean } from 'react-hanger'
 
 import caret from './select.caret'
+import { colors } from 'src/data/theme'
 
-import theme from 'src/data/theme'
-
-const {
-  colors: { gray, blue },
-} = theme
+const { gray, blue } = colors
 
 const Select = <T>({
   options,

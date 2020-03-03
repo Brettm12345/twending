@@ -1,15 +1,19 @@
 import { div } from 'njsx-react'
-import { FC, useEffect } from 'react'
+import { useEffect, FC } from 'react'
+import { useInView } from 'react-intersection-observer'
 
 import 'src/styles/global.css'
 
-import { useInView } from 'react-intersection-observer'
-import AppBar from 'src/components/appBar/appBar'
-import Head from 'src/components/head'
-import Repos from 'src/components/repos'
-import { Language, Period } from 'src/components/select'
-import { useRepos } from 'src/hooks/useRepos'
-import { app, heading, Button } from 'src/styles/home'
+import { useRepos } from '../hooks'
+import {
+  AppBar,
+  Head,
+  Repos,
+  Language,
+  Period,
+  ScrollToTop,
+} from 'src/components'
+import { app, heading, Button } from 'src/styles'
 import { tw } from 'src/utils'
 
 const Home: FC = () => {
@@ -26,6 +30,7 @@ const Home: FC = () => {
     AppBar([Language(language), Period(period)]),
     heading('Trending Repositories'),
     Repos(repos),
+    ScrollToTop(),
     div(tw('mt-6'))(
       Button({ onClick: loadNextPage, ref })(
         `Load next ${period[0].value}`

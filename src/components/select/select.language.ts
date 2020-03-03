@@ -1,7 +1,5 @@
 import { FC } from 'react'
-
 import Select from './select'
-
 import language from 'src/components/language'
 import { options, OptionType } from 'src/data/languages'
 

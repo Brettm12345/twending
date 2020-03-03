@@ -6,65 +6,60 @@ import njsx from 'njsx'
 import { meta, title } from 'njsx-react'
 import { createElement, LinkHTMLAttributes } from 'react'
 
-import { name, description } from 'src/data/constants'
-import theme from 'src/data/theme'
+import { description, name } from 'src/data/constants'
+import { colors } from 'src/data/theme'
 
-const {
-  colors: { blue, gray },
-} = theme
+const head = njsx(NextHead)
+const { blue, gray } = colors
 
-type LinkProps = LinkHTMLAttributes<HTMLLinkElement>
-const links: LinkProps[] = [
-  {
-    href: '/apple-touch-icon.png',
-    rel: 'apple-touch-icon',
-    sizes: '180x180',
-    type: 'image/png',
-  },
-  {
-    href: '/favicon-32x32.png',
-    rel: 'icon',
-    sizes: '32x32',
-    type: 'image/png',
-  },
-  {
-    href: '/favicon-16x16.png',
-    rel: 'icon',
-    sizes: '16x16',
-    type: 'image/png',
-  },
-  {
-    href: '/site.webmanifest',
-    rel: 'manifest',
-  },
-  {
-    color: blue,
-    href: '/safari-pinned-tab.svg',
-    rel: 'mask-icon',
-  },
-  {
-    href: 'https://rsms.me/inter/inter.css',
-    rel: 'stylesheet',
-  },
-]
-
-const metaData = {
-  description,
-  'msapplication-TitleColor': blue,
-  'theme-color': gray[800],
-  viewport: 'initial-scale=1.0, width=device-width',
-}
-
-// I have to use createElement here because njsx doesn't work
-const createLink = (props: LinkProps) =>
-  createElement('link', props)
-
-const createMeta = ([name, content]: [string, string]) =>
-  meta({ content, name })
-
-const Head = njsx(NextHead)([
-  pipe(links, map(createLink)),
-  pipe(entries(metaData), map(createMeta)),
+const Head = head([
+  pipe(
+    [
+      {
+        href: '/apple-touch-icon.png',
+        rel: 'apple-touch-icon',
+        sizes: '180x180',
+        type: 'image/png',
+      },
+      {
+        href: '/favicon-32x32.png',
+        rel: 'icon',
+        sizes: '32x32',
+        type: 'image/png',
+      },
+      {
+        href: '/favicon-16x16.png',
+        rel: 'icon',
+        sizes: '16x16',
+        type: 'image/png',
+      },
+      {
+        href: '/site.webmanifest',
+        rel: 'manifest',
+      },
+      {
+        color: blue,
+        href: '/safari-pinned-tab.svg',
+        rel: 'mask-icon',
+      },
+      {
+        href: 'https://rsms.me/inter/inter.css',
+        rel: 'stylesheet',
+      },
+    ] as Array<LinkHTMLAttributes<HTMLLinkElement>>,
+    map(p => createElement('link', p))
+  ),
+  pipe(
+    entries({
+      description,
+      'msapplication-TitleColor': blue,
+      'theme-color': gray[800],
+      viewport: 'initial-scale=1.0, width=device-width',
+    }),
+    map(([name, content]: string[]) =>
+      meta({ content, name })
+    )
+  ),
   title(`${name} - ${description}`),
 ])
 
