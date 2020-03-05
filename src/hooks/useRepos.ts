@@ -75,14 +75,18 @@ const useRepos = (): UseReposResult => {
   }, [page.value])
 
   useEffect(() => {
-    setNextPage(RD.initial)
+    page.setValue(0)
+    setRepos(RD.pending)
+    setNextPage(RD.pending)
+  }, [language[0].value, period[0].value])
+
+  useEffect(() => {
     pipe(
       [T.of(RD.pending), getRepos()],
       map(setWith),
       array.sequence(task),
       T.chain(() => fetchNextPage)
     )()
-    page.setValue(0)
   }, [language[0].value, period[0].value])
 
   return {

@@ -9,6 +9,9 @@ export const Button = button(
     'ml-16',
     'mb-10',
     'bg-blue',
+    'hover:bg-lightBlue',
+    'transition-colors',
+    'duration-200',
     'focus:outline-none',
     'p-4',
     'rounded-full'

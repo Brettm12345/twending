@@ -1,5 +1,4 @@
 import * as RD from '@devexperts/remote-data-ts'
-import memoize from 'fast-memoize'
 import { map, range } from 'fp-ts/lib/Array'
 import { constant, flow } from 'fp-ts/lib/function'
 import { pipe } from 'fp-ts/lib/pipeable'
@@ -22,4 +21,4 @@ const Repos = RD.fold<Errors, RepoType[], Builder<unknown>>(
   flow(map(Repo), list)
 )
 
-export default memoize(Repos)
+export default Repos

@@ -1,5 +1,4 @@
 import dayjs from 'dayjs'
-import memoize from 'fast-memoize'
 
 import { flow } from 'fp-ts/lib/function'
 import { div } from 'njsx-react'
@@ -43,8 +42,10 @@ const Repo = ({
     ]),
   ])
 
-export const RepoSkeleton = memoize(() =>
-  repo({ style: { lineHeight: 0.8 } })([
+export const RepoSkeleton = () =>
+  repo({
+    style: { lineHeight: 0.8 },
+  })([
     AvatarSkeleton(),
     link([
       title({ style: { marginBottom: '-0.2rem' } })(
@@ -66,6 +67,5 @@ export const RepoSkeleton = memoize(() =>
       Info(Skeleton({ height: '0.4rem', width: '20%' })),
     ]),
   ])
-)
 
-export default memoize(Repo)
+export default Repo

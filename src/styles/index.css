@@ -1,9 +1,7 @@
+/* purgecss start ignore */
 @import './colors.css';
 @tailwind base;
 @tailwind components;
-@tailwind utilities;
-@tailwind screens;
-@import './custom-utilities.css';
 
 * {
   scrollbar-width: none;
@@ -20,3 +18,7 @@ html {
 body {
   @apply bg-gray-700;
 }
+/* purgecss-end-ignore */
+@tailwind utilities;
+@tailwind screens;
+@import './custom-utilities.css';
