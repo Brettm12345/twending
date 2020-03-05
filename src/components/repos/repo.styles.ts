@@ -23,7 +23,7 @@ export const repo = li(
 export const link = a({
   rel: 'noopener noreferrer',
   target: '_blank',
-})(tw('flex', 'flex-col', 'flex-grow'))
+})(tw('flex', 'flex-col', 'flex-grow', 'outline-none'))
 
 export const title = h3(tw('text-lg', 'text-white'))
 

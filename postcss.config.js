@@ -20,16 +20,7 @@ const dev = [
   ),
 ]
 
-const production = [
-  r('cssnano'),
-  r('@fullhuman/postcss-purgecss')({
-    // Specify the paths to all of the template files in your project
-    content: ['./src/**/*.ts'],
-    // Include any special characters you're using in this regular expression
-    defaultExtractor: content =>
-      content.match(/[\w-/:]+/g) || [],
-  }),
-]
+const production = [r('cssnano')]
 
 module.exports = {
   plugins: isProduction ? dev.concat(production) : dev,

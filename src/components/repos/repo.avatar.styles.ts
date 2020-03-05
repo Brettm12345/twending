@@ -9,6 +9,7 @@ export const link = a(
     'mr-4',
     'p-0',
     'w-16',
+    'outline-none',
     'xs:inline-block',
     'sm:w-20',
     'md:mr-8'

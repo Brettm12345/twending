@@ -1,6 +1,7 @@
 import 'intersection-observer'
+import { NextPage } from 'next'
 import { div } from 'njsx-react'
-import { useEffect, FC } from 'react'
+import { useEffect } from 'react'
 import { useInView } from 'react-intersection-observer'
 
 import { useRepos } from '../hooks'
@@ -15,7 +16,7 @@ import {
 import { app, heading } from 'src/styles'
 import { tw } from 'src/utils'
 
-const Home: FC = () => {
+const Home: NextPage = () => {
   const {
     repos,
     loadNextPage,
