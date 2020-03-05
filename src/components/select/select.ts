@@ -1,3 +1,4 @@
+import './select.css'
 import njsx from 'njsx'
 import { Select as FunctionalSelect } from 'react-functional-select'
 import { SelectProps } from 'react-functional-select/dist/Select'

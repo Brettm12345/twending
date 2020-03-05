@@ -44,18 +44,26 @@ const Repo = ({
   ])
 
 export const RepoSkeleton = memoize(() =>
-  repo([
+  repo({ style: { lineHeight: 0.8 } })([
     AvatarSkeleton(),
     link([
-      title(Skeleton({ height: '0.7em', width: '30%' })),
-      date(Skeleton({ height: '0.2em', width: '15%' })),
-      Description(
-        [
-          { height: '0.3em', width: '40%' },
-          { height: '0.3em', width: '20%' },
-        ].map(flow(Skeleton, div))
+      title({ style: { marginBottom: '-0.2rem' } })(
+        Skeleton({ height: '0.5rem', width: '30%' })
       ),
-      Info(Skeleton({ height: '0.4em', width: '20%' })),
+      date({ style: { marginBottom: '0.5rem' } })(
+        Skeleton({ height: '0.2rem', width: '15%' })
+      ),
+      [40, 20, 10].map(
+        flow(
+          width => ({
+            height: '0.3rem',
+            width: `${width}%`,
+          }),
+          Skeleton,
+          div
+        )
+      ),
+      Info(Skeleton({ height: '0.4rem', width: '20%' })),
     ]),
   ])
 )

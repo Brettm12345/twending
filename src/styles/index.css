@@ -1,0 +1,22 @@
+@import './colors.css';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@tailwind screens;
+@import './custom-utilities.css';
+
+* {
+  scrollbar-width: none;
+}
+html {
+  font: 14px/1.5;
+}
+@supports (font-variation-settings: normal) {
+  html {
+    font-family: 'Inter var', sans-serif;
+  }
+}
+
+body {
+  @apply bg-gray-700;
+}

@@ -8,6 +8,5 @@ export const icon = svg(
 )({
   height: '1.4em',
   viewBox: '0 0 14 16',
-
   width: '1.4em',
 })

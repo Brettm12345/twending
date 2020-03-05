@@ -8,16 +8,12 @@ import { task } from 'fp-ts/lib/Task'
 import { useEffect, useState } from 'react'
 import { useNumber } from 'react-hanger'
 import createPersistedState from 'use-persisted-state'
+import { Query, RemoteRepos, ApiResponse } from 'api'
 import {
   allLanguages,
   OptionType as LanguageType,
 } from 'src/data/languages'
 import { OptionType as PeriodType } from 'src/data/period'
-import {
-  Query,
-  RemoteRepos,
-  ApiResponse,
-} from 'src/pages/api'
 import { joinRD } from 'src/utils'
 
 export const fetchRepos = (params: Query) =>

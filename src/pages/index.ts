@@ -1,8 +1,7 @@
+import 'intersection-observer'
 import { div } from 'njsx-react'
 import { useEffect, FC } from 'react'
 import { useInView } from 'react-intersection-observer'
-
-import 'src/styles/global.css'
 
 import { useRepos } from '../hooks'
 import {

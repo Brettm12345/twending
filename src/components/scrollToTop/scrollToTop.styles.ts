@@ -1,17 +1,16 @@
-import njsx from 'njsx'
-import styled from 'styled-components'
+import { button } from 'njsx-react'
 import { tw } from 'src/utils'
 
-export const Button = njsx(styled.button.attrs(
+export const Button = button(
   tw(
     'fixed',
-    'mr-auto',
+    'bottom-0',
+    'left-0',
+    'ml-16',
     'mb-10',
     'bg-blue',
+    'focus:outline-none',
     'p-4',
     'rounded-full'
   )
-)`
-  bottom: 0;
-  left: 45px;
-`)
+)

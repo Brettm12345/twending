@@ -33,6 +33,7 @@
   "include": [
     "./src/**/*",
     "./api/**/*",
+    "./tests/*",
     "./next.env.d.ts",
     "./src/global.d.ts",
     "./src/classnames.d.ts",

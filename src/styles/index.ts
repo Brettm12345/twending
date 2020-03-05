@@ -1,4 +1,4 @@
-import './global.css'
+import './index.css'
 
 import { h1, main } from 'njsx-react'
 import { tw } from 'src/utils'
@@ -13,6 +13,12 @@ export const app = main(
     'items-center',
     'flex',
     'flex-col',
+    'caret-blue',
+    'text-white',
+    'font-sans',
+    'bg-gray-700',
+    'antialiased',
+    'leading-normal',
     'pt-24',
     'mb-10'
   )

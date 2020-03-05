@@ -7,30 +7,25 @@ import { colors } from 'src/data/theme'
 
 const { gray } = colors
 
-const skeletonKeyframes = keyframes`
+const pulse = keyframes`
   0% {
-    background-position: -200px 0;
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
   }
   100% {
-    background-position: calc(200px + 100%) 0;
+    opacity: 1;
   }
 `
 
 const skeletonItem = styled.span`
   background-color: ${gray[600]};
-  background-image: linear-gradient(
-    90deg,
-    ${gray[600]},
-    ${gray[700]},
-    ${gray[600]}
-  );
-  background-size: 200px 100%;
-  background-repeat: no-repeat;
-  border-radius: 4px;
+  border-radius: 2px;
   display: inline-block;
   line-height: 1;
   width: 100%;
-  animation: ${skeletonKeyframes} 1.2s ease-in-out infinite;
+  animation: ${pulse} 1.5s ease-in-out 0.5s infinite;
 `
 
 interface SkeletonProps {
