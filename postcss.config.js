@@ -1,25 +1,28 @@
-// @ts-nocheck
-
 const isProduction = !process.argv.find(v =>
   v.includes('dev')
 )
 
+const r = require
+
 const dev = [
-  require('tailwindcss'),
-  require('postcss-preset-env'),
-  require('postcss-scrollbar'),
-  require('postcss-will-change-transition'),
-  require('postcss-normalize'),
-  require('postcss-momentum-scrolling')([
-    'hidden',
-    'inherit',
-  ]),
-  require('postcss-ts-classnames'),
+  r('tailwindcss'),
+  ...[
+    'preset-env',
+    'scrollbar',
+    'will-change-transition',
+    'normalize',
+    ['momentum-scrolling', ['hidden', 'inherit']],
+    'ts-classnames',
+  ].map(val =>
+    Array.isArray(val)
+      ? r(`postcss-${val[0]}`)(val[1])
+      : r(`postcss-${val}`)
+  ),
 ]
 
 const production = [
-  require('cssnano'),
-  require('@fullhuman/postcss-purgecss')({
+  r('cssnano'),
+  r('@fullhuman/postcss-purgecss')({
     // Specify the paths to all of the template files in your project
     content: ['./src/**/*.ts'],
     // Include any special characters you're using in this regular expression

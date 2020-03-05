@@ -128,6 +128,18 @@
       }
     },
     {
+      "files": ["*.stories.ts"],
+      "rules": {
+        "@typescript-eslint/ban-ts-ignore": "off"
+      }
+    },
+    {
+      "files": ["postcss.config.js"],
+      "rules": {
+        "import/order": "off"
+      }
+    },
+    {
       "files": ["*.js"],
       "rules": {
         "@typescript-eslint/no-var-requires": "off"

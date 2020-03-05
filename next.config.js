@@ -1,8 +1,9 @@
-require('dotenv').config()
-const { pipe } = require('fp-ts/lib/pipeable')
-const {
-  TsconfigPathsPlugin: TsconfigPaths,
-} = require('tsconfig-paths-webpack-plugin')
+const r = require
+r('dotenv').config()
+const { pipe } = r('fp-ts/lib/pipeable')
+const { TsconfigPathsPlugin: TsconfigPaths } = r(
+  'tsconfig-paths-webpack-plugin'
+)
 
 module.exports = pipe(
   {
@@ -43,6 +44,6 @@ module.exports = pipe(
       swDest: 'static/service-worker.js',
     },
   },
-  require('next-offline'),
-  require('@zeit/next-css')
+  r('next-offline'),
+  r('@zeit/next-css')
 )
