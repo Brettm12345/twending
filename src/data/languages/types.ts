@@ -4,14 +4,15 @@ import { TypeOf } from 'io-ts'
 import { all } from './constants'
 
 import { everythingElse, popular } from './list.json'
-import { oneOf } from 'src/utils'
+import { oneOf } from 'lib'
 
 export const AllLanguages = t.literal(all)
 export type AllLanguages = typeof all
 
-export const SpecificLanguage = oneOf(
-  popular.concat(everythingElse)
-)
+export const SpecificLanguage = oneOf([
+  ...popular,
+  ...everythingElse,
+])
 
 export type SpecificLanguage = TypeOf<
   typeof SpecificLanguage

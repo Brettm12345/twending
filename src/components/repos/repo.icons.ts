@@ -17,7 +17,7 @@ const paths = {
 
 const Icons = (
   dict: Record<keyof typeof paths, ReactNode>
-) =>
+): Array<typeof item> =>
   pipe(
     entries(dict),
     map(([key, value]) =>

@@ -1,8 +1,8 @@
 import { map, range } from 'fp-ts/lib/Array'
 import { pipe } from 'fp-ts/lib/pipeable'
-import njsx from 'njsx'
+import { keyframes } from 'styled-components'
 
-import styled, { keyframes } from 'styled-components'
+import { styled } from 'lib'
 import { colors } from 'src/data/theme'
 
 const { gray } = colors
@@ -19,7 +19,7 @@ const pulse = keyframes`
   }
 `
 
-const skeletonItem = styled.span`
+const skeletonItem = styled('span')`
   background-color: ${gray[600]};
   border-radius: 2px;
   display: inline-block;
@@ -39,11 +39,11 @@ const Skeleton = ({
   count = 1,
   height,
   width,
-}: SkeletonProps) =>
+}: SkeletonProps): Array<typeof skeletonItem> =>
   pipe(
     range(1, count),
     map(key =>
-      njsx(skeletonItem)({
+      skeletonItem({
         key,
         style: { height, width },
       })

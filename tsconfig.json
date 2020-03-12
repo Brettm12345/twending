@@ -17,6 +17,7 @@
     "noUnusedParameters": true,
     "paths": {
       "api/*": ["./src/pages/api/*"],
+      "lib": ["./src/lib"],
       "api": ["./src/pages/api"],
       "src/*": ["./src/*"],
       "fp/*": ["fp-ts/lib/*"]

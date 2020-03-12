@@ -22,5 +22,9 @@
       "orderLevel": 50
     }
   ],
-  "cSpell.words": ["Twending", "octokit"]
+  "cSpell.words": [
+    "Twending",
+    "maxage",
+    "octokit"
+  ]
 }

@@ -2,22 +2,27 @@ import * as RD from '@devexperts/remote-data-ts'
 import { map, range } from 'fp-ts/lib/Array'
 import { constant, flow } from 'fp-ts/lib/function'
 import { pipe } from 'fp-ts/lib/pipeable'
-import { Errors } from 'io-ts'
-import { Builder } from 'njsx'
 import { div } from 'njsx-react'
 
 import Repo, { RepoSkeleton } from './repo'
 import { list } from './repos.styles'
 
-import { Repo as RepoType } from 'api'
+import { RemoteRepos } from 'api'
 
-const loading = () =>
-  pipe(range(0, 30), map(RepoSkeleton), list)
+const loading: Lazy<typeof list> = pipe(
+  range(0, 30),
+  map(RepoSkeleton),
+  list,
+  constant
+)
 
-const Repos = RD.fold<Errors, RepoType[], Builder<unknown>>(
+const Repos: (repos: RemoteRepos) => typeof list = RD.fold(
   loading,
   loading,
-  flow(console.error, constant(div('Error fetching data'))),
+  flow(
+    console.error,
+    constant(list(div('Error fetching data')))
+  ),
   flow(map(Repo), list)
 )
 

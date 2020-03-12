@@ -1,7 +1,7 @@
 import './index.css'
 
+import { tw } from 'lib'
 import { h1, main } from 'njsx-react'
-import { tw } from 'src/utils'
 
 export const heading = h1(
   tw('mt-6', 'text-2xl', 'text-center')

@@ -1,7 +1,7 @@
 import { header, div, a } from 'njsx-react'
-import { tw } from 'src/utils'
+import { tw } from 'lib'
 
-export const Logo = a(
+export const Logo: typeof a = a(
   tw(
     'mr-auto',
     'opacity-75',
@@ -10,7 +10,7 @@ export const Logo = a(
     'sm:flex'
   )
 )
-export const Header = header(
+export const Header: typeof header = header(
   tw(
     'fixed',
     'top-0',
@@ -23,7 +23,7 @@ export const Header = header(
   )
 )
 
-export const Toolbar = div(
+export const Toolbar: typeof div = div(
   tw(
     'relative',
     'flex',

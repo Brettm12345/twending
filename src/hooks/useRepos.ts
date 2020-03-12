@@ -1,24 +1,20 @@
 import * as RD from '@devexperts/remote-data-ts'
 import axios from 'axios'
-import { map, array } from 'fp-ts/lib/Array'
+import { array, map } from 'fp-ts/lib/Array'
 import { pipe } from 'fp-ts/lib/pipeable'
 import * as T from 'fp-ts/lib/Task'
-
 import { task } from 'fp-ts/lib/Task'
 import { useEffect, useState } from 'react'
 import { useNumber } from 'react-hanger'
-import createPersistedState from 'use-persisted-state'
+import makePersistedState from 'use-persisted-state'
+
+import { ApiResponse, Query, RemoteRepos } from 'api'
+import { joinRD } from 'lib'
 import {
   allLanguages,
   OptionType as LanguageType,
 } from 'src/data/languages'
 import { OptionType as PeriodType } from 'src/data/period'
-import {
-  Query,
-  RemoteRepos,
-  ApiResponse,
-} from 'src/pages/api'
-import { joinRD } from 'src/utils'
 
 export const fetchRepos = (params: Query) =>
   pipe(
@@ -31,8 +27,8 @@ export const fetchRepos = (params: Query) =>
     )
   )
 
-const usePeriod = createPersistedState('period')
-const useLanguage = createPersistedState('language')
+const usePeriod = makePersistedState('period')
+const useLanguage = makePersistedState('language')
 
 type SelectInput<T> = [T, (value: T) => void]
 interface UseReposResult {

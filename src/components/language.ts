@@ -2,8 +2,9 @@ import { pipe } from 'fp-ts/lib/pipeable'
 import njsx from 'njsx'
 import { span } from 'njsx-react'
 import styled from 'styled-components'
+
+import { tw } from 'lib'
 import { getColor } from 'src/data/languages'
-import { tw } from 'src/utils'
 
 const dot = pipe(
   styled.span.attrs(

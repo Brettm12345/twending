@@ -1,5 +1,6 @@
 import { button } from 'njsx-react'
-import { tw } from 'src/utils'
+
+import { tw } from 'lib'
 
 export const Button = button(
   tw(

@@ -1,9 +1,11 @@
 import { svg, span } from 'njsx-react'
-import { tw } from 'src/utils'
+import { tw } from 'lib'
 
-export const item = span(tw('inline-flex', 'mr-4'))
+export const item: typeof span = span(
+  tw('inline-flex', 'mr-4')
+)
 
-export const icon = svg(
+export const icon: typeof svg = svg(
   tw('fill-current', 'mx-1', '-mt-px')
 )({
   height: '1.4em',

@@ -1,5 +1,5 @@
 import { svg, path } from 'njsx-react'
-import { tw } from 'src/utils'
+import { tw } from 'lib'
 
 const size = 20
 

@@ -4,7 +4,8 @@ import { div } from 'njsx-react'
 import { useEffect } from 'react'
 import { useInView } from 'react-intersection-observer'
 
-import { useRepos } from '../hooks'
+import { useRepos } from 'src/hooks'
+import { tw } from 'lib'
 import {
   AppBar,
   Head,
@@ -14,7 +15,6 @@ import {
   ScrollToTop,
 } from 'src/components'
 import { app, heading } from 'src/styles'
-import { tw } from 'src/utils'
 
 const Home: NextPage = () => {
   const {

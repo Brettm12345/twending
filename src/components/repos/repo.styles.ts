@@ -1,7 +1,8 @@
 import { li, a, h3, p, div, time } from 'njsx-react'
-import { tw } from 'src/utils'
 
-export const repo = li(
+import { tw } from 'lib'
+
+export const repo: typeof li = li(
   tw(
     'flex',
     'p-5',
@@ -20,21 +21,23 @@ export const repo = li(
   )
 )
 
-export const link = a({
+export const link: typeof a = a({
   rel: 'noopener noreferrer',
   target: '_blank',
 })(tw('flex', 'flex-col', 'flex-grow', 'outline-none'))
 
-export const title = h3(tw('text-lg', 'text-white'))
+export const title: typeof h3 = h3(
+  tw('text-lg', 'text-white')
+)
 
-export const date = time(
+export const date: typeof time = time(
   tw('text-xs', 'text-gray-400', 'mb-1')
 )
 
-export const description = p(
+export const description: typeof p = p(
   tw('max-w-3xl', 'mb-4', 'text-gray-300', 'w-10/12')
 )
 
-export const info = div(
+export const info: typeof div = div(
   tw('flex', 'mt-auto', 'text-sm', 'text-gray-400')
 )

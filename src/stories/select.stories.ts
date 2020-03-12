@@ -7,7 +7,7 @@ import {
   OptionType as LanguageType,
 } from 'src/data/languages'
 import { OptionType as PeriodType } from 'src/data/period'
-import { tw } from 'src/utils'
+import { tw } from 'lib'
 
 storiesOf('Select', module)
   .addDecorator(storyFn =>

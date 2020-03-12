@@ -1,7 +1,8 @@
 import { a, img } from 'njsx-react'
-import { tw } from 'src/utils'
 
-export const link = a(
+import { tw } from 'lib'
+
+export const link: typeof a = a(
   tw(
     'hidden',
     'flex-shrink-0',
@@ -16,6 +17,6 @@ export const link = a(
   )
 )
 
-export const avatar = img(tw('rounded-lg'))({
+export const avatar: typeof img = img(tw('rounded-lg'))({
   alt: 'Author avatar',
 })

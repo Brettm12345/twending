@@ -42,7 +42,7 @@ const Repo = ({
     ]),
   ])
 
-export const RepoSkeleton = () =>
+export const RepoSkeleton = (): typeof repo =>
   repo({
     style: { lineHeight: 0.8 },
   })([

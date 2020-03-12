@@ -12,7 +12,7 @@ import {
 } from './list.json'
 import { Language, OptionType } from './types'
 import * as theme from 'src/data/theme'
-import { makeOption, lookup } from 'src/utils'
+import { makeOption, lookup } from 'lib'
 
 const {
   colors: { gray },

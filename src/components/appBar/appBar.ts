@@ -8,7 +8,7 @@ import { repoLink } from 'src/data/constants'
 
 const GitHub = njsx(Feather.GitHub)
 
-const AppBar = (children: ReactNode[]) =>
+const AppBar = (children: ReactNode[]): typeof Header =>
   Header(
     Toolbar([
       Logo({ href: repoLink })(
