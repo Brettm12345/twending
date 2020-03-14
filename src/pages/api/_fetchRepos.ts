@@ -16,12 +16,12 @@ import * as OP from 'optics-ts'
 import { cache } from './_cache'
 import { Repo, GithubResponse } from './_types'
 import { handleResponse } from './_util'
+import { join } from 'lib'
 import {
   SpecificLanguage,
   replace,
 } from 'src/data/languages'
 import { Value as Period } from 'src/data/period'
-import { join } from 'lib'
 
 const octokit = new Octokit({
   auth: `token ${process.env.GITHUB_TOKEN}`,

@@ -1,13 +1,13 @@
 import { storiesOf } from '@storybook/react'
 import { div } from 'njsx-react'
 import { useState } from 'react'
+import { tw } from 'lib'
 import { Period, Language } from 'src/components'
 import {
   allLanguages,
   OptionType as LanguageType,
 } from 'src/data/languages'
 import { OptionType as PeriodType } from 'src/data/period'
-import { tw } from 'lib'
 
 storiesOf('Select', module)
   .addDecorator(storyFn =>
