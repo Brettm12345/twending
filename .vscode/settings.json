@@ -26,5 +26,6 @@
     "Twending",
     "maxage",
     "octokit"
-  ]
+  ],
+  "cSpell.enabled": true
 }

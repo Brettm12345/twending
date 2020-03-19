@@ -3,7 +3,7 @@ import { tw } from 'lib'
 
 const size = 20
 
-const caret = (isMenuOpen: boolean) =>
+const caret = (isMenuOpen: boolean): typeof svg =>
   svg(
     tw(
       'fill-current',

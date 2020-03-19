@@ -7,12 +7,12 @@ import { meta, title } from 'njsx-react'
 import { createElement, LinkHTMLAttributes } from 'react'
 
 import { description, name } from 'src/data/constants'
-import { colors } from 'src/data/theme'
+import { colors } from 'src/styles/theme'
 
 const head = njsx(NextHead)
 const { blue, gray } = colors
 
-const Head = head([
+const Head: typeof head = head([
   pipe(
     [
       {
@@ -56,7 +56,7 @@ const Head = head([
       'theme-color': gray[800],
       viewport: 'initial-scale=1.0, width=device-width',
     }),
-    map(([name, content]: string[]) =>
+    map(([name, content]: string[]): typeof meta =>
       meta({ content, name })
     )
   ),

@@ -7,7 +7,7 @@ module.exports = {
   moduleFileExtensions: ['js', 'ts', 'tsx', 'html'],
   moduleNameMapper: {
     '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
-    '^api/(.*)$': '<rootDir>/src/pages/api/$1',
+    '^api': '<rootDir>/src/pages/api',
     '^src/(.*)$': '<rootDir>/src/$1',
   },
   preset: 'ts-jest/presets/js-with-babel',

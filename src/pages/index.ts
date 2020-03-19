@@ -14,7 +14,7 @@ import {
   ScrollToTop,
 } from 'src/components'
 import { useRepos } from 'src/hooks'
-import { app, heading } from 'src/styles'
+import { app, heading } from 'src/styles/home'
 
 const Home: NextPage = () => {
   const {

@@ -1,5 +1,7 @@
-import { Octokit } from '@octokit/rest'
-import { OctokitResponse } from '@octokit/types'
+import { get } from 'axios-fp-ts/lib/client'
+import { HttpError } from 'axios-fp-ts/lib/error'
+import { expected } from 'axios-fp-ts/lib/expected'
+import { toTaskEither } from 'axios-fp-ts/lib/taskEither'
 import dayjs from 'dayjs'
 import memoize from 'fast-memoize'
 import { map } from 'fp-ts/lib/Array'
@@ -7,50 +9,38 @@ import { fold } from 'fp-ts/lib/Either'
 import { constant, flow } from 'fp-ts/lib/function'
 import * as O from 'fp-ts/lib/Option'
 import { pipe } from 'fp-ts/lib/pipeable'
-import * as T from 'fp-ts/lib/Task'
 import * as TE from 'fp-ts/lib/TaskEither'
-import { Errors } from 'io-ts'
-import { formatValidationError } from 'io-ts-reporters'
-import * as OP from 'optics-ts'
 
-import { cache } from './_cache'
-import { Repo, GithubResponse } from './_types'
-import { handleResponse } from './_util'
 import { join } from 'lib'
 import {
-  SpecificLanguage,
   replace,
+  SpecificLanguage,
 } from 'src/data/languages'
 import { Value as Period } from 'src/data/period'
+import { cache } from './_cache'
+import { GithubResponse, RepoTaskEither } from './_types'
+import { handleResponse } from './_util'
 
-const octokit = new Octokit({
-  auth: `token ${process.env.GITHUB_TOKEN}`,
-})
-
-const data = OP.optic<OctokitResponse<unknown>>().prop(
-  'data'
-)
-
-const decode = flow(OP.get(data), GithubResponse.decode)
-
-const search = (q: string) => () =>
-  octokit.search.repos({ order: 'desc', q, sort: 'stars' })
-
-const logError: Endomorphism<Errors> = errors => {
+const logError: Endomorphism<HttpError> = errors => {
   console.error(
     'Failed to decode github response',
-    errors.map(formatValidationError)
+    JSON.stringify(errors)
   )
   return errors
 }
-const gh = (q: string): TaskEither<Errors, Repo[]> =>
+
+const baseUrl =
+  'https://api.github.com/search/repositories?sort=stars&order=desc&q='
+
+const gh = (q: string): RepoTaskEither =>
   pipe(
     cache.get(q),
     O.fold(
       () =>
         pipe(
-          search(q),
-          T.map(decode),
+          toTaskEither(
+            get(baseUrl + q, expected(GithubResponse))
+          ),
           TE.mapLeft(logError),
           TE.map(handleResponse),
           TE.chain(cache.set(q))
@@ -89,14 +79,12 @@ type QueryFN<T> = (options: {
   language: string
 }) => (page?: number) => T
 
-const buildQuery: QueryFN<string> = memoize(
+const buildQuery = memoize<QueryFN<string>>(
   ({ period, language }) => (page = 0) =>
     `${getLanguage(language)}+${getPage(period, page)}`
 )
 
-const fetchRepos: QueryFN<TaskEither<
-  Errors,
-  Repo[]
->> = options => flow(buildQuery(options), gh)
+const fetchRepos: QueryFN<RepoTaskEither> = options =>
+  flow(buildQuery(options), gh)
 
 export default fetchRepos

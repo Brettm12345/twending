@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/camelcase, @typescript-eslint/naming-convention */
 import * as t from 'io-ts'
-import { Errors, TypeOf } from 'io-ts'
+import { TypeOf } from 'io-ts'
+import { HttpError } from 'axios-fp-ts/lib/error'
 
 export const GithubUser = t.type({
   /** Link to the users avatar */
@@ -57,7 +58,8 @@ export const Repo = t.type({
   url: t.string,
 })
 export type Repo = TypeOf<typeof Repo>
-export type RemoteRepos = RemoteData<Errors, Repo[]>
+export type RepoTaskEither = TaskEither<HttpError, Repo[]>
+export type RemoteRepos = RemoteData<HttpError, Repo[]>
 export type RepoTask = Task<RemoteRepos>
 
 export const ApiResponse = t.array(Repo)

@@ -11,7 +11,7 @@ module.exports = {
   plugins: ['caret-color'].map(p =>
     require(`tailwind-${p}`)()
   ),
-  theme: require('./src/data/theme'),
+  theme: require('./src/styles/theme'),
   variants: {
     borderWidth: ['responsive', 'last', 'hover', 'focus'],
   },

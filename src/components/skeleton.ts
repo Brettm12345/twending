@@ -1,9 +1,10 @@
 import { map, range } from 'fp-ts/lib/Array'
 import { pipe } from 'fp-ts/lib/pipeable'
+import * as CSS from 'csstype'
 import { keyframes } from 'styled-components'
 
 import { styled } from 'lib'
-import { colors } from 'src/data/theme'
+import { colors } from 'src/styles/theme'
 
 const { gray } = colors
 
@@ -19,7 +20,7 @@ const pulse = keyframes`
   }
 `
 
-const skeletonItem = styled('span')`
+const item = styled('span')`
   background-color: ${gray[600]};
   border-radius: 2px;
   display: inline-block;
@@ -28,24 +29,24 @@ const skeletonItem = styled('span')`
   animation: ${pulse} 1.5s ease-in-out 0.5s infinite;
 `
 
-interface SkeletonProps {
+interface SkeletonProps extends CSS.Properties {
   count?: number
-  width?: number | string
-  height?: number | string
   circle?: boolean
 }
 
 const Skeleton = ({
   count = 1,
-  height,
-  width,
-}: SkeletonProps): Array<typeof skeletonItem> =>
+  circle = false,
+  ...style
+}: SkeletonProps): Array<typeof item> =>
   pipe(
     range(1, count),
     map(key =>
-      skeletonItem({
+      item({
         key,
-        style: { height, width },
+        style: circle
+          ? { borderRadius: '100%', ...style }
+          : style,
       })
     )
   )

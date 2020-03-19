@@ -1,5 +1,4 @@
 import { NowRequest, NowResponse } from '@now/node'
-import { map } from 'fp-ts/lib/Array'
 import * as Console from 'fp-ts/lib/Console'
 import * as E from 'fp-ts/lib/Either'
 import { flow } from 'fp-ts/lib/function'
@@ -7,14 +6,13 @@ import { chain } from 'fp-ts/lib/IO'
 import { pipe } from 'fp-ts/lib/pipeable'
 import * as T from 'fp-ts/lib/Task'
 
-import { ValidationError } from 'io-ts'
-import { formatValidationError } from 'io-ts-reporters'
 import { calculateMaxAge } from './_cache'
 import fetchRepos from './_fetchRepos'
 import { Repo } from './_types'
 import { all } from 'src/data/constants'
 import { Language } from 'src/data/languages/types'
 import { Value as Period } from 'src/data/period/types'
+import { HttpError } from 'axios-fp-ts/lib/error'
 
 export * from './_types'
 
@@ -39,10 +37,7 @@ const handler = (
     data: A
   ): IO<void> => () => res.status(status).end(data)
 
-  const handleErr: (
-    errors: ValidationError[]
-  ) => IO<void> = flow(
-    map(formatValidationError),
+  const handleErr: (errors: HttpError) => IO<void> = flow(
     E.toError,
     err =>
       pipe(

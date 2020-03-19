@@ -1,40 +1,30 @@
 import { pipe } from 'fp-ts/lib/pipeable'
-import njsx from 'njsx'
 import { span } from 'njsx-react'
-import styled from 'styled-components'
 
-import { tw } from 'lib'
+import { tw, styled } from 'lib'
 import { getColor } from 'src/data/languages'
 
 const dot = pipe(
-  styled.span.attrs(
-    tw(
-      'inline-block',
-      'mr-1',
-      'border',
-      'relative',
-      'rounded-full',
-      'border-gray-700'
-    )
-  )`
+  tw(
+    'inline-block',
+    'mr-1',
+    'border',
+    'relative',
+    'rounded-full',
+    'border-gray-700'
+  ),
+  styled('span')`
     content: ' ';
     height: 2ex;
     line-height: 1.3;
     width: 2ex;
     bottom: -0.2ex;
-  `,
-  njsx
+  `
 )
 
-const Language = (language: string) =>
+const Language = (language: string): typeof span =>
   span(
-    tw(
-      'inline-flex',
-      'mr-4',
-      'ellipsis',
-      'font-medium',
-      'leading-5'
-    )
+    tw('inline-flex', 'mr-4', 'font-medium', 'leading-5')
   )([
     dot({ style: { backgroundColor: getColor(language) } }),
     language,

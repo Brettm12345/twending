@@ -14,7 +14,7 @@ import {
   description as Description,
   info as Info,
 } from './repo.styles'
-import { Skeleton } from 'src/components'
+import Skeleton from 'src/components/skeleton'
 import Language from 'src/components/language'
 import { Repo as RepoType } from 'src/pages/api'
 

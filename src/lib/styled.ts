@@ -1,7 +1,7 @@
 import { flow } from 'fp-ts/lib/function'
 import njsx from 'njsx'
 import { ComponentType } from 'react'
-import * as SC from 'styled-components'
+import SC from 'styled-components'
 
 export const styled = <
   C extends
@@ -9,4 +9,4 @@ export const styled = <
     | ComponentType<unknown>
 >(
   component: C
-) => flow(SC.default(component), njsx)
+) => flow(SC(component), njsx)

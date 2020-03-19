@@ -1,7 +1,7 @@
 type Option<A> = import('fp-ts/lib/Option').Option<A>
 type OptionTuple<A, B> = Option<[A, B]>
 type Either<E, A> = import('fp-ts/lib/Either').Either<E, A>
-type Mixed = import('io-ts')
+type Mixed = import('io-ts').Mixed
 type RemoteData<
   E,
   A

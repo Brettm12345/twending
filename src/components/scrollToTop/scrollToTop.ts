@@ -7,7 +7,7 @@ import { Button } from './scrollToTop.styles'
 const UpArrow = njsx(ArrowUp)
 const Tippy = njsx(TippyJS)
 
-const ScrollToTop = () =>
+const ScrollToTop = (): typeof Tippy =>
   Tippy({
     content: 'Scroll to top',
     theme: 'material',

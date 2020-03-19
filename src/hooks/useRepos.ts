@@ -1,7 +1,9 @@
 import * as RD from '@devexperts/remote-data-ts'
-import axios from 'axios'
+import { get } from 'axios-fp-ts/lib/client'
+import { expected } from 'axios-fp-ts/lib/expected'
 import { array, map } from 'fp-ts/lib/Array'
 import { pipe } from 'fp-ts/lib/pipeable'
+import * as QS from 'query-string'
 import * as T from 'fp-ts/lib/Task'
 import { task } from 'fp-ts/lib/Task'
 import { useEffect, useState } from 'react'
@@ -9,21 +11,23 @@ import { useNumber } from 'react-hanger'
 import makePersistedState from 'use-persisted-state'
 
 import { ApiResponse, Query, RemoteRepos } from 'api'
-import { joinRD } from 'lib'
+import { joinRD, toRemoteData } from 'lib'
 import {
   allLanguages,
   OptionType as LanguageType,
 } from 'src/data/languages'
 import { OptionType as PeriodType } from 'src/data/period'
 
-export const fetchRepos = (params: Query) =>
-  pipe(
-    () =>
-      axios.get('/api', {
-        params,
+export const fetchRepos = (
+  query: Query
+): Task<RemoteRepos> =>
+  toRemoteData(
+    get(
+      QS.stringifyUrl({
+        url: '/api',
+        query: query as QS.ParsedQuery,
       }),
-    T.map(({ data }) =>
-      pipe(ApiResponse.decode(data), RD.fromEither)
+      expected(ApiResponse)
     )
   )
 

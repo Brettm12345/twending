@@ -1,13 +1,15 @@
 import './select.css'
 import njsx from 'njsx'
-import { Select as FunctionalSelect } from 'react-functional-select'
+import { Select as FS } from 'react-functional-select'
 import { SelectProps } from 'react-functional-select/dist/Select'
 import { useBoolean } from 'react-hanger'
 
 import caret from './select.caret'
-import { colors } from 'src/data/theme'
+import { colors } from 'src/styles/theme'
 
 const { gray, blue } = colors
+
+const FunctionalSelect = njsx(FS)
 
 const Select = <T>({
   options,
@@ -15,7 +17,9 @@ const Select = <T>({
 }: { options: T[] } & SelectProps) => ([
   initialValue,
   onOptionChange,
-]: [T, (data: T) => void]) => {
+]: [T, (data: T) => void]):
+  | false
+  | typeof FunctionalSelect => {
   const {
     setFalse: onMenuClose,
     setTrue: onMenuOpen,
@@ -24,7 +28,7 @@ const Select = <T>({
   const renderCaret = caret(isOpen)
   return (
     typeof window !== 'undefined' &&
-    njsx(FunctionalSelect)({
+    FunctionalSelect({
       ...props,
       addClassNames: true,
       caretIcon: renderCaret(),

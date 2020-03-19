@@ -2,7 +2,7 @@ import { button } from 'njsx-react'
 
 import { tw } from 'lib'
 
-export const Button = button(
+export const Button: typeof button = button(
   tw(
     'fixed',
     'bottom-0',
