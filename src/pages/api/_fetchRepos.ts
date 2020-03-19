@@ -38,11 +38,9 @@ const gh = (q: string): RepoTaskEither =>
     O.fold(
       () =>
         pipe(
-          toTaskEither(
-            get(baseUrl + q, expected(GithubResponse))
-          ),
-          TE.mapLeft(logError),
-          TE.map(handleResponse),
+          get(baseUrl + q, expected(GithubResponse)),
+          toTaskEither,
+          TE.bimap(logError, handleResponse),
           TE.chain(cache.set(q))
         ),
       TE.right
