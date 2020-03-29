@@ -11,7 +11,8 @@ import { useNumber } from 'react-hanger'
 import makePersistedState from 'use-persisted-state'
 
 import { ApiResponse, Query, RemoteRepos } from 'api'
-import { joinRD, toRemoteData } from 'lib'
+import { toRemoteData } from 'axios-fp-ts/lib/remoteData'
+import { joinRD } from 'lib'
 import {
   allLanguages,
   OptionType as LanguageType,

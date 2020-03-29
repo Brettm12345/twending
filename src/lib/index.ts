@@ -1,4 +1,3 @@
-export * from './axios'
 export * from './remoteData'
 export * from './array'
 export * from './select'
