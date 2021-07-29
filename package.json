@@ -23,7 +23,7 @@
   "dependencies": {
     "@devexperts/remote-data-ts": "^2.0.3",
     "@tippy.js/react": "^3.1.1",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "axios-fp-ts": "^1.1.0",
     "dayjs": "^1.8.23",
     "fast-memoize": "^2.5.1",
