@@ -2,7 +2,7 @@
 .rfs-select-container {
   min-width: 8rem;
   max-width: 12rem;
-  @apply mx-2 flex-grow text-gray-200;
+  @apply border-2 border-transparent mx-2 flex-grow text-gray-200;
 }
 .rfs-select-container:focus,
 .rfs-select-container:hover .rfs-control-container {

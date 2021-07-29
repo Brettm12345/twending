@@ -136,8 +136,5 @@
     "typescript": "^3.8.3",
     "typescript-require": "^0.2.10",
     "webpack": "^4.42.1"
-  },
-  "engines": {
-    "node": "10.x"
   }
 }
