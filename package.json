@@ -109,7 +109,7 @@
     "identity-obj-proxy": "^3.0.0",
     "jest": "^25.2.3",
     "jest-image-snapshot": "^3.0.1",
-    "next": "^9.3.2",
+    "next": "^11.1.0",
     "next-cli": "^1.0.0",
     "next-offline": "^5.0.0",
     "now": "^17.1.1",
