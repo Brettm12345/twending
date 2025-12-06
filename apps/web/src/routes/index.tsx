@@ -50,7 +50,7 @@ function HomeComponent() {
   )
   return (
     <div className="flex flex-col">
-      <header className="h-16 bg-accent shadow-sm border-b border-border flex items-center justify-between px-4 fixed top-0 left-0 right-0">
+      <header className="h-16 bg-accent shadow-sm border-b border-border flex items-center justify-between px-4 fixed top-0 left-0 right-0 z-10">
         <a href="https://github.com/brettm12345/twending" target="_blank">
           <Github className="size-10" />
         </a>
