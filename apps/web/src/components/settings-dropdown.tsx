@@ -5,6 +5,7 @@ import {
   DialogContent,
   DialogDescription,
   DialogHeader,
+  DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
 import {
@@ -17,7 +18,6 @@ import {
 import {Switch} from '@/components/ui/switch'
 import {setThemeServerFn} from '@/lib/theme'
 import {Route} from '@/routes/__root'
-import {DialogTitle} from '@radix-ui/react-dialog'
 import {useRouter} from '@tanstack/react-router'
 import {Key, Moon, Settings} from 'lucide-react'
 import {useState} from 'react'
