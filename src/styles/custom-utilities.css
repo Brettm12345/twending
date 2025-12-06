@@ -1,4 +1,0 @@
-.ellipsis {
-  text-overflow: ellipsis;
-  @apply whitespace-no-wrap overflow-x-hidden;
-}
