@@ -50,7 +50,7 @@ function HomeComponent() {
   )
   return (
     <div className="flex flex-col">
-      <header className="h-16 bg-card shadow-sm border-b border-border flex items-center justify-between px-4">
+      <header className="h-16 bg-card shadow-sm border-b border-border flex items-center justify-between px-4 fixed top-0 left-0 right-0">
         <a href="https://github.com/brettm12345/twending" target="_blank">
           <Github className="size-10" />
         </a>
@@ -60,7 +60,7 @@ function HomeComponent() {
           <SettingsDropdown />
         </div>
       </header>
-      <h1 className="text-2xl font-bold text-center mt-16">
+      <h1 className="text-2xl font-bold text-center mt-32">
         Trending Repositories
       </h1>
       <div className="container mx-auto rounded-2xl bg-card mt-16 mb-4 border border-border">
