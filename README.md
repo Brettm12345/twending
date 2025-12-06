@@ -1,55 +1,59 @@
-<h1 align="center">
-  Twending
-</h1>
+# my-better-t-app
 
-<p align="center">
-  <a href="https://codechecks.io">
-    <img
-      alt="Code Checks"
-      src="https://raw.githubusercontent.com/codechecks/docs/master/images/badges/badge-default.svg?sanitize=true"
-    />
-  </a>
-  <a href="https://github.com/Brettm12345/twending/actions?query=workflow%3ACI">
-    <img
-      style="margin: 0px 2px;"
-      alt="CI Workflow Status"
-      src="https://github.com/Brettm12345/twending/workflows/CI/badge.svg"
-    />
-  </a>
-  <a href="https://codeclimate.com/github/Brettm12345/twending/maintainability">
-    <img
-      alt="Maintainability"
-      src="https://api.codeclimate.com/v1/badges/072e2e327dabeef158a6/maintainability"
-    />
-  </a>
-</p>
+This project was created with [Better-T-Stack](https://github.com/AmanVarshney01/create-better-t-stack), a modern TypeScript stack that combines React, TanStack Start, Self, TRPC, and more.
 
-<p align="center">
-  Yet another github trending web application.
-</p>
+## Features
 
-<a href="https://twending.now.sh">
-  <img
-    align="center"
-    alt="Screenshot"
-    src="https://raw.githubusercontent.com/Brettm12345/twending/master/public/screenshot.png"
-  />
-</a>
+- **TypeScript** - For type safety and improved developer experience
+- **TanStack Start** - SSR framework with TanStack Router
+- **React Native** - Build mobile apps using React
+- **Expo** - Tools for React Native development
+- **TailwindCSS** - Utility-first CSS for rapid UI development
+- **shadcn/ui** - Reusable UI components
+- **tRPC** - End-to-end type-safe APIs
+- **Authentication** - Better-Auth
+- **Turborepo** - Optimized monorepo build system
 
-## Twending is
+## Getting Started
 
-- _instant_ by automatically fetches the next page while you're reading the current one
-- _lightweight_ the total build build under 100kB
+First, install the dependencies:
 
-## Development
-
-To get started with development use these commands
-
-```zsh
-git clone https://github.com/brettm12345/twending
-yarn install
-yarn dev
+```bash
+pnpm install
 ```
 
-Then rename [`.env.sample`](./.env.sample) to `.env.build` and
-[create a personal access token](https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line)
+
+Then, run the development server:
+
+```bash
+pnpm run dev
+```
+
+Open [http://localhost:3001](http://localhost:3001) in your browser to see your fullstack application.
+Use the Expo Go app to run the mobile application.
+
+
+
+
+
+
+
+## Project Structure
+
+```
+my-better-t-app/
+├── apps/
+│   └── web/         # Fullstack application (React + TanStack Start)
+│   ├── native/      # Mobile application (React Native, Expo)
+├── packages/
+│   ├── api/         # API layer / business logic
+│   ├── auth/        # Authentication configuration & logic
+│   └── db/          # Database schema & queries
+```
+
+## Available Scripts
+
+- `pnpm run dev`: Start all applications in development mode
+- `pnpm run build`: Build all applications
+- `pnpm run check-types`: Check TypeScript types across all apps
+- `pnpm run dev:native`: Start the React Native/Expo development server

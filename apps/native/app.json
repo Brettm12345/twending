@@ -1,0 +1,17 @@
+{
+	"expo": {
+		"scheme": "my-better-t-app",
+		"userInterfaceStyle": "automatic",
+		"orientation": "default",
+		"web": {
+			"bundler": "metro"
+		},
+		"name": "my-better-t-app",
+		"slug": "my-better-t-app",
+		"plugins": ["expo-font"],
+		"experiments": {
+			"typedRoutes": true,
+			"reactCompiler": true
+		}
+	}
+}
