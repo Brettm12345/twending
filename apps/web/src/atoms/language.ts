@@ -1,16 +1,19 @@
-import {useAtom, useAtomValue, useSetAtom} from 'jotai'
-import {atomWithStorage} from 'jotai/utils'
+import { useAtom, useAtomValue, useSetAtom } from "jotai";
+import { atomWithStorage } from "jotai/utils";
 
-export const languageAtom = atomWithStorage<string>('language', 'All Languages')
+export const languageAtom = atomWithStorage<string>(
+	"language",
+	"All Languages",
+);
 
 export function useSetLanguage() {
-  return useSetAtom(languageAtom)
+	return useSetAtom(languageAtom);
 }
 
 export function useLanguageValue() {
-  return useAtomValue(languageAtom)
+	return useAtomValue(languageAtom);
 }
 
 export function useLanguage() {
-  return useAtom(languageAtom)
+	return useAtom(languageAtom);
 }

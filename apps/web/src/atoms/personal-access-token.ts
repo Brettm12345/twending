@@ -1,19 +1,19 @@
-import {useAtom, useAtomValue, useSetAtom} from 'jotai'
-import {atomWithStorage} from 'jotai/utils'
+import { useAtom, useAtomValue, useSetAtom } from "jotai";
+import { atomWithStorage } from "jotai/utils";
 
 export const personalAccessTokenAtom = atomWithStorage<string | null>(
-  'personalAccessToken',
-  null
-)
+	"personalAccessToken",
+	null,
+);
 
 export function usePersonalAccessToken() {
-  return useAtom(personalAccessTokenAtom)
+	return useAtom(personalAccessTokenAtom);
 }
 
 export function useSetPersonalAccessToken() {
-  return useSetAtom(personalAccessTokenAtom)
+	return useSetAtom(personalAccessTokenAtom);
 }
 
 export function usePersonalAccessTokenValue() {
-  return useAtomValue(personalAccessTokenAtom)
+	return useAtomValue(personalAccessTokenAtom);
 }

@@ -1,26 +1,21 @@
-import {useCallback, useEffect, useState} from 'react'
+import * as React from "react";
 
-function useIntersectionObserver(options: IntersectionObserverInit = {}) {
-  const [node, setNode] = useState<HTMLElement | null>(null)
-  const [isVisible, setIsVisible] = useState(false)
+export function useIntersectionObserver<T extends HTMLElement>(
+	ref: React.RefObject<T>,
+	options: IntersectionObserverInit = {},
+	onIntersection: (entry: IntersectionObserverEntry) => void,
+) {
+	React.useEffect(() => {
+		const observer = new IntersectionObserver(([entry]) => {
+			onIntersection(entry);
+		}, options);
 
-  const ref = useCallback((element: HTMLElement) => {
-    setNode(element)
-  }, [])
+		observer.observe(ref.current);
 
-  useEffect(() => {
-    if (!node) return
+		return () => {
+			observer.unobserve(ref.current);
+		};
+	}, [ref, options, onIntersection]);
 
-    const observer = new IntersectionObserver(([entry]) => {
-      setIsVisible(entry.isIntersecting)
-    }, options)
-
-    observer.observe(node)
-
-    return () => {
-      observer.unobserve(node)
-    }
-  }, [node, options])
-
-  return [ref, isVisible]
+	return ref;
 }

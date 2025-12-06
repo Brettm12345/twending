@@ -1,0 +1,13 @@
+{
+	"formatter": {
+		"enabled": true
+	},
+	"linter": {
+		"enabled": true
+	},
+	"javascript": {
+		"formatter": {
+			"enabled": true
+		}
+	}
+}

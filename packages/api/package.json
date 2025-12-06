@@ -1,27 +1,31 @@
 {
-  "name": "@twending/api",
-  "exports": {
-    ".": {
-      "default": "./src/index.ts"
-    },
-    "./*": {
-      "default": "./src/*.ts"
-    }
-  },
-  "type": "module",
-  "scripts": {},
-  "devDependencies": {
-    "@twending/config": "workspace:*"
-  },
-  "peerDependencies": {
-    "typescript": "^5"
-  },
-  "dependencies": {
-    "@trpc/client": "catalog:",
-    "@trpc/server": "catalog:",
-    "date-fns": "^4.1.0",
-    "dotenv": "catalog:",
-    "octokit": "^5.0.5",
-    "zod": "^4.1.11"
-  }
+	"name": "@twending/api",
+	"exports": {
+		".": {
+			"default": "./src/index.ts"
+		},
+		"./*": {
+			"default": "./src/*.ts"
+		}
+	},
+	"type": "module",
+	"scripts": {
+		"lint": "biome check .",
+		"lint:fix": "biome check . --write",
+		"format": "biome format . --write"
+	},
+	"devDependencies": {
+		"@twending/config": "workspace:*"
+	},
+	"peerDependencies": {
+		"typescript": "^5"
+	},
+	"dependencies": {
+		"@trpc/client": "catalog:",
+		"@trpc/server": "catalog:",
+		"date-fns": "^4.1.0",
+		"dotenv": "catalog:",
+		"octokit": "^5.0.5",
+		"zod": "^4.1.11"
+	}
 }

@@ -1,0 +1,42 @@
+{
+	"files": {
+		"includes": [
+			"components.json",
+			"package.json",
+			"src/**",
+			"vite.config.ts",
+			"tsconfig.json",
+			"biome.json",
+			"!**/*.gen.ts"
+		]
+	},
+	"css": {
+		"parser": {
+			"tailwindDirectives": true
+		}
+	},
+	"formatter": {
+		"enabled": true
+	},
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"a11y": {
+				"useSemanticElements": "off"
+			},
+			"nursery": {
+				"useSortedClasses": {
+					"options": {
+						"attributes": ["classList"],
+						"functions": ["clsx", "cva", "cn"]
+					}
+				}
+			}
+		}
+	},
+	"javascript": {
+		"formatter": {
+			"enabled": true
+		}
+	}
+}
