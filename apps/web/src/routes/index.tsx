@@ -63,35 +63,37 @@ function HomeComponent() {
       <h1 className="text-2xl font-bold text-center mt-32">
         Trending Repositories
       </h1>
-      <div className="container mx-auto rounded-2xl bg-card mt-16 mb-4 border border-border">
-        <ItemGroup>
-          {listRepositories.data?.pages.map((page, pageIndex) =>
-            page.repositories.map((repository, index) => (
-              <Fragment key={repository.id}>
-                <Repository
-                  repository={repository}
-                  ref={
-                    pageIndex === listRepositories.data?.pages.length - 1 &&
-                    index === page.repositories.length - 1
-                      ? lastRepoRef
-                      : null
-                  }
-                />
-                <ItemSeparator />
-              </Fragment>
-            ))
-          )}
-        </ItemGroup>
-        {listRepositories.isFetching && (
+      <div className="flex p-2 flex-1">
+        <div className="container mx-auto rounded-2xl bg-card mt-16 mb-4 border border-border">
           <ItemGroup>
-            {Array.from({length: 20}).map((_, index, array) => (
-              <Fragment key={index}>
-                <RepositorySkeleton />
-                {index !== array.length - 1 && <ItemSeparator />}
-              </Fragment>
-            ))}
+            {listRepositories.data?.pages.map((page, pageIndex) =>
+              page.repositories.map((repository, index) => (
+                <Fragment key={repository.id}>
+                  <Repository
+                    repository={repository}
+                    ref={
+                      pageIndex === listRepositories.data?.pages.length - 1 &&
+                      index === page.repositories.length - 1
+                        ? lastRepoRef
+                        : null
+                    }
+                  />
+                  <ItemSeparator />
+                </Fragment>
+              ))
+            )}
           </ItemGroup>
-        )}
+          {listRepositories.isFetching && (
+            <ItemGroup>
+              {Array.from({length: 20}).map((_, index, array) => (
+                <Fragment key={index}>
+                  <RepositorySkeleton />
+                  {index !== array.length - 1 && <ItemSeparator />}
+                </Fragment>
+              ))}
+            </ItemGroup>
+          )}
+        </div>
       </div>
     </div>
   )
