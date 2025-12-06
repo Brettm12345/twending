@@ -15,6 +15,7 @@ import {TRPCProvider} from './utils/trpc'
 export const queryClient = new QueryClient({
   queryCache: new QueryCache({
     onError: error => {
+      localStorage.clear()
       console.error(error)
     },
   }),
