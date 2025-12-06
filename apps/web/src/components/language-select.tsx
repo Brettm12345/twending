@@ -1,5 +1,7 @@
 'use client'
 
+import {ChevronDown} from 'lucide-react'
+
 import {useLanguage} from '@/atoms/language'
 import {LanguageIndicator} from '@/components/language-indicator'
 import {Button} from '@/components/ui/button'
@@ -13,7 +15,6 @@ import {
 } from '@/components/ui/command'
 import {Popover, PopoverContent, PopoverTrigger} from '@/components/ui/popover'
 import {languages} from '@/lib/languages'
-import {ChevronDown} from 'lucide-react'
 
 export const LanguageSelect = ({
   className,
