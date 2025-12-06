@@ -7,7 +7,7 @@ export type T = z.infer<typeof postThemeValidator>
 const storageKey = '_preferred-theme'
 
 export const getThemeServerFn = createServerFn().handler(
-  async () => (getCookie(storageKey) || 'light') as T
+  async () => (getCookie(storageKey) ?? 'dark') as T
 )
 
 export const setThemeServerFn = createServerFn({method: 'POST'})
