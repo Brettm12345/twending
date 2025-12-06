@@ -75,6 +75,7 @@ export const LanguageSelect = ({
           <Button variant="outline" {...props}>
             <LanguageIndicator language={language} />
             {language}
+            <ChevronDown />
           </Button>
         </DrawerTrigger>
         <DrawerContent>
