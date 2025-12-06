@@ -32,11 +32,44 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
         charSet: 'utf-8',
       },
       {
+        rel: 'icon',
+        type: 'image/png',
+        sizes: '512x512',
+        href: '/android-chrome-512x512.png',
+      },
+      {
+        rel: 'icon',
+        type: 'image/png',
+        sizes: '192x192',
+        href: '/android-chrome-192x192.png',
+      },
+      {
+        rel: 'icon',
+        type: 'image/png',
+        sizes: '180x180',
+        href: '/apple-touch-icon.png',
+      },
+      {
+        rel: 'icon',
+        type: 'image/png',
+        sizes: '16x16',
+        href: '/favicon-16x16.png',
+      },
+      {
         name: 'viewport',
         content: 'width=device-width, initial-scale=1',
       },
       {
-        title: 'My App',
+        title: 'Twending',
+        description:
+          'Twending is a new way to view trending repositories from github.',
+        ogTitle: 'Twending',
+        ogDescription:
+          'Twending is a new way to view trending repositories from github.',
+        ogUrl: 'https://twending.vercel.app',
+        ogType: 'website',
+        ogLocale: 'en_US',
+        ogSiteName: 'Twending',
       },
     ],
     links: [
