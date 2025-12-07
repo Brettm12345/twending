@@ -1,0 +1,20 @@
+{
+	"folders": [
+		{
+			"path": "..",
+			"name": "root"
+		},
+		{
+			"path": "apps/web",
+			"name": "web"
+		},
+		{
+			"path": "packages/api",
+			"name": "api"
+		},
+		{
+			"path": "packages/config",
+			"name": "config"
+		}
+	]
+}

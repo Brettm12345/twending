@@ -1,5 +1,7 @@
 "use client";
 
+import { ChevronDown } from "lucide-react";
+
 import { useLanguageValue, useSetLanguage } from "@/atoms/language";
 import { LanguageIndicator } from "@/components/language-indicator";
 import { Button } from "@/components/ui/button";
@@ -19,7 +21,6 @@ import {
 } from "@/components/ui/popover";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { languages } from "@/lib/languages";
-import { ChevronDown } from "lucide-react";
 
 function LanguageSelectContent() {
 	const setLanguage = useSetLanguage();
