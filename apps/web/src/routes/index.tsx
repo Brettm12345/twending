@@ -1,3 +1,8 @@
+import { useInfiniteQuery } from "@tanstack/react-query";
+import { createFileRoute } from "@tanstack/react-router";
+import { Github } from "lucide-react";
+import { Fragment, useRef } from "react";
+
 import { useLanguageValue } from "@/atoms/language";
 import { usePeriodValue } from "@/atoms/period";
 import { usePersonalAccessTokenValue } from "@/atoms/personal-access-token";
@@ -9,10 +14,6 @@ import { SettingsDropdown } from "@/components/settings-dropdown";
 import { ItemGroup, ItemSeparator } from "@/components/ui/item";
 import { useIntersectionObserver } from "@/hooks/use-intersection-observer";
 import { useTRPC } from "@/utils/trpc";
-import { useInfiniteQuery } from "@tanstack/react-query";
-import { createFileRoute } from "@tanstack/react-router";
-import { Github } from "lucide-react";
-import { Fragment, useRef } from "react";
 
 export const Route = createFileRoute("/")({
 	component: HomeComponent,

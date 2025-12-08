@@ -1,3 +1,7 @@
+import { useRouter } from "@tanstack/react-router";
+import { Key, Moon, Settings } from "lucide-react";
+import { useState } from "react";
+
 import { PersonalAccessTokenForm } from "@/components/personal-access-token-form";
 import { Button } from "@/components/ui/button";
 import { Command, CommandItem, CommandList } from "@/components/ui/command";
@@ -28,9 +32,6 @@ import { Switch } from "@/components/ui/switch";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { setThemeServerFn } from "@/lib/theme";
 import { Route } from "@/routes/__root";
-import { useRouter } from "@tanstack/react-router";
-import { Key, Moon, Settings } from "lucide-react";
-import { useState } from "react";
 
 export function SettingsDropdown({
 	className,

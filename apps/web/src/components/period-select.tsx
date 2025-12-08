@@ -1,3 +1,5 @@
+import { CalendarDays, ChevronDown } from "lucide-react";
+
 import { usePeriodValue, useSetPeriod } from "@/atoms/period";
 import { Button } from "@/components/ui/button";
 import {
@@ -15,7 +17,6 @@ import {
 	PopoverTrigger,
 } from "@/components/ui/popover";
 import { useMediaQuery } from "@/hooks/use-media-query";
-import { CalendarDays, ChevronDown } from "lucide-react";
 
 const periods = [
 	{ value: "daily", label: "Daily" } as const,
