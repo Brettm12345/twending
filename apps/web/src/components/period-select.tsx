@@ -58,7 +58,7 @@ export function PeriodSelect({
   if (isMobile) {
     return (
       <Drawer>
-        <DrawerTrigger>
+        <DrawerTrigger asChild>
           <Button variant="outline" className={className} {...props}>
             <CalendarDays />
             {currentPeriod?.label ?? "Daily"}
@@ -73,7 +73,7 @@ export function PeriodSelect({
   }
   return (
     <Popover>
-      <PopoverTrigger>
+      <PopoverTrigger asChild>
         <Button variant="outline" className={className} {...props}>
           <CalendarDays />
           {currentPeriod?.label ?? "Daily"}

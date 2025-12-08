@@ -76,7 +76,7 @@ export const LanguageSelect = ({
   if (isMobile) {
     return (
       <Drawer>
-        <DrawerTrigger>
+        <DrawerTrigger asChild>
           <Button variant="outline" {...props}>
             <LanguageIndicator language={language} />
             {language}
@@ -91,7 +91,7 @@ export const LanguageSelect = ({
   }
   return (
     <Popover>
-      <PopoverTrigger>
+      <PopoverTrigger asChild>
         <Button variant="outline" {...props}>
           <LanguageIndicator language={language} />
           {language}

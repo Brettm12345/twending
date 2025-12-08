@@ -45,7 +45,7 @@ export function SettingsDropdown({
     return (
       <Drawer open={open} onOpenChange={setOpen}>
         <Drawer>
-          <DrawerTrigger>
+          <DrawerTrigger asChild>
             <Button
               variant="outline"
               className={className}
@@ -111,7 +111,7 @@ export function SettingsDropdown({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DropdownMenu>
-        <DropdownMenuTrigger>
+        <DropdownMenuTrigger asChild>
           <Button
             variant="outline"
             className={className}
@@ -157,6 +157,7 @@ export function SettingsDropdown({
           <DialogDescription>
             Setup a personal access token
             <a
+              className="mx-0.5"
               href="https://github.com/settings/personal-access-tokens"
               target="_blank"
               rel="noopener noreferrer"
