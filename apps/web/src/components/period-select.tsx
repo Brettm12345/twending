@@ -53,7 +53,6 @@ export function PeriodSelect({
   ...props
 }: React.ComponentProps<typeof Button>) {
   const period = usePeriodValue();
-  const setPeriod = useSetPeriod();
   const currentPeriod = periods.find((p) => p.value === period);
   const isMobile = useMediaQuery("(max-width: 768px)");
   if (isMobile) {
@@ -82,23 +81,7 @@ export function PeriodSelect({
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0" align="end">
-        <Command>
-          <CommandInput placeholder="Search for a period" />
-          <CommandList>
-            <CommandEmpty>No periods found</CommandEmpty>
-            <CommandGroup heading="Period">
-              {periods.map((p) => (
-                <CommandItem
-                  key={p.value}
-                  value={p.value}
-                  onSelect={() => setPeriod(p.value)}
-                >
-                  {p.label}
-                </CommandItem>
-              ))}
-            </CommandGroup>
-          </CommandList>
-        </Command>
+        <PeriodSelectContent />
       </PopoverContent>
     </Popover>
   );
