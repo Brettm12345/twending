@@ -14,13 +14,17 @@ import {
 } from "@/components/ui/item";
 import { cn } from "@/lib/utils";
 
+type RouterOutput = inferRouterOutputs<AppRouter>;
+
+interface RepositoryProps extends ComponentProps<typeof Item> {
+  repository: RouterOutput["listRepositories"]["repositories"][number];
+}
+
 export function Repository({
   repository,
   className,
   ...props
-}: {
-  repository: inferRouterOutputs<AppRouter>["listRepositories"]["repositories"][number];
-} & ComponentProps<typeof Item>) {
+}: RepositoryProps) {
   return (
     <Item
       className={cn("hover:bg-border/10 py-8 px-6", className)}
