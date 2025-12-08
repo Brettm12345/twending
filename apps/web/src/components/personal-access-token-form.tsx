@@ -59,7 +59,7 @@ export function PersonalAccessTokenForm({ onClose }: { onClose: () => void }) {
           );
         }}
       />
-      <div className="flex sm:flex-row flex-col mt-4 justify-end gap-2">
+      <div className="flex sm:flex-row flex-col-reverse mt-4 justify-end gap-2">
         <DialogClose asChild>
           <Button variant="outline">Cancel</Button>
         </DialogClose>
