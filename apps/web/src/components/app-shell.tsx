@@ -7,7 +7,7 @@ import { AppBar } from "@/components/ui/app-bar";
 export function AppShell({ children, ...props }: React.ComponentProps<"div">) {
   return (
     <div {...props}>
-      <AppBar>
+      <AppBar position="fixed">
         <Logo />
         <div className="flex items-center gap-2">
           <LanguageSelect />
