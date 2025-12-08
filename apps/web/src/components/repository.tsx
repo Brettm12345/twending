@@ -1,9 +1,9 @@
-import type {inferRouterOutputs} from '@trpc/server'
-import type {AppRouter} from '@twending/api/routers/index'
-import {EyeIcon, GitBranchIcon, StarIcon} from 'lucide-react'
-import type {ComponentProps} from 'react'
+import type { inferRouterOutputs } from "@trpc/server";
+import type { AppRouter } from "@twending/api/routers/index";
+import { EyeIcon, GitBranchIcon, StarIcon } from "lucide-react";
+import type { ComponentProps } from "react";
 
-import {LanguageIndicator} from '@/components/language-indicator'
+import { LanguageIndicator } from "@/components/language-indicator";
 import {
   Item,
   ItemContent,
@@ -11,19 +11,19 @@ import {
   ItemFooter,
   ItemMedia,
   ItemTitle,
-} from '@/components/ui/item'
-import {cn} from '@/lib/utils'
+} from "@/components/ui/item";
+import { cn } from "@/lib/utils";
 
 export function Repository({
   repository,
   className,
   ...props
 }: {
-  repository: inferRouterOutputs<AppRouter>['listRepositories']['repositories'][number]
+  repository: inferRouterOutputs<AppRouter>["listRepositories"]["repositories"][number];
 } & ComponentProps<typeof Item>) {
   return (
     <Item
-      className={cn('hover:bg-border/10 py-8 px-6', className)}
+      className={cn("hover:bg-border/10 py-8 px-6", className)}
       asChild
       {...props}
     >
@@ -40,13 +40,13 @@ export function Repository({
         <ItemContent>
           <ItemTitle>{repository.name}</ItemTitle>
           <ItemDescription>
-            {repository.description ?? 'No description'}
+            {repository.description ?? "No description"}
           </ItemDescription>
           <ItemFooter className="justify-start [&>span]:text-sm [&>span]:font-normal [&>span]:text-muted-foreground [&>span]:inline-flex [&>span]:items-center [&>span]:gap-1 [&>span>svg]:size-4">
             <span>
               <LanguageIndicator
                 className="size-3"
-                language={repository.language ?? 'Unknown'}
+                language={repository.language ?? "Unknown"}
               />
               {repository.language}
             </span>
@@ -66,5 +66,5 @@ export function Repository({
         </ItemContent>
       </a>
     </Item>
-  )
+  );
 }

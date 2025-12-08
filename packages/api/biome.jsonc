@@ -1,0 +1,16 @@
+{
+  "root": false,
+  "formatter": {
+    "enabled": true,
+    "indentWidth": 2,
+    "indentStyle": "space"
+  },
+  "linter": {
+    "enabled": true
+  },
+  "javascript": {
+    "formatter": {
+      "enabled": true
+    }
+  }
+}

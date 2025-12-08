@@ -1,4 +1,5 @@
 {
+  "root": false,
   "files": {
     "includes": [
       "components.json",
@@ -18,7 +19,8 @@
   },
   "formatter": {
     "enabled": true,
-    "indentWidth": 2
+    "indentWidth": 2,
+    "indentStyle": "space"
   },
   "linter": {
     "enabled": true,

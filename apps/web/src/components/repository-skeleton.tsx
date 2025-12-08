@@ -1,4 +1,4 @@
-import type {ComponentProps} from 'react'
+import type { ComponentProps } from "react";
 
 import {
   Item,
@@ -7,16 +7,16 @@ import {
   ItemFooter,
   ItemMedia,
   ItemTitle,
-} from '@/components/ui/item'
-import {Skeleton} from '@/components/ui/skeleton'
-import {cn} from '@/lib/utils'
+} from "@/components/ui/item";
+import { Skeleton } from "@/components/ui/skeleton";
+import { cn } from "@/lib/utils";
 
 export function RepositorySkeleton({
   className,
   ...props
 }: ComponentProps<typeof Item>) {
   return (
-    <Item className={cn('py-8 px-6', className)} {...props}>
+    <Item className={cn("py-8 px-6", className)} {...props}>
       <ItemMedia variant="image">
         <Skeleton className="size-10 rounded-sm object-cover" />
       </ItemMedia>
@@ -34,5 +34,5 @@ export function RepositorySkeleton({
         <Skeleton className="w-16" />
       </ItemFooter>
     </Item>
-  )
+  );
 }
