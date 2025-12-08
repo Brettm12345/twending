@@ -1,0 +1,28 @@
+import { LanguageSelect } from "@/components/language-select";
+import { Logo } from "@/components/logo";
+import { PeriodSelect } from "@/components/period-select";
+import { SettingsDropdown } from "@/components/settings-dropdown";
+import { AppBar } from "@/components/ui/app-bar";
+
+export function AppShell({ children, ...props }: React.ComponentProps<"div">) {
+  return (
+    <div {...props}>
+      <AppBar>
+        <Logo />
+        <div className="flex items-center gap-2">
+          <LanguageSelect />
+          <PeriodSelect />
+          <SettingsDropdown />
+        </div>
+      </AppBar>
+      <h1 className="text-2xl font-bold text-center mt-32">
+        Trending Repositories
+      </h1>
+      <div className="flex p-2 flex-1">
+        <div className="container mx-auto rounded-2xl bg-card mt-16 mb-4 border border-border">
+          {children}
+        </div>
+      </div>
+    </div>
+  );
+}
