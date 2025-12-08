@@ -11,6 +11,7 @@
     "format": "biome format . --write"
   },
   "dependencies": {
+    "@fontsource-variable/geist": "^5.2.8",
     "@tailwindcss/vite": "^4.1.17",
     "@tanstack/react-form": "^1.27.1",
     "@tanstack/react-query": "catalog:",

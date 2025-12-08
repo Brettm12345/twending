@@ -104,7 +104,7 @@ function RootDocument() {
           <HeadContent />
         </head>
         <body>
-          <div className="grid h-svh grid-rows-[auto_1fr] bg-background antialiased">
+          <div className="grid h-svh grid-rows-[auto_1fr] bg-background">
             <Outlet />
           </div>
           <TanStackRouterDevtools position="bottom-left" />
