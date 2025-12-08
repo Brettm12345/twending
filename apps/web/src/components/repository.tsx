@@ -20,6 +20,18 @@ interface RepositoryProps extends ComponentProps<typeof Item> {
   repository: RouterOutput["listRepositories"]["repositories"][number];
 }
 
+function getAvatarUrl(avatarUrl: string) {
+  const githubUrl = avatarUrl.replace("https://", "").replace("?v=4", "");
+  const searchParams = new URLSearchParams({
+    url: githubUrl,
+    w: "40",
+    h: "40",
+    output: "webp",
+    maxage: "1w",
+  });
+  return `https://wsrv.nl/?${searchParams.toString()}`;
+}
+
 export function Repository({
   repository,
   className,
@@ -35,10 +47,14 @@ export function Repository({
         <ItemMedia variant="image">
           <img
             className="object-cover"
-            src={repository.owner?.avatar_url}
+            src={
+              repository.owner?.avatar_url
+                ? getAvatarUrl(repository.owner?.avatar_url)
+                : undefined
+            }
             alt={repository.owner?.login}
-            width={100}
-            height={100}
+            width={40}
+            height={40}
           />
         </ItemMedia>
         <ItemContent>
