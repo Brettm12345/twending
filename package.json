@@ -10,7 +10,8 @@
     "dev": "turbo dev",
     "build": "turbo build",
     "check-types": "turbo check-types",
-    "dev:web": "turbo -F web dev",
+    "dev:web": "turbo -F @twending/web dev",
+    "serve:web": "turbo -F @twending/web serve",
     "lint": "turbo lint",
     "lint:fix": "turbo lint:fix",
     "format": "turbo format"
