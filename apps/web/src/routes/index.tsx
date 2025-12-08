@@ -39,16 +39,23 @@ function HomeComponent() {
     ),
   );
   const lastRepoRef = useRef<HTMLDivElement>(null);
-  const handleIntersection = useCallback((entry: IntersectionObserverEntry) => {
-    if (entry.isIntersecting && listRepositories.hasNextPage) {
-      listRepositories.fetchNextPage();
-    }
-  }, [listRepositories]);
+  const handleIntersection = useCallback(
+    (entry: IntersectionObserverEntry) => {
+      if (entry.isIntersecting && listRepositories.hasNextPage) {
+        listRepositories.fetchNextPage();
+      }
+    },
+    [listRepositories],
+  );
 
-  useIntersectionObserver(lastRepoRef, {
-    rootMargin: "1000px",
-    threshold: 0,
-  }, handleIntersection);
+  useIntersectionObserver(
+    lastRepoRef,
+    {
+      rootMargin: "1000px",
+      threshold: 0,
+    },
+    handleIntersection,
+  );
 
   return (
     <div className="flex flex-col">
