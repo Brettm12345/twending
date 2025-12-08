@@ -1,7 +1,7 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { Github } from "lucide-react";
-import { Fragment, useRef } from "react";
+import { Fragment, useCallback, useRef } from "react";
 
 import { useLanguageValue } from "@/atoms/language";
 import { usePeriodValue } from "@/atoms/period";
@@ -33,23 +33,23 @@ function HomeComponent() {
       },
       {
         initialCursor: 1,
+        staleTime: 60 * 60 * 1000,
         getNextPageParam: (lastPage) => lastPage.nextCursor,
       },
     ),
   );
   const lastRepoRef = useRef<HTMLDivElement>(null);
-  useIntersectionObserver(
-    lastRepoRef,
-    {
-      rootMargin: "1000px",
-      threshold: 0,
-    },
-    (entry: IntersectionObserverEntry | null) => {
-      if (entry?.isIntersecting && listRepositories.hasNextPage) {
-        listRepositories.fetchNextPage();
-      }
-    },
-  );
+  const handleIntersection = useCallback((entry: IntersectionObserverEntry) => {
+    if (entry.isIntersecting && listRepositories.hasNextPage) {
+      listRepositories.fetchNextPage();
+    }
+  }, [listRepositories]);
+
+  useIntersectionObserver(lastRepoRef, {
+    rootMargin: "1000px",
+    threshold: 0,
+  }, handleIntersection);
+
   return (
     <div className="flex flex-col">
       <header className="h-16 bg-accent shadow-sm border-b border-border flex items-center justify-between px-4 fixed top-0 left-0 right-0 z-10">
