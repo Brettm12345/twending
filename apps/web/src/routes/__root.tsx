@@ -10,8 +10,10 @@ import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import type { TRPCOptionsProxy } from "@trpc/tanstack-react-query";
 import type { AppRouter } from "@twending/api/routers/index";
 import { Provider } from "jotai";
+import { useEffect, useState } from "react";
 
-import { getThemeServerFn } from "@/lib/theme";
+import { useMediaQuery } from "@/hooks/use-media-query";
+import { getThemeServerFn, type T as ThemePreference } from "@/lib/theme";
 
 import appCss from "../index.css?url";
 
@@ -95,11 +97,33 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
   component: RootDocument,
 });
 
+function useResolvedTheme(preference: ThemePreference) {
+  const prefersDark = useMediaQuery("(prefers-color-scheme: dark)");
+  const [resolved, setResolved] = useState<"light" | "dark">(
+    preference === "system" ? "dark" : preference,
+  );
+
+  useEffect(() => {
+    if (preference === "system") {
+      setResolved(prefersDark ? "dark" : "light");
+      return;
+    }
+    setResolved(preference);
+  }, [preference, prefersDark]);
+
+  return resolved;
+}
+
 function RootDocument() {
   const { theme } = Route.useLoaderData();
+  const resolvedTheme = useResolvedTheme(theme);
+
   return (
     <Provider>
-      <html lang="en" className={theme}>
+      <html
+        lang="en"
+        className={resolvedTheme === "dark" ? "dark" : undefined}
+      >
         <head>
           <HeadContent />
         </head>

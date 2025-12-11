@@ -1,5 +1,5 @@
 import { useRouter } from "@tanstack/react-router";
-import { Key, Moon, Settings } from "lucide-react";
+import { Check, Key, Moon, Settings } from "lucide-react";
 import { useState } from "react";
 
 import { PersonalAccessTokenForm } from "@/components/personal-access-token-form";
@@ -26,9 +26,13 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Switch } from "@/components/ui/switch";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { setThemeServerFn } from "@/lib/theme";
 import { Route } from "@/routes/__root";
@@ -39,12 +43,14 @@ export function SettingsDropdown({
 }: React.ComponentProps<typeof Button>) {
   const { theme } = Route.useLoaderData();
   const router = useRouter();
-  const [open, setOpen] = useState(false);
+  const [settingsOpen, setSettingsOpen] = useState(false);
+  const [themeDrawerOpen, setThemeDrawerOpen] = useState(false);
+  const [patOpen, setPatOpen] = useState(false);
   const isMobile = useMediaQuery("(max-width: 768px)");
   if (isMobile) {
     return (
-      <Drawer open={open} onOpenChange={setOpen}>
-        <Drawer>
+      <>
+        <Drawer open={settingsOpen} onOpenChange={setSettingsOpen}>
           <DrawerTrigger asChild>
             <Button
               variant="outline"
@@ -63,25 +69,22 @@ export function SettingsDropdown({
               <CommandList>
                 <CommandItem
                   onSelect={() => {
-                    setThemeServerFn({
-                      data: theme === "light" ? "dark" : "light",
-                    }).then(() => {
-                      router.invalidate();
-                    });
+                    setSettingsOpen(false);
+                    setThemeDrawerOpen(true);
                   }}
                 >
                   <Moon />
-                  <span>Dark Mode</span>
-                  <Switch
-                    className="ml-auto"
-                    size="sm"
-                    checked={theme === "dark"}
-                    onCheckedChange={() => {
-                      router.invalidate();
-                    }}
-                  />
+                  <span>Theme</span>
+                  <span className="ml-auto text-xs text-muted-foreground capitalize">
+                    {theme}
+                  </span>
                 </CommandItem>
-                <CommandItem onSelect={() => setOpen(true)}>
+                <CommandItem
+                  onSelect={() => {
+                    setSettingsOpen(false);
+                    setPatOpen(true);
+                  }}
+                >
                   <Key />
                   <span>Personal Access Token</span>
                 </CommandItem>
@@ -89,27 +92,62 @@ export function SettingsDropdown({
             </Command>
           </DrawerContent>
         </Drawer>
-        <DrawerContent>
-          <DrawerHeader>
-            <DrawerTitle>Settings</DrawerTitle>
-            <DrawerDescription>
-              Setup a personal access token
-              <a
-                href="https://github.com/settings/personal-access-tokens"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                here
-              </a>
-            </DrawerDescription>
-          </DrawerHeader>
-          <PersonalAccessTokenForm onClose={() => setOpen(false)} />
-        </DrawerContent>
-      </Drawer>
+
+        <Drawer open={themeDrawerOpen} onOpenChange={setThemeDrawerOpen}>
+          <DrawerContent>
+            <DrawerHeader>
+              <DrawerTitle>Theme</DrawerTitle>
+              <DrawerDescription>
+                Choose how Twending should follow your appearance.
+              </DrawerDescription>
+            </DrawerHeader>
+            <Command className="bg-transparent">
+              <CommandList>
+                {(["light", "dark", "system"] as const).map((value) => (
+                  <CommandItem
+                    key={value}
+                    onSelect={() => {
+                      setThemeServerFn({ data: value }).then(() => {
+                        router.invalidate();
+                        setThemeDrawerOpen(false);
+                      });
+                    }}
+                  >
+                    <Moon />
+                    <span className="capitalize">{value}</span>
+                    {theme === value ? (
+                      <Check className="ml-auto size-4" />
+                    ) : null}
+                  </CommandItem>
+                ))}
+              </CommandList>
+            </Command>
+          </DrawerContent>
+        </Drawer>
+
+        <Drawer open={patOpen} onOpenChange={setPatOpen}>
+          <DrawerContent>
+            <DrawerHeader>
+              <DrawerTitle>Settings</DrawerTitle>
+              <DrawerDescription>
+                Setup a personal access token
+                <a
+                  href="https://github.com/settings/personal-access-tokens"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  here
+                </a>
+              </DrawerDescription>
+            </DrawerHeader>
+            <PersonalAccessTokenForm onClose={() => setPatOpen(false)} />
+          </DrawerContent>
+        </Drawer>
+      </>
     );
   }
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={patOpen} onOpenChange={setPatOpen}>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button
@@ -123,26 +161,34 @@ export function SettingsDropdown({
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Settings</DropdownMenuLabel>
-          <DropdownMenuItem
-            onClick={() =>
-              setThemeServerFn({
-                data: theme === "light" ? "dark" : "light",
-              }).then(() => {
-                router.invalidate();
-              })
-            }
-          >
-            <Moon />
-            <span>Dark Mode</span>
-            <Switch
-              className="ml-auto"
-              size="sm"
-              checked={theme === "dark"}
-              onCheckedChange={() => {
-                router.invalidate();
-              }}
-            />
-          </DropdownMenuItem>
+          <DropdownMenuSub>
+            <DropdownMenuSubTrigger>
+              <Moon />
+              <span>Theme</span>
+            </DropdownMenuSubTrigger>
+            <DropdownMenuSubContent>
+              <DropdownMenuRadioGroup
+                value={theme}
+                onValueChange={(value) => {
+                  setThemeServerFn({
+                    data: value as "light" | "dark" | "system",
+                  }).then(() => {
+                    router.invalidate();
+                  });
+                }}
+              >
+                {(["light", "dark", "system"] as const).map((value) => (
+                  <DropdownMenuRadioItem
+                    key={value}
+                    value={value}
+                    className="capitalize"
+                  >
+                    {value}
+                  </DropdownMenuRadioItem>
+                ))}
+              </DropdownMenuRadioGroup>
+            </DropdownMenuSubContent>
+          </DropdownMenuSub>
           <DialogTrigger asChild>
             <DropdownMenuItem>
               <Key />
@@ -166,7 +212,7 @@ export function SettingsDropdown({
             </a>
           </DialogDescription>
         </DialogHeader>
-        <PersonalAccessTokenForm onClose={() => setOpen(false)} />
+        <PersonalAccessTokenForm onClose={() => setPatOpen(false)} />
       </DialogContent>
     </Dialog>
   );
