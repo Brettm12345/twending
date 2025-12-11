@@ -1,5 +1,5 @@
 import { useRouter } from "@tanstack/react-router";
-import { Check, Key, Moon, Settings } from "lucide-react";
+import { Check, Key, Monitor, Moon, Settings, Sun } from "lucide-react";
 import { useState } from "react";
 
 import { PersonalAccessTokenForm } from "@/components/personal-access-token-form";
@@ -64,6 +64,9 @@ export function SettingsDropdown({
           <DrawerContent>
             <DrawerHeader>
               <DrawerTitle>Settings</DrawerTitle>
+              <DrawerDescription>
+                Manage your settings and preferences.
+              </DrawerDescription>
             </DrawerHeader>
             <Command className="bg-transparent">
               <CommandList>
@@ -113,7 +116,9 @@ export function SettingsDropdown({
                       });
                     }}
                   >
-                    <Moon />
+                    {value === "dark" && <Moon />}
+                    {value === "light" && <Sun />}
+                    {value === "system" && <Monitor />}
                     <span className="capitalize">{value}</span>
                     {theme === value ? (
                       <Check className="ml-auto size-4" />
@@ -128,7 +133,7 @@ export function SettingsDropdown({
         <Drawer open={patOpen} onOpenChange={setPatOpen}>
           <DrawerContent>
             <DrawerHeader>
-              <DrawerTitle>Settings</DrawerTitle>
+              <DrawerTitle>Personal Access Token</DrawerTitle>
               <DrawerDescription>
                 Setup a personal access token
                 <a
@@ -163,8 +168,8 @@ export function SettingsDropdown({
           <DropdownMenuLabel>Settings</DropdownMenuLabel>
           <DropdownMenuSub>
             <DropdownMenuSubTrigger>
-              <Moon />
-              <span>Theme</span>
+              <Moon className="size-4 mr-2 text-muted-foreground" />
+              Theme
             </DropdownMenuSubTrigger>
             <DropdownMenuSubContent>
               <DropdownMenuRadioGroup
