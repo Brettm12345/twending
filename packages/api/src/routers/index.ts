@@ -1,26 +1,45 @@
-import { subDays, subMonths, subWeeks, subYears } from "date-fns";
-import { Octokit } from "octokit";
-import { z } from "zod";
-import { publicProcedure, router } from "../index";
+import {z} from 'zod'
+import {publicProcedure, router} from '../index'
+import type {RepositoryResponse} from '../types'
 
-const periodSchema = z.enum(["daily", "weekly", "monthly", "yearly"]);
+const periodSchema = z.enum(['daily', 'weekly', 'monthly', 'yearly'])
 
-function getPeriodFn(period: z.infer<typeof periodSchema>) {
+function subDays(date: Date, amount: number = 1) {
+  return new Date(date.setDate(date.getDate() - amount))
+}
+
+function subMonths(date: Date, amount: number = 1) {
+  return new Date(date.setMonth(date.getMonth() - amount))
+}
+
+function subWeeks(date: Date, amount: number = 1) {
+  return new Date(date.setDate(date.getDate() - amount * 7))
+}
+
+function subYears(date: Date, amount: number = 1) {
+  return new Date(date.setFullYear(date.getFullYear() - amount))
+}
+
+function subtractPeriod(
+  period: z.infer<typeof periodSchema>,
+  date: Date,
+  amount: number = 1
+) {
   switch (period) {
-    case "daily":
-      return subDays;
-    case "monthly":
-      return subMonths;
-    case "weekly":
-      return subWeeks;
-    case "yearly":
-      return subYears;
+    case 'daily':
+      return subDays(date, amount)
+    case 'monthly':
+      return subMonths(date, amount)
+    case 'weekly':
+      return subWeeks(date, amount)
+    case 'yearly':
+      return subYears(date, amount)
   }
 }
 
 export const appRouter = router({
   healthCheck: publicProcedure.query(() => {
-    return "OK";
+    return 'OK'
   }),
   listRepositories: publicProcedure
     .input(
@@ -29,26 +48,33 @@ export const appRouter = router({
         period: periodSchema,
         cursor: z.number().optional(),
         publicAccessToken: z.string().optional(),
-      }),
+      })
     )
-    .query(async ({ input }) => {
-      const { language, period, cursor } = input;
-      const octokit = new Octokit({
-        auth: input.publicAccessToken,
-      });
-      const periodFn = getPeriodFn(period) ?? subDays;
-      const startDate = periodFn(new Date(), cursor ? cursor + 1 : 1);
-      const endDate = periodFn(new Date(), cursor ?? 0);
+    .query(async ({input}) => {
+      const {language, period, cursor} = input
+      const startDate = subtractPeriod(
+        period,
+        new Date(),
+        cursor ? cursor + 1 : 1
+      )
+      const endDate = subtractPeriod(period, new Date(), cursor ?? 0)
 
-      const repositories = await octokit.rest.search.repos({
-        q: `language:${language}+created:${startDate.toISOString()}..${endDate.toISOString()}`,
-        sort: "stars",
-        order: "desc",
-      });
+      const queryString = `language:${language}+created:${startDate.toISOString()}..${endDate.toISOString()}`
+      const searchParams = `q=${queryString}&sort=stars&order=desc&per_page=30`
+
+      const url = `https://api.github.com/search/repositories?${searchParams}`
+      const response = await fetch(url, {
+        headers: input.publicAccessToken
+          ? {
+              Authorization: `Bearer ${input.publicAccessToken}`,
+            }
+          : undefined,
+      })
+      const data = (await response.json()) as RepositoryResponse
       return {
-        repositories: repositories.data.items,
+        repositories: data.items,
         nextCursor: (cursor ?? 0) + 1,
-      };
+      }
     }),
-});
-export type AppRouter = typeof appRouter;
+})
+export type AppRouter = typeof appRouter
