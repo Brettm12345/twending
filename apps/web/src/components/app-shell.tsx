@@ -15,7 +15,7 @@ export function AppShell({ children, ...props }: React.ComponentProps<"div">) {
           <SettingsDropdown />
         </div>
       </AppBar>
-      <h1 className="text-2xl font-bold text-center mt-16 md:mt-32">
+      <h1 className="text-2xl font-bold text-center mt-24 md:mt-32">
         Trending Repositories
       </h1>
       <div className="flex p-2 flex-1">
