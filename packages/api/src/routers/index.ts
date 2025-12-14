@@ -1,45 +1,45 @@
-import {z} from 'zod'
-import {publicProcedure, router} from '../index'
-import type {RepositoryResponse} from '../types'
+import { z } from "zod";
+import { publicProcedure, router } from "../index";
+import type { RepositoryResponse } from "../types";
 
-const periodSchema = z.enum(['daily', 'weekly', 'monthly', 'yearly'])
+const periodSchema = z.enum(["daily", "weekly", "monthly", "yearly"]);
 
 function subDays(date: Date, amount: number = 1) {
-  return new Date(date.setDate(date.getDate() - amount))
+  return new Date(date.setDate(date.getDate() - amount));
 }
 
 function subMonths(date: Date, amount: number = 1) {
-  return new Date(date.setMonth(date.getMonth() - amount))
+  return new Date(date.setMonth(date.getMonth() - amount));
 }
 
 function subWeeks(date: Date, amount: number = 1) {
-  return new Date(date.setDate(date.getDate() - amount * 7))
+  return new Date(date.setDate(date.getDate() - amount * 7));
 }
 
 function subYears(date: Date, amount: number = 1) {
-  return new Date(date.setFullYear(date.getFullYear() - amount))
+  return new Date(date.setFullYear(date.getFullYear() - amount));
 }
 
 function subtractPeriod(
   period: z.infer<typeof periodSchema>,
   date: Date,
-  amount: number = 1
+  amount: number = 1,
 ) {
   switch (period) {
-    case 'daily':
-      return subDays(date, amount)
-    case 'monthly':
-      return subMonths(date, amount)
-    case 'weekly':
-      return subWeeks(date, amount)
-    case 'yearly':
-      return subYears(date, amount)
+    case "daily":
+      return subDays(date, amount);
+    case "monthly":
+      return subMonths(date, amount);
+    case "weekly":
+      return subWeeks(date, amount);
+    case "yearly":
+      return subYears(date, amount);
   }
 }
 
 export const appRouter = router({
   healthCheck: publicProcedure.query(() => {
-    return 'OK'
+    return "OK";
   }),
   listRepositories: publicProcedure
     .input(
@@ -48,33 +48,33 @@ export const appRouter = router({
         period: periodSchema,
         cursor: z.number().optional(),
         publicAccessToken: z.string().optional(),
-      })
+      }),
     )
-    .query(async ({input}) => {
-      const {language, period, cursor} = input
+    .query(async ({ input }) => {
+      const { language, period, cursor } = input;
       const startDate = subtractPeriod(
         period,
         new Date(),
-        cursor ? cursor + 1 : 1
-      )
-      const endDate = subtractPeriod(period, new Date(), cursor ?? 0)
+        cursor ? cursor + 1 : 1,
+      );
+      const endDate = subtractPeriod(period, new Date(), cursor ?? 0);
 
-      const queryString = `language:${language}+created:${startDate.toISOString()}..${endDate.toISOString()}`
-      const searchParams = `q=${queryString}&sort=stars&order=desc&per_page=30`
+      const queryString = `language:${language}+created:${startDate.toISOString()}..${endDate.toISOString()}`;
+      const searchParams = `q=${queryString}&sort=stars&order=desc&per_page=30`;
 
-      const url = `https://api.github.com/search/repositories?${searchParams}`
+      const url = `https://api.github.com/search/repositories?${searchParams}`;
       const response = await fetch(url, {
         headers: input.publicAccessToken
           ? {
               Authorization: `Bearer ${input.publicAccessToken}`,
             }
           : undefined,
-      })
-      const data = (await response.json()) as RepositoryResponse
+      });
+      const data = (await response.json()) as RepositoryResponse;
       return {
         repositories: data.items,
         nextCursor: (cursor ?? 0) + 1,
-      }
+      };
     }),
-})
-export type AppRouter = typeof appRouter
+});
+export type AppRouter = typeof appRouter;
