@@ -1,13 +1,5 @@
 import { useRouter } from "@tanstack/react-router";
-import {
-  Check,
-  Key,
-  Monitor,
-  Moon,
-  Settings,
-  Settings2Icon,
-  Sun,
-} from "lucide-react";
+import { Key, Monitor, Moon, Settings, Settings2Icon, Sun } from "lucide-react";
 import { useState } from "react";
 
 import { PersonalAccessTokenForm } from "@/components/personal-access-token-form";
@@ -80,6 +72,7 @@ export function SettingsDropdown({
             <Command className="bg-transparent">
               <CommandList>
                 <CommandItem
+                  className="[&>.lucide-check]:hidden"
                   onSelect={() => {
                     setSettingsOpen(false);
                     setThemeDrawerOpen(true);
@@ -118,6 +111,7 @@ export function SettingsDropdown({
                 {(["light", "dark", "system"] as const).map((value) => (
                   <CommandItem
                     key={value}
+                    data-checked={theme === value}
                     onSelect={() => {
                       setThemeServerFn({ data: value }).then(() => {
                         router.invalidate();
@@ -129,9 +123,6 @@ export function SettingsDropdown({
                     {value === "light" && <Sun />}
                     {value === "system" && <Monitor />}
                     <span className="capitalize">{value}</span>
-                    {theme === value ? (
-                      <Check className="ml-auto size-4" />
-                    ) : null}
                   </CommandItem>
                 ))}
               </CommandList>
@@ -180,10 +171,11 @@ export function SettingsDropdown({
             <DropdownMenuLabel>Settings</DropdownMenuLabel>
             <DropdownMenuSub>
               <DropdownMenuSubTrigger>
-                <Moon className="size-4 mr-2 text-muted-foreground" />
+                <Moon />
                 Theme
               </DropdownMenuSubTrigger>
               <DropdownMenuSubContent>
+                <DropdownMenuLabel>Theme</DropdownMenuLabel>
                 <DropdownMenuRadioGroup
                   value={theme}
                   onValueChange={(value) => {
@@ -200,6 +192,9 @@ export function SettingsDropdown({
                       value={value}
                       className="capitalize"
                     >
+                      {value === "dark" && <Moon />}
+                      {value === "light" && <Sun />}
+                      {value === "system" && <Monitor />}
                       {value}
                     </DropdownMenuRadioItem>
                   ))}
