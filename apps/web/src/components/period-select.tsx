@@ -10,7 +10,14 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
-import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
+import {
+  Drawer,
+  DrawerContent,
+  DrawerDescription,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
 import {
   Popover,
   PopoverContent,
@@ -66,6 +73,10 @@ export function PeriodSelect({
           </Button>
         </DrawerTrigger>
         <DrawerContent>
+          <DrawerHeader>
+            <DrawerTitle>Period</DrawerTitle>
+            <DrawerDescription>Select your period</DrawerDescription>
+          </DrawerHeader>
           <PeriodSelectContent />
         </DrawerContent>
       </Drawer>
@@ -81,7 +92,7 @@ export function PeriodSelect({
             <ChevronDown />
           </Button>
         }
-      />
+      ></PopoverTrigger>
       <PopoverContent className="w-auto p-0" align="end">
         <PeriodSelectContent />
       </PopoverContent>

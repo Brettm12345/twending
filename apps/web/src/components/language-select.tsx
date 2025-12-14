@@ -13,7 +13,14 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
-import { Drawer, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
+import {
+  Drawer,
+  DrawerContent,
+  DrawerDescription,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
 import {
   Popover,
   PopoverContent,
@@ -84,6 +91,10 @@ export const LanguageSelect = ({
           </Button>
         </DrawerTrigger>
         <DrawerContent>
+          <DrawerHeader>
+            <DrawerTitle>Language</DrawerTitle>
+            <DrawerDescription>Select your language</DrawerDescription>
+          </DrawerHeader>
           <LanguageSelectContent />
         </DrawerContent>
       </Drawer>
