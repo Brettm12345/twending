@@ -1,5 +1,13 @@
 import { useRouter } from "@tanstack/react-router";
-import { Check, Key, Monitor, Moon, Settings, Sun } from "lucide-react";
+import {
+  Check,
+  Key,
+  Monitor,
+  Moon,
+  Settings,
+  Settings2Icon,
+  Sun,
+} from "lucide-react";
 import { useState } from "react";
 
 import { PersonalAccessTokenForm } from "@/components/personal-access-token-form";
@@ -24,6 +32,7 @@ import {
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuRadioGroup,
@@ -154,52 +163,59 @@ export function SettingsDropdown({
   return (
     <Dialog open={patOpen} onOpenChange={setPatOpen}>
       <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button
-            variant="outline"
-            className={className}
-            size="icon"
-            {...props}
-          >
-            <Settings />
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end">
-          <DropdownMenuLabel>Settings</DropdownMenuLabel>
-          <DropdownMenuSub>
-            <DropdownMenuSubTrigger>
-              <Moon className="size-4 mr-2 text-muted-foreground" />
-              Theme
-            </DropdownMenuSubTrigger>
-            <DropdownMenuSubContent>
-              <DropdownMenuRadioGroup
-                value={theme}
-                onValueChange={(value) => {
-                  setThemeServerFn({
-                    data: value as "light" | "dark" | "system",
-                  }).then(() => {
-                    router.invalidate();
-                  });
-                }}
-              >
-                {(["light", "dark", "system"] as const).map((value) => (
-                  <DropdownMenuRadioItem
-                    key={value}
-                    value={value}
-                    className="capitalize"
-                  >
-                    {value}
-                  </DropdownMenuRadioItem>
-                ))}
-              </DropdownMenuRadioGroup>
-            </DropdownMenuSubContent>
-          </DropdownMenuSub>
-          <DialogTrigger asChild>
-            <DropdownMenuItem>
-              <Key />
-              <span>Personal Access Token</span>
-            </DropdownMenuItem>
-          </DialogTrigger>
+        <DropdownMenuTrigger
+          render={
+            <Button
+              variant="outline"
+              className={className}
+              size="icon"
+              {...props}
+            >
+              <Settings />
+            </Button>
+          }
+        />
+        <DropdownMenuContent align="end" className="w-56">
+          <DropdownMenuGroup>
+            <DropdownMenuLabel>Settings</DropdownMenuLabel>
+            <DropdownMenuSub>
+              <DropdownMenuSubTrigger>
+                <Moon className="size-4 mr-2 text-muted-foreground" />
+                Theme
+              </DropdownMenuSubTrigger>
+              <DropdownMenuSubContent>
+                <DropdownMenuRadioGroup
+                  value={theme}
+                  onValueChange={(value) => {
+                    setThemeServerFn({
+                      data: value as "light" | "dark" | "system",
+                    }).then(() => {
+                      router.invalidate();
+                    });
+                  }}
+                >
+                  {(["light", "dark", "system"] as const).map((value) => (
+                    <DropdownMenuRadioItem
+                      key={value}
+                      value={value}
+                      className="capitalize"
+                    >
+                      {value}
+                    </DropdownMenuRadioItem>
+                  ))}
+                </DropdownMenuRadioGroup>
+              </DropdownMenuSubContent>
+            </DropdownMenuSub>
+            <DialogTrigger
+              render={
+                <DropdownMenuItem>
+                  <Key />
+                  Personal Access Token
+                  <Settings2Icon className="ml-auto size-4" />
+                </DropdownMenuItem>
+              }
+            />
+          </DropdownMenuGroup>
         </DropdownMenuContent>
       </DropdownMenu>
       <DialogContent>

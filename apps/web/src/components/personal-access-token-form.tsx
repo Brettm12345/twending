@@ -5,9 +5,11 @@ import { z } from "zod";
 
 import { usePersonalAccessToken } from "@/atoms/personal-access-token";
 import { Button } from "@/components/ui/button";
-import { DialogClose } from "@/components/ui/dialog";
+import { DialogClose, DialogFooter } from "@/components/ui/dialog";
+import { DrawerFooter } from "@/components/ui/drawer";
 import { Field, FieldError, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+import { useMediaQuery } from "@/hooks/use-media-query";
 
 const schema = z.object({
   personalAccessToken: z.string().min(1),
@@ -27,6 +29,8 @@ export function PersonalAccessTokenForm({ onClose }: { onClose: () => void }) {
       personalAccessToken: personalAccessToken ?? "",
     },
   });
+  const isMobile = useMediaQuery("(max-width: 768px)");
+  const Footer = isMobile ? DrawerFooter : DialogFooter;
   return (
     <form id="personal-access-token-form" onSubmit={form.handleSubmit}>
       <form.Field
@@ -59,10 +63,8 @@ export function PersonalAccessTokenForm({ onClose }: { onClose: () => void }) {
           );
         }}
       />
-      <div className="flex sm:flex-row flex-col-reverse mt-4 justify-end gap-2">
-        <DialogClose asChild>
-          <Button variant="outline">Cancel</Button>
-        </DialogClose>
+      <Footer className="mt-4">
+        <DialogClose render={<Button variant="outline">Cancel</Button>} />
         <Button
           type="submit"
           disabled={form.state.isSubmitting}
@@ -70,7 +72,7 @@ export function PersonalAccessTokenForm({ onClose }: { onClose: () => void }) {
         >
           Save
         </Button>
-      </div>
+      </Footer>
     </form>
   );
 }

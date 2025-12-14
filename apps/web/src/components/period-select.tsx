@@ -73,13 +73,15 @@ export function PeriodSelect({
   }
   return (
     <Popover>
-      <PopoverTrigger asChild>
-        <Button variant="outline" className={className} {...props}>
-          <CalendarDays />
-          {currentPeriod?.label ?? "Daily"}
-          <ChevronDown />
-        </Button>
-      </PopoverTrigger>
+      <PopoverTrigger
+        render={
+          <Button variant="outline" className={className} {...props}>
+            <CalendarDays />
+            {currentPeriod?.label ?? "Daily"}
+            <ChevronDown />
+          </Button>
+        }
+      />
       <PopoverContent className="w-auto p-0" align="end">
         <PeriodSelectContent />
       </PopoverContent>

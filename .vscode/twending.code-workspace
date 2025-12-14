@@ -16,5 +16,12 @@
       "path": "../packages/config",
       "name": "config"
     }
-  ]
+  ],
+  "settings": {
+    "editor.codeActionsOnSave": {
+      "source.sortImports": "never",
+      "source.organizeImports.biome": "never"
+    },
+    "notebook.codeActionsOnSave": {}
+  }
 }

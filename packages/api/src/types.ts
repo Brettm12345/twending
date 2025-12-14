@@ -16,6 +16,7 @@ export interface RepositoryOwner {
   followers_url: string
   following_url: string
   gists_url: string
+  forks_count: number
   starred_url: string
   subscriptions_url: string
   organizations_url: string
@@ -50,6 +51,7 @@ export interface Repository {
   watchers_count: number
   language: string
   archive_url: string
+  license: RepositoryLicense
   assignees_url: string
   blobs_url: string
   branches_url: string

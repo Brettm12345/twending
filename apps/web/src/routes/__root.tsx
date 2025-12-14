@@ -15,7 +15,7 @@ import { useEffect, useState } from "react";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { getThemeServerFn, type T as ThemePreference } from "@/lib/theme";
 
-import appCss from "../index.css?url";
+import appCss from "@/styles.css?url";
 
 export interface RouterAppContext {
   trpc: TRPCOptionsProxy<AppRouter>;
@@ -120,10 +120,7 @@ function RootDocument() {
 
   return (
     <Provider>
-      <html
-        lang="en"
-        className={resolvedTheme === "dark" ? "dark" : undefined}
-      >
+      <html lang="en" className={resolvedTheme === "dark" ? "dark" : undefined}>
         <head>
           <HeadContent />
         </head>

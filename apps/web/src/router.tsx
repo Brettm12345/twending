@@ -11,7 +11,7 @@ import type { AppRouter } from "@twending/api/routers/index";
 import Loader from "@/components/loader";
 import { routeTree } from "@/routeTree.gen";
 import { TRPCProvider } from "@/utils/trpc";
-import "./index.css";
+import "./styles.css";
 
 export const queryClient = new QueryClient({
   queryCache: new QueryCache({

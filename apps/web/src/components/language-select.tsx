@@ -91,13 +91,15 @@ export const LanguageSelect = ({
   }
   return (
     <Popover>
-      <PopoverTrigger asChild>
-        <Button variant="outline" {...props}>
-          <LanguageIndicator language={language} />
-          {language}
-          <ChevronDown />
-        </Button>
-      </PopoverTrigger>
+      <PopoverTrigger
+        render={
+          <Button variant="outline" {...props}>
+            <LanguageIndicator language={language} />
+            {language}
+            <ChevronDown />
+          </Button>
+        }
+      />
       <PopoverContent className="w-auto p-0" align="end">
         <LanguageSelectContent />
       </PopoverContent>

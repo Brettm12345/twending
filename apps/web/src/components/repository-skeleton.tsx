@@ -16,7 +16,7 @@ export function RepositorySkeleton({
   ...props
 }: ComponentProps<typeof Item>) {
   return (
-    <Item className={cn("py-8 px-6", className)} {...props}>
+    <Item className={cn("p-4", className)} {...props}>
       <ItemMedia variant="image">
         <Skeleton className="size-10 rounded-sm object-cover" />
       </ItemMedia>
