@@ -15,11 +15,13 @@ export function AppShell({ children, ...props }: React.ComponentProps<"div">) {
           <SettingsDropdown />
         </div>
       </AppBar>
-      <h1 className="text-2xl font-bold text-center mt-8 md:mt-16">
+      <h1 className="text-2xl font-bold text-center mt-24 md:mt-32">
         Trending Repositories
       </h1>
-      <div className="container mx-auto rounded-2xl bg-card mt-8 md:mt-16 mb-4 border border-border overflow-hidden">
-        {children}
+      <div className="flex px-4 flex-1">
+        <div className="container mx-auto rounded-2xl bg-card mt-8 md:mt-16 mb-4 border border-border overflow-hidden">
+          {children}
+        </div>
       </div>
     </main>
   );
