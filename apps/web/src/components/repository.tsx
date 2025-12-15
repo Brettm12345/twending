@@ -71,12 +71,6 @@ export function Repository({
                 <EyeIcon />
                 {repository.watchers_count}
               </span>
-              {repository.license && (
-                <span>
-                  <ScaleIcon />
-                  {repository.license?.spdx_id}
-                </span>
-              )}
               <span>
                 <GitBranchIcon />
                 {repository.forks}
