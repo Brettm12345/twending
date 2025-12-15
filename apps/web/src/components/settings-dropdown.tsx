@@ -15,8 +15,10 @@ import {
 } from "@/components/ui/dialog";
 import {
   Drawer,
+  DrawerClose,
   DrawerContent,
   DrawerDescription,
+  DrawerFooter,
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
@@ -85,16 +87,22 @@ export function SettingsDropdown({
                   </span>
                 </CommandItem>
                 <CommandItem
+                  className="[&>.lucide-check]:hidden"
                   onSelect={() => {
-                    setSettingsOpen(false);
                     setPatOpen(true);
                   }}
                 >
                   <Key />
                   <span>Personal Access Token</span>
+                  <Settings2Icon className="ml-auto size-4" />
                 </CommandItem>
               </CommandList>
             </Command>
+            <DrawerFooter>
+              <DrawerClose asChild>
+                <Button variant="outline">Close</Button>
+              </DrawerClose>
+            </DrawerFooter>
           </DrawerContent>
         </Drawer>
 
@@ -127,6 +135,11 @@ export function SettingsDropdown({
                 ))}
               </CommandList>
             </Command>
+            <DrawerFooter>
+              <DrawerClose asChild>
+                <Button variant="outline">Close</Button>
+              </DrawerClose>
+            </DrawerFooter>
           </DrawerContent>
         </Drawer>
 
