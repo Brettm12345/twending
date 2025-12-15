@@ -20,12 +20,12 @@ interface RepositoryProps extends ComponentProps<typeof Item> {
   repository: RouterOutput["listRepositories"]["repositories"][number];
 }
 
-function getAvatarUrl(avatarUrl: string) {
+function getAvatarUrl(avatarUrl: string, scale: number = 1) {
   const githubUrl = avatarUrl.replace("https://", "").replace("?v=4", "");
   const searchParams = new URLSearchParams({
     url: githubUrl,
-    w: "40",
-    h: "40",
+    w: (40 * scale).toString(),
+    h: (40 * scale).toString(),
     output: "webp",
     maxage: "1w",
   });
@@ -39,17 +39,12 @@ export function Repository({
 }: RepositoryProps) {
   return (
     <Item
-      className={cn("hover:bg-border/10 p-4", className)}
+      className={cn("hover:bg-border/10 p-4 flex-nowrap", className)}
       render={
         <a href={repository.html_url} target="_blank">
           <ItemMedia variant="image">
             <img
-              className="object-cover"
-              src={
-                repository.owner?.avatar_url
-                  ? getAvatarUrl(repository.owner?.avatar_url)
-                  : undefined
-              }
+              srcSet={`${getAvatarUrl(repository.owner?.avatar_url, 1)} 1x, ${getAvatarUrl(repository.owner?.avatar_url, 2)} 2x`}
               alt={repository.owner?.login}
               width={40}
               height={40}

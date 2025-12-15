@@ -13,7 +13,8 @@ export const appBarVariants = cva(
       },
       position: {
         default: "relative",
-        fixed: "fixed top-0 left-0 right-0 z-10",
+        fixed:
+          "fixed top-0 left-0 right-0 z-10 mb-16 has-[[data-size=sm]]:mb-12 has-[[data-size=lg]]:mb-20",
         sticky: "sticky top-0 left-0 right-0 z-10",
       },
       defaultVariants: {
@@ -34,6 +35,7 @@ export function AppBar({
     <header
       className={cn(appBarVariants({ size, position }), className)}
       data-slot="app-bar"
+      data-size={size}
       {...props}
     />
   );
