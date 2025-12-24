@@ -1,6 +1,6 @@
 import type { inferRouterOutputs } from "@trpc/server";
 import type { AppRouter } from "@twending/api/routers/index";
-import { EyeIcon, GitBranchIcon, ScaleIcon, StarIcon } from "lucide-react";
+import { EyeIcon, GitBranchIcon, StarIcon } from "lucide-react";
 import type { ComponentProps } from "react";
 
 import { LanguageIndicator } from "@/components/language-indicator";
@@ -39,7 +39,10 @@ export function Repository({
 }: RepositoryProps) {
   return (
     <Item
-      className={cn("hover:bg-border/10 p-4 flex-nowrap", className)}
+      className={cn(
+        "p-4 flex-nowrap rounded-none first-of-type:rounded-t-lg last-of-type:rounded-b-lg",
+        className,
+      )}
       render={
         <a href={repository.html_url} target="_blank">
           <ItemMedia variant="image">

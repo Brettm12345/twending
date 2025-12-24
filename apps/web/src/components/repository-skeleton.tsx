@@ -24,15 +24,15 @@ export function RepositorySkeleton({
         <ItemTitle>
           <Skeleton className="w-24 h-4" />
         </ItemTitle>
-        <ItemDescription>
+        <ItemDescription className="flex flex-col gap-1">
           <Skeleton className="w-1/5 h-2" />
           <Skeleton className="w-4/5 h-2" />
         </ItemDescription>
       </ItemContent>
-      <ItemFooter className="justify-start *:data-[slot=skeleton]:h-4">
-        <Skeleton className="w-24" />
-        <Skeleton className="w-16" />
-        <Skeleton className="w-16" />
+      <ItemFooter className="justify-start">
+        <Skeleton className="w-24 h-4" />
+        <Skeleton className="w-16 h-4" />
+        <Skeleton className="w-16 h-4" />
       </ItemFooter>
     </Item>
   );

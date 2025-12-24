@@ -5,16 +5,17 @@ import type { RepositoryResponse } from "../types";
 const periodSchema = z.enum(["daily", "weekly", "monthly", "yearly"]);
 
 function subDays(date: Date, days: number) {
-  return new Date(date.getTime() - days * 24 * 60 * 60 * 1000);
+  const milliseconds = days * 24 * 60 * 60 * 1000;
+  return new Date(date.getTime() - milliseconds);
 }
 function subWeeks(date: Date, weeks: number) {
-  return new Date(date.getTime() - weeks * 7 * 24 * 60 * 60 * 1000);
+  return subDays(date, weeks * 7);
 }
 function subMonths(date: Date, months: number) {
-  return new Date(date.getTime() - months * 30 * 24 * 60 * 60 * 1000);
+  return subDays(date, months * 30);
 }
 function subYears(date: Date, years: number) {
-  return new Date(date.getTime() - years * 365 * 24 * 60 * 60 * 1000);
+  return subDays(date, years * 365);
 }
 
 function subtractPeriod(
