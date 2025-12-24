@@ -1,6 +1,6 @@
 import type { inferRouterOutputs } from "@trpc/server";
 import type { AppRouter } from "@twending/api/routers/index";
-import { EyeIcon, GitBranchIcon, ScaleIcon, StarIcon } from "lucide-react";
+import { EyeIcon, GitBranchIcon, StarIcon } from "lucide-react";
 import type { ComponentProps } from "react";
 
 import { LanguageIndicator } from "@/components/language-indicator";

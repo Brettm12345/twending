@@ -5,8 +5,8 @@ import { z } from "zod";
 
 import { usePersonalAccessToken } from "@/atoms/personal-access-token";
 import { Button } from "@/components/ui/button";
-import { DialogClose, DialogFooter } from "@/components/ui/dialog";
-import { DrawerClose, DrawerFooter } from "@/components/ui/drawer";
+import { DialogFooter } from "@/components/ui/dialog";
+import { DrawerFooter } from "@/components/ui/drawer";
 import {
   Field,
   FieldError,
