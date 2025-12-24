@@ -39,7 +39,10 @@ export function Repository({
 }: RepositoryProps) {
   return (
     <Item
-      className={cn("hover:bg-border/10 p-4 flex-nowrap", className)}
+      className={cn(
+        "p-4 flex-nowrap rounded-none first-of-type:rounded-t-lg last-of-type:rounded-b-lg",
+        className,
+      )}
       render={
         <a href={repository.html_url} target="_blank">
           <ItemMedia variant="image">
