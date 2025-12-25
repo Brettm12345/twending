@@ -112,8 +112,16 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
       {
         rel: "icon",
         type: "image/png",
-        sizes: "192x192",
-        href: "/android-chrome-192x192.png",
+        sizes: "512x512",
+        purpose: "any maskable",
+        href: "/android-chrome-maskable_512x512.png",
+      },
+      {
+        rel: "icon",
+        type: "image/png",
+        sizes: "128x128",
+        purpose: "any maskable",
+        href: "/android-chrome-maskable_128x128.png",
       },
       {
         rel: "icon",
