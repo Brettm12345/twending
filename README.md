@@ -1,6 +1,6 @@
 # Twending
 
-<img alt="Twending" src="https://media.cleanshot.cloud/media/79927/tUbQvOvrUDieFnClBVaOUTlT5qH6pmai9cWJ1Tyb.jpeg?Expires=1765184642&Signature=J6W3nXp-2yLq5cPJph9wDPHSC280Gz~pI083liEkSi4Qp-FAaZ-nyiO3N9dTM3~1MNzKg7KwAKpKgZfg3nVpaJmeoB2h8eKWUZgkoqmhw4TybSGJrr3qSW79QzPeNQOJDl2TZfC7ZOhopIOEvbQ-qtoGn~JoO9K2ePTyHgQo88XWp5CujiZaiV1WWJbzjXB~OofIHRsMuVR2j-ZFr0Era06yAbpwLBQOFVZvy6cc2SroaNT6as5jZdEARPKnFv7N0tMmk6Is82O9qCJDNcDfYtTyRPMNTTU2vWdpD2EP6jf0ahbuyT2rlEDH3roWRmIFpVUEjJVlidyhBF4DeQV3cA__&Key-Pair-Id=K269JMAT9ZF4GZ">
+<img alt="Twending" src="blob:https://github.com/f9e32747-f2db-4d46-933b-23773cc6a170">
 
 Twending is a new way to view trending repositories from github.
 
