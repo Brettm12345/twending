@@ -1,6 +1,6 @@
 # Twending
 
-<img alt="Twending" src="blob:https://github.com/f9e32747-f2db-4d46-933b-23773cc6a170">
+<img alt="Twending" src="https://github.com/f9e32747-f2db-4d46-933b-23773cc6a170">
 
 Twending is a new way to view trending repositories from github.
 
