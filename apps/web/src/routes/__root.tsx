@@ -35,10 +35,59 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
         charSet: "utf-8",
       },
       {
-        rel: "icon",
-        type: "image/png",
-        sizes: "512x512",
-        href: "/android-chrome-512x512.png",
+        property: "og:image",
+        content: "/og.png",
+        sizes: "1200x630",
+        href: "/og.png",
+      },
+      {
+        property: "og:image:width",
+        content: "1200",
+      },
+      {
+        property: "og:image:height",
+        content: "630",
+      },
+      {
+        property: "og:title",
+        content: "Twending",
+      },
+      {
+        property: "og:description",
+        content:
+          "Twending is the best way to find new trending repositories on github.",
+      },
+      { property: "og:type", content: "article" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Twending" },
+      {
+        name: "twitter:description",
+        content:
+          "Twending is the best way to find new trending repositories on github.",
+      },
+      { name: "twitter:image", content: "/og.png" },
+      {
+        property: "og:url",
+        content: "https://twending.vercel.app",
+      },
+      {
+        property: "og:type",
+        content: "website",
+      },
+      {
+        name: "viewport",
+        content: "width=device-width, initial-scale=1",
+      },
+      {
+        title: "Twending",
+        description:
+          "Twending is the best way to find new trending repositories on github.",
+      },
+    ],
+    links: [
+      {
+        rel: "stylesheet",
+        href: appCss,
       },
       {
         rel: "icon",
@@ -70,26 +119,8 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
         href: "/favicon-96x96.png",
       },
       {
-        name: "viewport",
-        content: "width=device-width, initial-scale=1",
-      },
-      {
-        title: "Twending",
-        description:
-          "Twending is a new way to view trending repositories from github.",
-        ogTitle: "Twending",
-        ogDescription:
-          "Twending is a new way to view trending repositories from github.",
-        ogUrl: "https://twending.vercel.app",
-        ogType: "website",
-        ogLocale: "en_US",
-        ogSiteName: "Twending",
-      },
-    ],
-    links: [
-      {
-        rel: "stylesheet",
-        href: appCss,
+        rel: "manifest",
+        href: "/site.webmanifest",
       },
     ],
   }),
