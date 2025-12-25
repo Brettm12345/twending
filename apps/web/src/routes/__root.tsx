@@ -9,6 +9,7 @@ import {
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import type { TRPCOptionsProxy } from "@trpc/tanstack-react-query";
 import type { AppRouter } from "@twending/api/routers/index";
+import { Analytics } from "@vercel/analytics/react";
 import { Provider } from "jotai";
 import { useEffect, useState } from "react";
 
@@ -189,6 +190,7 @@ function RootDocument() {
           </main>
           <TanStackRouterDevtools position="bottom-left" />
           <ReactQueryDevtools position="bottom" buttonPosition="bottom-right" />
+          <Analytics />
           <Scripts />
         </body>
       </html>
