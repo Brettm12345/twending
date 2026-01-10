@@ -14,6 +14,7 @@ export const seo = ({
   [
     { title },
     { charSet: "utf-8" },
+    { name: "viewport", content: "width=device-width, initial-scale=1.0" },
     { property: "keywords", content: keywords.join(",") },
     { property: "description", content: description },
     { property: "og:title", content: title },

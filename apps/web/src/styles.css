@@ -123,6 +123,6 @@
     @apply font-sans bg-background text-foreground;
   }
   html {
-    @apply font-sans antialiased md:subpixel-antialiased;
+    @apply font-sans antialiased md:subpixel-antialiased bg-background;
   }
 }
