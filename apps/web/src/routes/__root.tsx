@@ -17,6 +17,7 @@ import { useMediaQuery } from "@/hooks/use-media-query";
 import { getThemeServerFn, type T as ThemePreference } from "@/lib/theme";
 
 import appCss from "@/styles.css?url";
+import { seo } from "@/utils/seo";
 
 export interface RouterAppContext {
   trpc: TRPCOptionsProxy<AppRouter>;
@@ -35,75 +36,13 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
       {
         charSet: "utf-8",
       },
-      {
-        property: "og:image",
-        content: "/og.png",
-        sizes: "1200x630",
-        href: "/og.png",
-      },
-      {
-        property: "og:image:width",
-        content: "1200",
-      },
-      {
-        property: "og:image:height",
-        content: "630",
-      },
-      {
-        property: "og:title",
-        content: "Twending",
-      },
-      {
-        property: "og:description",
-        content:
-          "Twending is the best way to find new trending repositories on github.",
-      },
-      { property: "og:type", content: "article" },
-      { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "Twending" },
-      {
-        name: "twitter:description",
-        content:
-          "Twending is the best way to find new trending repositories on github.",
-      },
-      { name: "twitter:image", content: "/og.png" },
-      {
-        property: "og:url",
-        content: "https://twending.vercel.app",
-      },
-      {
-        property: "og:type",
-        content: "website",
-      },
-      {
-        property: "background-color",
-        content: "#0A0A0A",
-        media: "(prefers-color-scheme: dark)",
-      },
-      {
-        property: "background-color",
-        content: "#ffffff",
-        media: "(prefers-color-scheme: light)",
-      },
-      {
-        name: "theme-color",
-        content: "#171717",
-        media: "(prefers-color-scheme: dark)",
-      },
-      {
-        name: "theme-color",
-        content: "#fafafa",
-        media: "(prefers-color-scheme: light)",
-      },
-      {
-        name: "viewport",
-        content: "width=device-width, initial-scale=1",
-      },
-      {
+      ...seo({
         title: "Twending",
         description:
           "Twending is the best way to find new trending repositories on github.",
-      },
+        image: "/og.png",
+        keywords: ["twending", "github", "trending", "repositories"],
+      }),
     ],
     links: [
       {
