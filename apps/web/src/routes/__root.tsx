@@ -119,6 +119,7 @@ function RootDocument() {
     posthog.init("phc_dAam8kgQPVoA93AZYmMNBcknT1PXOmwseN1FA3fjGYG", {
       api_host: "/ph",
       defaults: "2025-11-30",
+      autocapture: true,
     });
   }, []);
 
