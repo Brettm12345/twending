@@ -56,7 +56,7 @@ function HomeComponent() {
 
   return (
     <AppShell>
-      <ItemGroup className="gap-0">
+      <ItemGroup className="has-data-[size=sm]:gap-0!">
         {listRepositories.data?.pages.map((page, pageIndex) =>
           page.repositories.map((repository, index) => (
             <Fragment key={repository.id}>

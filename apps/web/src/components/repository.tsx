@@ -39,6 +39,7 @@ export function Repository({
 }: RepositoryProps) {
   return (
     <Item
+      size="sm"
       className={cn(
         "p-4 flex-nowrap rounded-none first-of-type:rounded-t-lg last-of-type:rounded-b-lg",
         className,
