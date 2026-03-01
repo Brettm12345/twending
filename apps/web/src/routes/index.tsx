@@ -59,18 +59,16 @@ function HomeComponent() {
       <ItemGroup className="has-data-[size=sm]:gap-0!">
         {listRepositories.data?.pages.map((page, pageIndex) =>
           page.repositories.map((repository, index) => (
-            <Fragment key={repository.id}>
-              <Repository
-                repository={repository}
-                ref={
-                  pageIndex === listRepositories.data?.pages.length - 1 &&
-                  index === page.repositories.length - 1
-                    ? lastRepoRef
-                    : undefined
-                }
-              />
-              <ItemSeparator className="my-0" />
-            </Fragment>
+            <Repository
+              repository={repository}
+              key={repository.id}
+              ref={
+                pageIndex === listRepositories.data?.pages.length - 1 &&
+                index === page.repositories.length - 1
+                  ? lastRepoRef
+                  : undefined
+              }
+            />
           )),
         )}
       </ItemGroup>

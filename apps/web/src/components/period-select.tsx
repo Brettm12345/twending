@@ -1,4 +1,5 @@
-import { CalendarDays, ChevronDown } from "lucide-react";
+import { CalendarDays, ChevronDown } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 
 import { usePeriodValue, useSetPeriod } from "@/atoms/period";
 import { Button } from "@/components/ui/button";
@@ -67,9 +68,9 @@ export function PeriodSelect({
       <Drawer>
         <DrawerTrigger asChild>
           <Button variant="outline" className={className} {...props}>
-            <CalendarDays />
+            <HugeiconsIcon icon={CalendarDays} />
             {currentPeriod?.label ?? "Daily"}
-            <ChevronDown />
+            <HugeiconsIcon icon={ChevronDown} />
           </Button>
         </DrawerTrigger>
         <DrawerContent>
@@ -87,9 +88,9 @@ export function PeriodSelect({
       <PopoverTrigger
         render={
           <Button variant="outline" className={className} {...props}>
-            <CalendarDays />
+            <HugeiconsIcon icon={CalendarDays} />
             {currentPeriod?.label ?? "Daily"}
-            <ChevronDown />
+            <HugeiconsIcon icon={ChevronDown} />
           </Button>
         }
       ></PopoverTrigger>

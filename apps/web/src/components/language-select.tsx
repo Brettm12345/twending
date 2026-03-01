@@ -1,6 +1,7 @@
 "use client";
 
-import { ChevronDown } from "lucide-react";
+import { ChevronDown } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 
 import { useLanguageValue, useSetLanguage } from "@/atoms/language";
 import { LanguageIndicator } from "@/components/language-indicator";
@@ -87,7 +88,7 @@ export const LanguageSelect = ({
           <Button variant="outline" {...props}>
             <LanguageIndicator language={language} />
             {language}
-            <ChevronDown />
+            <HugeiconsIcon icon={ChevronDown} />
           </Button>
         </DrawerTrigger>
         <DrawerContent>
@@ -107,7 +108,7 @@ export const LanguageSelect = ({
           <Button variant="outline" {...props}>
             <LanguageIndicator language={language} />
             {language}
-            <ChevronDown />
+            <HugeiconsIcon icon={ChevronDown} />
           </Button>
         }
       />

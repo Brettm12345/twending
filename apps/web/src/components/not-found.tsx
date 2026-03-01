@@ -1,5 +1,6 @@
+import { Binoculars } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { Link } from "@tanstack/react-router";
-import { BinocularsIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Empty,
@@ -32,7 +33,7 @@ export function NotFound({
     >
       <Empty>
         <EmptyMedia variant="icon">
-          <BinocularsIcon />
+          <HugeiconsIcon icon={Binoculars} />
         </EmptyMedia>
         <EmptyHeader>
           <EmptyTitle>{title}</EmptyTitle>

@@ -1,7 +1,13 @@
+import {
+  ComputerPhoneSyncIcon,
+  MoonIcon,
+  Settings01Icon,
+  SquareLockIcon,
+  SunIcon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { useRouter } from "@tanstack/react-router";
-import { Key, Monitor, Moon, Settings, Settings2Icon, Sun } from "lucide-react";
 import { useState } from "react";
-
 import { PersonalAccessTokenForm } from "@/components/personal-access-token-form";
 import { Button } from "@/components/ui/button";
 import { Command, CommandItem, CommandList } from "@/components/ui/command";
@@ -61,7 +67,7 @@ export function SettingsDropdown({
               size="icon"
               {...props}
             >
-              <Settings />
+              <HugeiconsIcon icon={Settings01Icon} />
             </Button>
           </DrawerTrigger>
           <DrawerContent>
@@ -80,7 +86,7 @@ export function SettingsDropdown({
                     setThemeDrawerOpen(true);
                   }}
                 >
-                  <Moon />
+                  <HugeiconsIcon icon={MoonIcon} />
                   <span>Theme</span>
                   <span className="ml-auto text-xs text-muted-foreground capitalize">
                     {theme}
@@ -92,9 +98,11 @@ export function SettingsDropdown({
                     setPatOpen(true);
                   }}
                 >
-                  <Key />
+                  <HugeiconsIcon
+                    icon={SquareLockIcon}
+                    className="ml-auto size-4"
+                  />
                   <span>Personal Access Token</span>
-                  <Settings2Icon className="ml-auto size-4" />
                 </CommandItem>
               </CommandList>
             </Command>
@@ -127,9 +135,11 @@ export function SettingsDropdown({
                       });
                     }}
                   >
-                    {value === "dark" && <Moon />}
-                    {value === "light" && <Sun />}
-                    {value === "system" && <Monitor />}
+                    {value === "dark" && <HugeiconsIcon icon={MoonIcon} />}
+                    {value === "light" && <HugeiconsIcon icon={SunIcon} />}
+                    {value === "system" && (
+                      <HugeiconsIcon icon={ComputerPhoneSyncIcon} />
+                    )}
                     <span className="capitalize">{value}</span>
                   </CommandItem>
                 ))}
@@ -175,7 +185,7 @@ export function SettingsDropdown({
               size="icon"
               {...props}
             >
-              <Settings />
+              <HugeiconsIcon icon={Settings01Icon} />
             </Button>
           }
         />
@@ -184,7 +194,7 @@ export function SettingsDropdown({
             <DropdownMenuLabel>Settings</DropdownMenuLabel>
             <DropdownMenuSub>
               <DropdownMenuSubTrigger>
-                <Moon />
+                <HugeiconsIcon icon={MoonIcon} />
                 Theme
               </DropdownMenuSubTrigger>
               <DropdownMenuSubContent>
@@ -205,9 +215,11 @@ export function SettingsDropdown({
                       value={value}
                       className="capitalize"
                     >
-                      {value === "dark" && <Moon />}
-                      {value === "light" && <Sun />}
-                      {value === "system" && <Monitor />}
+                      {value === "dark" && <HugeiconsIcon icon={MoonIcon} />}
+                      {value === "light" && <HugeiconsIcon icon={SunIcon} />}
+                      {value === "system" && (
+                        <HugeiconsIcon icon={ComputerPhoneSyncIcon} />
+                      )}
                       {value}
                     </DropdownMenuRadioItem>
                   ))}
@@ -217,9 +229,8 @@ export function SettingsDropdown({
             <DialogTrigger
               render={
                 <DropdownMenuItem>
-                  <Key />
+                  <HugeiconsIcon icon={SquareLockIcon} />
                   Personal Access Token
-                  <Settings2Icon className="ml-auto size-4" />
                 </DropdownMenuItem>
               }
             />

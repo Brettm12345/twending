@@ -1,6 +1,12 @@
+import {
+  EyeIcon,
+  GitBranchIcon,
+  RepositoryIcon,
+  StarIcon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import type { inferRouterOutputs } from "@trpc/server";
 import type { AppRouter } from "@twending/api/routers/index";
-import { EyeIcon, GitBranchIcon, StarIcon } from "lucide-react";
 import type { ComponentProps } from "react";
 
 import { LanguageIndicator } from "@/components/language-indicator";
@@ -41,7 +47,7 @@ export function Repository({
     <Item
       size="sm"
       className={cn(
-        "p-4 flex-nowrap rounded-none first-of-type:rounded-t-lg last-of-type:rounded-b-lg",
+        "p-4 flex-nowrap rounded-none first-of-type:rounded-t-lg last-of-type:rounded-b-lg not-last:border-b-border border",
         className,
       )}
       render={
@@ -59,31 +65,31 @@ export function Repository({
             <ItemDescription>
               {repository.description ?? "No description"}
             </ItemDescription>
-            <ItemFooter className="justify-start [&>span]:text-sm [&>span]:font-normal [&>span]:text-muted-foreground [&>span]:inline-flex [&>span]:gap-1 [&>span>svg]:size-3 [&>span]:items-center">
+            <ItemFooter className="justify-start [&>span]:text-sm [&>span]:font-normal [&>span]:text-muted-foreground [&>span]:flex [&>span]:gap-1 [&>span>svg]:size-4">
               <span>
                 <LanguageIndicator
-                  className="size-3"
+                  className="size-4"
                   language={repository.language ?? "Unknown"}
                 />
                 {repository.language}
               </span>
               <span>
-                <StarIcon />
-                {repository.stargazers_count}
+                <HugeiconsIcon icon={StarIcon} />
+                {Intl.NumberFormat("en-US").format(repository.stargazers_count)}
               </span>
               <span>
-                <EyeIcon />
-                {repository.watchers_count}
+                <HugeiconsIcon icon={EyeIcon} />
+                {Intl.NumberFormat("en-US").format(repository.watchers_count)}
               </span>
               <span>
-                <GitBranchIcon />
-                {repository.forks}
+                <HugeiconsIcon icon={GitBranchIcon} />
+                {Intl.NumberFormat("en-US").format(repository.forks)}
               </span>
             </ItemFooter>
           </ItemContent>
         </a>
       }
       {...props}
-    ></Item>
+    />
   );
 }

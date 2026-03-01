@@ -17,7 +17,7 @@ export function RepositorySkeleton({
   return (
     <Item
       size="sm"
-      className="p-4 first-of-type:rounded-t-lg last-of-type:rounded-b-lg"
+      className="p-4 first-of-type:rounded-t-lg last-of-type:rounded-b-lg not-last:border-b-border border"
       {...props}
     >
       <ItemMedia variant="image">
