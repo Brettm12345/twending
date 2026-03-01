@@ -1,9 +1,4 @@
-import {
-  EyeIcon,
-  GitBranchIcon,
-  RepositoryIcon,
-  StarIcon,
-} from "@hugeicons/core-free-icons";
+import { EyeIcon, GitBranchIcon, StarIcon } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon } from "@hugeicons/react";
 import type { inferRouterOutputs } from "@trpc/server";
 import type { AppRouter } from "@twending/api/routers/index";

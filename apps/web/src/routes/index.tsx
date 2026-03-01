@@ -1,6 +1,6 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
-import { Fragment, useCallback, useRef } from "react";
+import { useCallback, useRef } from "react";
 
 import { useLanguageValue } from "@/atoms/language";
 import { usePeriodValue } from "@/atoms/period";
@@ -8,7 +8,7 @@ import { usePersonalAccessTokenValue } from "@/atoms/personal-access-token";
 import { AppShell } from "@/components/app-shell";
 import Loader from "@/components/loader";
 import { Repository } from "@/components/repository";
-import { ItemGroup, ItemSeparator } from "@/components/ui/item";
+import { ItemGroup } from "@/components/ui/item";
 import { useIntersectionObserver } from "@/hooks/use-intersection-observer";
 import { useTRPC } from "@/utils/trpc";
 

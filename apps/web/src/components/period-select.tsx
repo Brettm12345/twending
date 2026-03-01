@@ -34,9 +34,10 @@ const periods = [
 ];
 
 function PeriodSelectContent() {
+  const period = usePeriodValue();
   const setPeriod = useSetPeriod();
   return (
-    <Command className="bg-transparent">
+    <Command className="bg-transparent" value={period}>
       <CommandInput placeholder="Search for a period" />
       <CommandList>
         <CommandEmpty>No periods found</CommandEmpty>
@@ -93,7 +94,7 @@ export function PeriodSelect({
             <HugeiconsIcon icon={ChevronDown} />
           </Button>
         }
-      ></PopoverTrigger>
+      />
       <PopoverContent className="w-auto p-0" align="end">
         <PeriodSelectContent />
       </PopoverContent>
