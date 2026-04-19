@@ -25,11 +25,11 @@ describe("seo", () => {
         },
       ]),
     );
-    expect(metadata).not.toEqual(
-      expect.arrayContaining([
-        expect.objectContaining({ property: "og:image" }),
-        expect.objectContaining({ name: "twitter:image" }),
-      ]),
+    expect(metadata).not.toContainEqual(
+      expect.objectContaining({ property: "og:image" }),
+    );
+    expect(metadata).not.toContainEqual(
+      expect.objectContaining({ name: "twitter:image" }),
     );
   });
 
