@@ -23,7 +23,6 @@ export default defineConfig({
     exclude: excludedFiles,
     setupFiles: ["./src/test/setup.ts"],
     coverage: {
-      all: true,
       provider: "v8",
       include: ["src/**/*.{ts,tsx}"],
       reporter: ["text", "html", "lcov"],

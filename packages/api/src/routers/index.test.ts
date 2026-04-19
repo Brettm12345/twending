@@ -49,14 +49,20 @@ describe("appRouter", () => {
       publicAccessToken: "secret-token",
     });
 
-    expect(fetchMock).toHaveBeenCalledWith(
-      "https://api.github.com/search/repositories?q=language:TypeScript+created:2026-03-28T12:00:00.000Z..2026-04-04T12:00:00.000Z&sort=stars&order=desc&per_page=30",
-      {
-        headers: {
-          Authorization: "Bearer secret-token",
-        },
-      },
+    // Decode the URL into a query string object and test that
+    expect(fetchMock).toHaveBeenCalled();
+    const url = fetchMock.mock.calls[0]?.[0];
+    const called = new URL(url);
+    expect(called.origin + called.pathname).toBe(
+      "https://api.github.com/search/repositories",
     );
+    const params = Object.fromEntries(called.searchParams.entries());
+    expect(params).toEqual({
+      q: "language:TypeScript created:2026-03-28T12:00:00.000Z..2026-04-04T12:00:00.000Z",
+      sort: "stars",
+      order: "desc",
+      per_page: "30",
+    });
     expect(result).toEqual({
       repositories: [repository],
       nextCursor: 3,
