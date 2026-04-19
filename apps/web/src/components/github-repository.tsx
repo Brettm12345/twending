@@ -39,11 +39,9 @@ export function GithubRepository({
   className,
   ...props
 }: GithubRepositoryProps) {
+  const avatarUrl = repository.owner.avatar_url;
   const imgSrcSet = [1, 2]
-    .map(
-      (scale) =>
-        `${getAvatarUrl(repository.owner?.avatar_url, scale)} ${scale}x`,
-    )
+    .map((scale) => `${getAvatarUrl(avatarUrl, scale)} ${scale}x`)
     .join(", ");
   return (
     <Repository
@@ -53,7 +51,7 @@ export function GithubRepository({
           <RepositoryMedia>
             <img
               srcSet={imgSrcSet}
-              alt={repository.owner?.login}
+              alt={repository.owner.login}
               width={40}
               height={40}
             />
