@@ -38,7 +38,10 @@ function LanguageSelectContent({ onClose }: { onClose: () => void }) {
         <CommandEmpty>No languages found</CommandEmpty>
         <CommandGroup>
           <CommandItem
-            onSelect={() => setLanguage("All Languages")}
+            onSelect={() => {
+              setLanguage("All Languages");
+              onClose();
+            }}
             value="all"
           >
             <LanguageIndicator language="All Languages" />
