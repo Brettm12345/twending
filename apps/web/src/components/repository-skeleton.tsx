@@ -31,7 +31,7 @@ export function RepositorySkeleton({
           <Skeleton className="h-4 w-1/5" />
           <Skeleton className="h-4 w-3/5" />
         </ItemDescription>
-        <ItemFooter className="mt-2 justify-start">
+        <ItemFooter className="mt-2 flex flex-wrap justify-start">
           <Skeleton className="h-6 w-32 rounded-full" />
           <Skeleton className="h-6 w-24 rounded-full" />
           <Skeleton className="h-6 w-24 rounded-full" />
