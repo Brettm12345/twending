@@ -8,7 +8,7 @@ interface LanguageIndicatorProps extends React.ComponentProps<"div"> {
 const allLanguagesColor = "#ef4444";
 
 export const LanguageIndicator = ({
-  language,
+  language = "Unknown",
   className,
   ...props
 }: LanguageIndicatorProps) => {

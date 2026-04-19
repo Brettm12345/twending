@@ -6,8 +6,8 @@ import { useLanguageValue } from "@/atoms/language";
 import { usePeriodValue } from "@/atoms/period";
 import { usePersonalAccessTokenValue } from "@/atoms/personal-access-token";
 import { AppShell } from "@/components/app-shell";
+import { GithubRepository } from "@/components/github-repository";
 import Loader from "@/components/loader";
-import { Repository } from "@/components/repository";
 import { ItemGroup } from "@/components/ui/item";
 import { useIntersectionObserver } from "@/hooks/use-intersection-observer";
 import { useTRPC } from "@/utils/trpc";
@@ -59,7 +59,7 @@ function HomeComponent() {
       <ItemGroup className="has-data-[size=sm]:gap-0!">
         {listRepositories.data?.pages.map((page, pageIndex) =>
           page.repositories.map((repository, index) => (
-            <Repository
+            <GithubRepository
               repository={repository}
               key={repository.id}
               ref={
