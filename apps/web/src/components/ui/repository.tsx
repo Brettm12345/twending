@@ -75,7 +75,7 @@ export function RepositoryFooterItem({
   return (
     <span
       className={cn(
-        "flex gap-1 font-normal text-muted-foreground text-sm [&>svg:not([class*='size-'])]:size-4",
+        "flex items-center gap-1 font-normal text-muted-foreground text-sm [&>svg:not([class*='size-'])]:size-4",
         className,
       )}
       {...props}
