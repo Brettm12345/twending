@@ -8,11 +8,13 @@ export function AppShell({ children, ...props }: React.ComponentProps<"div">) {
   return (
     <main {...props}>
       <AppBar position="fixed">
-        <Logo />
-        <div className="flex items-center gap-2">
-          <LanguageSelect />
-          <PeriodSelect />
-          <SettingsDropdown />
+        <div className="container mx-auto flex items-center justify-between">
+          <Logo />
+          <div className="flex items-center gap-2">
+            <LanguageSelect />
+            <PeriodSelect />
+            <SettingsDropdown />
+          </div>
         </div>
       </AppBar>
       <h1 className="text-2xl text-center mt-24 md:mt-32">
