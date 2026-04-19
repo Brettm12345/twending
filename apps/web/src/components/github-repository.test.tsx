@@ -6,7 +6,7 @@ const repository = {
   name: "twending",
   description: null,
   html_url: "https://github.com/brettm12345/twending",
-  stargazers_count: 12345,
+  stargazers_count: 12_345,
   watchers_count: 678,
   forks: 90,
   language: null,
@@ -16,6 +16,7 @@ const repository = {
   },
 };
 
+const linkRegex = /twending/i;
 describe("GithubRepository", () => {
   it("renders repository metadata with fallbacks", () => {
     render(<GithubRepository repository={repository as never} />);
@@ -27,7 +28,7 @@ describe("GithubRepository", () => {
     expect(screen.getByText("678")).toBeInTheDocument();
     expect(screen.getByText("90")).toBeInTheDocument();
 
-    const link = screen.getByRole("link", { name: /twending/i });
+    const link = screen.getByRole("link", { name: linkRegex });
     expect(link).toHaveAttribute(
       "href",
       "https://github.com/brettm12345/twending",

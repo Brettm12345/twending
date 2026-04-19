@@ -8,12 +8,12 @@ import { cn } from "@/lib/utils";
 function ItemGroup({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
-      role="list"
-      data-slot="item-group"
       className={cn(
         "group/item-group flex w-full flex-col gap-4 has-data-[size=sm]:gap-2.5 has-data-[size=xs]:gap-2",
         className,
       )}
+      data-slot="item-group"
+      role="list"
       {...props}
     />
   );
@@ -25,16 +25,16 @@ function ItemSeparator({
 }: React.ComponentProps<typeof Separator>) {
   return (
     <Separator
+      className={cn("my-2", className)}
       data-slot="item-separator"
       orientation="horizontal"
-      className={cn("my-2", className)}
       {...props}
     />
   );
 }
 
 const itemVariants = cva(
-  "group/item flex w-full flex-wrap items-center rounded-2xl border text-sm transition-colors duration-100 outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 [a]:transition-colors [a]:hover:bg-muted",
+  "group/item flex w-full flex-wrap items-center rounded-2xl border text-sm outline-none transition-colors duration-100 focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 [a]:transition-colors [a]:hover:bg-muted",
   {
     variants: {
       variant: {
@@ -45,7 +45,7 @@ const itemVariants = cva(
       size: {
         default: "gap-3.5 px-4 py-3.5",
         sm: "gap-3.5 px-3.5 py-3",
-        xs: "gap-2.5 px-3 py-2.5 in-data-[slot=dropdown-menu-content]:p-0",
+        xs: "gap-2.5 in-data-[slot=dropdown-menu-content]:p-0 px-3 py-2.5",
       },
     },
     defaultVariants: {
@@ -103,9 +103,9 @@ function ItemMedia({
 }: React.ComponentProps<"div"> & VariantProps<typeof itemMediaVariants>) {
   return (
     <div
+      className={cn(itemMediaVariants({ variant, className }))}
       data-slot="item-media"
       data-variant={variant}
-      className={cn(itemMediaVariants({ variant, className }))}
       {...props}
     />
   );
@@ -114,11 +114,11 @@ function ItemMedia({
 function ItemContent({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
-      data-slot="item-content"
       className={cn(
         "flex flex-1 flex-col gap-1 group-data-[size=xs]/item:gap-0.5 [&+[data-slot=item-content]]:flex-none",
         className,
       )}
+      data-slot="item-content"
       {...props}
     />
   );
@@ -127,11 +127,11 @@ function ItemContent({ className, ...props }: React.ComponentProps<"div">) {
 function ItemTitle({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
-      data-slot="item-title"
       className={cn(
-        "line-clamp-1 flex w-fit items-center gap-2 text-sm leading-snug font-medium underline-offset-4",
+        "line-clamp-1 flex w-fit items-center gap-2 font-medium text-sm leading-snug underline-offset-4",
         className,
       )}
+      data-slot="item-title"
       {...props}
     />
   );
@@ -140,11 +140,11 @@ function ItemTitle({ className, ...props }: React.ComponentProps<"div">) {
 function ItemDescription({ className, ...props }: React.ComponentProps<"p">) {
   return (
     <p
-      data-slot="item-description"
       className={cn(
-        "line-clamp-2 text-left text-sm font-normal text-muted-foreground [&>a]:underline [&>a]:underline-offset-4 [&>a:hover]:text-primary",
+        "line-clamp-2 text-left font-normal text-muted-foreground text-sm [&>a:hover]:text-primary [&>a]:underline [&>a]:underline-offset-4",
         className,
       )}
+      data-slot="item-description"
       {...props}
     />
   );
@@ -153,8 +153,8 @@ function ItemDescription({ className, ...props }: React.ComponentProps<"p">) {
 function ItemActions({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
-      data-slot="item-actions"
       className={cn("flex items-center gap-2", className)}
+      data-slot="item-actions"
       {...props}
     />
   );
@@ -163,11 +163,11 @@ function ItemActions({ className, ...props }: React.ComponentProps<"div">) {
 function ItemHeader({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
-      data-slot="item-header"
       className={cn(
         "flex basis-full items-center justify-between gap-2",
         className,
       )}
+      data-slot="item-header"
       {...props}
     />
   );
@@ -176,11 +176,11 @@ function ItemHeader({ className, ...props }: React.ComponentProps<"div">) {
 function ItemFooter({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
-      data-slot="item-footer"
       className={cn(
         "flex basis-full items-center justify-between gap-2",
         className,
       )}
+      data-slot="item-footer"
       {...props}
     />
   );
@@ -188,13 +188,13 @@ function ItemFooter({ className, ...props }: React.ComponentProps<"div">) {
 
 export {
   Item,
-  ItemMedia,
-  ItemContent,
   ItemActions,
+  ItemContent,
+  ItemDescription,
+  ItemFooter,
   ItemGroup,
+  ItemHeader,
+  ItemMedia,
   ItemSeparator,
   ItemTitle,
-  ItemDescription,
-  ItemHeader,
-  ItemFooter,
 };

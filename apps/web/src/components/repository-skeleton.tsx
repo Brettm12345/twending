@@ -16,8 +16,8 @@ export function RepositorySkeleton({
 }: ComponentProps<typeof Item>) {
   return (
     <Item
+      className="rounded-none border not-last:border-b-border p-4 first-of-type:rounded-t-lg last-of-type:rounded-b-lg"
       size="sm"
-      className="p-4 first-of-type:rounded-t-lg last-of-type:rounded-b-lg not-last:border-b-border rounded-none border"
       {...props}
     >
       <ItemMedia variant="image">
@@ -25,17 +25,17 @@ export function RepositorySkeleton({
       </ItemMedia>
       <ItemContent>
         <ItemTitle className="mb-0.5">
-          <Skeleton className="w-24 h-4" />
+          <Skeleton className="h-4 w-24" />
         </ItemTitle>
         <ItemDescription className="flex flex-col gap-2">
-          <Skeleton className="w-1/5 h-2" />
-          <Skeleton className="w-4/5 h-2" />
+          <Skeleton className="h-2 w-1/5" />
+          <Skeleton className="h-2 w-4/5" />
         </ItemDescription>
       </ItemContent>
       <ItemFooter className="justify-start">
-        <Skeleton className="w-24 h-4" />
-        <Skeleton className="w-16 h-4" />
-        <Skeleton className="w-16 h-4" />
+        <Skeleton className="h-4 w-24" />
+        <Skeleton className="h-4 w-16" />
+        <Skeleton className="h-4 w-16" />
       </ItemFooter>
     </Item>
   );

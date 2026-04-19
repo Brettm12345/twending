@@ -58,12 +58,12 @@ export function SettingsDropdown({
   if (isMobile) {
     return (
       <>
-        <Drawer open={settingsOpen} onOpenChange={setSettingsOpen}>
+        <Drawer onOpenChange={setSettingsOpen} open={settingsOpen}>
           <DrawerTrigger asChild>
             <Button
-              variant="outline"
               className={className}
               size="icon"
+              variant="outline"
               {...props}
             >
               <RiSettings2Line />
@@ -87,8 +87,8 @@ export function SettingsDropdown({
                   <RiMoonLine />
                   <span>Theme</span>
                   <span
+                    className="ml-auto text-muted-foreground text-xs capitalize"
                     data-slot="command-shortcut"
-                    className="ml-auto text-xs text-muted-foreground capitalize"
                   >
                     {theme}
                   </span>
@@ -101,7 +101,7 @@ export function SettingsDropdown({
                   <RiLock2Line />
                   <span>Personal Access Token</span>
                   <RiSettings2Line
-                    className="ml-auto text-xs text-muted-foreground capitalize"
+                    className="ml-auto text-muted-foreground text-xs capitalize"
                     data-slot="command-shortcut"
                   />
                 </CommandItem>
@@ -115,7 +115,7 @@ export function SettingsDropdown({
           </DrawerContent>
         </Drawer>
 
-        <Drawer open={themeDrawerOpen} onOpenChange={setThemeDrawerOpen}>
+        <Drawer onOpenChange={setThemeDrawerOpen} open={themeDrawerOpen}>
           <DrawerContent>
             <DrawerHeader>
               <DrawerTitle>Theme</DrawerTitle>
@@ -127,8 +127,8 @@ export function SettingsDropdown({
               <CommandList>
                 {(["light", "dark", "system"] as const).map((value) => (
                   <CommandItem
-                    key={value}
                     data-checked={theme === value}
+                    key={value}
                     onSelect={() => {
                       setThemeServerFn({ data: value }).then(() => {
                         router.invalidate();
@@ -152,7 +152,7 @@ export function SettingsDropdown({
           </DrawerContent>
         </Drawer>
 
-        <Drawer open={patOpen} onOpenChange={setPatOpen}>
+        <Drawer onOpenChange={setPatOpen} open={patOpen}>
           <DrawerContent>
             <DrawerHeader>
               <DrawerTitle>Personal Access Token</DrawerTitle>
@@ -160,8 +160,8 @@ export function SettingsDropdown({
                 Setup a personal access token
                 <a
                   href="https://github.com/settings/personal-access-tokens"
-                  target="_blank"
                   rel="noopener noreferrer"
+                  target="_blank"
                 >
                   here
                 </a>
@@ -174,14 +174,14 @@ export function SettingsDropdown({
     );
   }
   return (
-    <Dialog open={patOpen} onOpenChange={setPatOpen}>
+    <Dialog onOpenChange={setPatOpen} open={patOpen}>
       <DropdownMenu>
         <DropdownMenuTrigger
           render={
             <Button
-              variant="outline"
               className={className}
               size="icon"
+              variant="outline"
               {...props}
             >
               <RiSettings2Line />
@@ -199,7 +199,6 @@ export function SettingsDropdown({
               <DropdownMenuSubContent>
                 <DropdownMenuLabel>Theme</DropdownMenuLabel>
                 <DropdownMenuRadioGroup
-                  value={theme}
                   onValueChange={(value) => {
                     setThemeServerFn({
                       data: value as "light" | "dark" | "system",
@@ -207,12 +206,13 @@ export function SettingsDropdown({
                       router.invalidate();
                     });
                   }}
+                  value={theme}
                 >
                   {(["light", "dark", "system"] as const).map((value) => (
                     <DropdownMenuRadioItem
+                      className="capitalize"
                       key={value}
                       value={value}
-                      className="capitalize"
                     >
                       {value === "dark" && <RiMoonLine />}
                       {value === "light" && <RiSunLine />}
@@ -242,8 +242,8 @@ export function SettingsDropdown({
             <a
               className="mx-0.5"
               href="https://github.com/settings/personal-access-tokens"
-              target="_blank"
               rel="noopener noreferrer"
+              target="_blank"
             >
               here
             </a>

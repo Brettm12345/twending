@@ -20,8 +20,8 @@ import appCss from "@/styles.css?url";
 import { seo } from "@/utils/seo";
 
 export interface RouterAppContext {
-  trpc: TRPCOptionsProxy<AppRouter>;
   queryClient: QueryClient;
+  trpc: TRPCOptionsProxy<AppRouter>;
 }
 
 export const Route = createRootRouteWithContext<RouterAppContext>()({
@@ -125,7 +125,7 @@ function RootDocument() {
 
   return (
     <Provider>
-      <html lang="en" className={resolvedTheme === "dark" ? "dark" : undefined}>
+      <html className={resolvedTheme === "dark" ? "dark" : undefined} lang="en">
         <head>
           <HeadContent />
         </head>
@@ -134,7 +134,7 @@ function RootDocument() {
             <Outlet />
           </main>
           <TanStackRouterDevtools position="bottom-left" />
-          <ReactQueryDevtools position="bottom" buttonPosition="bottom-right" />
+          <ReactQueryDevtools buttonPosition="bottom-right" position="bottom" />
           <Scripts />
         </body>
       </html>

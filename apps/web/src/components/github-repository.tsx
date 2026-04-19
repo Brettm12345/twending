@@ -22,7 +22,7 @@ interface GithubRepositoryProps extends ComponentProps<typeof Repository> {
 function formatNumber(number: number) {
   return Intl.NumberFormat("en-US").format(number);
 }
-function getAvatarUrl(avatarUrl: string, scale: number = 1) {
+function getAvatarUrl(avatarUrl: string, scale = 1) {
   const githubUrl = avatarUrl.replace("https://", "").replace("?v=4", "");
   const searchParams = new URLSearchParams({
     url: githubUrl,
@@ -45,15 +45,14 @@ export function GithubRepository({
     .join(", ");
   return (
     <Repository
-      size="sm"
       render={
-        <a href={repository.html_url} target="_blank">
+        <a href={repository.html_url} rel="noopener" target="_blank">
           <RepositoryMedia>
             <img
-              srcSet={imgSrcSet}
               alt={repository.owner.login}
-              width={40}
               height={40}
+              srcSet={imgSrcSet}
+              width={40}
             />
           </RepositoryMedia>
           <RepositoryContent>

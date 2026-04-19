@@ -16,7 +16,7 @@ export function Repository({
   return (
     <Item
       className={cn(
-        "p-4 flex-nowrap rounded-none first-of-type:rounded-t-lg last-of-type:rounded-b-lg not-last:border-b-border border",
+        "flex-nowrap rounded-none border not-last:border-b-border p-4 first-of-type:rounded-t-lg last-of-type:rounded-b-lg",
         className,
       )}
       {...props}
@@ -38,7 +38,7 @@ export function RepositoryTitle({
 }: ComponentProps<typeof ItemTitle>) {
   return (
     <ItemTitle
-      className={cn("truncate max-w-[calc(100svw-7rem)]", className)}
+      className={cn("max-w-[calc(100svw-7rem)] truncate", className)}
       {...props}
     />
   );
@@ -75,7 +75,7 @@ export function RepositoryFooterItem({
   return (
     <span
       className={cn(
-        "text-sm font-normal text-muted-foreground flex gap-1 [&>svg:not([class*='size-'])]:size-4",
+        "flex gap-1 font-normal text-muted-foreground text-sm [&>svg:not([class*='size-'])]:size-4",
         className,
       )}
       {...props}

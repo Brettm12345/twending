@@ -38,7 +38,7 @@ export function PersonalAccessTokenForm({ onClose }: { onClose: () => void }) {
   const Footer = isMobile ? DrawerFooter : DialogFooter;
   return (
     <form id="personal-access-token-form" onSubmit={form.handleSubmit}>
-      <FieldGroup className="md:p-0 px-4 pt-2">
+      <FieldGroup className="px-4 pt-2 md:p-0">
         <form.Field
           name="personalAccessToken"
           children={(field) => {
@@ -48,21 +48,21 @@ export function PersonalAccessTokenForm({ onClose }: { onClose: () => void }) {
               <Field>
                 <FieldLabel>Personal Access Token</FieldLabel>
                 <Input
-                  onBlur={field.handleBlur}
-                  onChange={(e) => field.handleChange(e.target.value)}
-                  value={field.state.value}
-                  id={field.name}
-                  name={field.name}
+                  aria-describedby={field.name}
                   aria-invalid={isInvalid}
-                  placeholder="Enter your personal access token"
+                  aria-labelledby={field.name}
+                  aria-required={true}
                   autoComplete="off"
                   autoFocus
-                  spellCheck={false}
                   disabled={form.state.isSubmitting}
+                  id={field.name}
+                  name={field.name}
+                  onBlur={field.handleBlur}
+                  onChange={(e) => field.handleChange(e.target.value)}
+                  placeholder="Enter your personal access token"
                   required
-                  aria-required={true}
-                  aria-describedby={field.name}
-                  aria-labelledby={field.name}
+                  spellCheck={false}
+                  value={field.state.value}
                 />
                 {isInvalid && <FieldError errors={field.state.meta.errors} />}
               </Field>
@@ -71,13 +71,13 @@ export function PersonalAccessTokenForm({ onClose }: { onClose: () => void }) {
         />
       </FieldGroup>
       <Footer className="mt-4">
-        <Button type="button" onClick={onClose} variant="outline">
+        <Button onClick={onClose} type="button" variant="outline">
           Close
         </Button>
         <Button
-          type="submit"
           disabled={form.state.isSubmitting}
           form="personal-access-token-form"
+          type="submit"
         >
           Save
         </Button>

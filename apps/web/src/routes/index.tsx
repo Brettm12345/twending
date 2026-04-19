@@ -24,8 +24,8 @@ function HomeComponent() {
   const listRepositories = useInfiniteQuery(
     trpc.listRepositories.infiniteQueryOptions(
       {
-        language: language,
-        period: period,
+        language,
+        period,
         publicAccessToken: personalAccessToken ?? undefined,
       },
       {
@@ -60,7 +60,6 @@ function HomeComponent() {
         {listRepositories.data?.pages.map((page, pageIndex) =>
           page.repositories.map((repository, index) => (
             <GithubRepository
-              repository={repository}
               key={repository.id}
               ref={
                 pageIndex === listRepositories.data?.pages.length - 1 &&
@@ -68,6 +67,7 @@ function HomeComponent() {
                   ? lastRepoRef
                   : undefined
               }
+              repository={repository}
             />
           )),
         )}
