@@ -13,7 +13,7 @@ export const LanguageIndicator = ({
   ...props
 }: LanguageIndicatorProps) => (
   <div
-    className={cn("size-4 rounded-full border border-border", className)}
+    className={cn("size-3.5 rounded-full border border-border", className)}
     data-slot="language-indicator"
     style={{
       backgroundColor:
