@@ -38,8 +38,8 @@ function LanguageSelectContent() {
         <CommandEmpty>No languages found</CommandEmpty>
         <CommandGroup>
           <CommandItem
-            value="all"
             onSelect={() => setLanguage("All Languages")}
+            value="all"
           >
             <LanguageIndicator language="All Languages" />
             All Languages
@@ -49,8 +49,8 @@ function LanguageSelectContent() {
           {languages.popular.map((language) => (
             <CommandItem
               key={language}
-              value={language}
               onSelect={() => setLanguage(language)}
+              value={language}
             >
               <LanguageIndicator language={language} />
               {language}
@@ -61,8 +61,8 @@ function LanguageSelectContent() {
           {languages.everythingElse.map((language) => (
             <CommandItem
               key={language}
-              value={language}
               onSelect={() => setLanguage(language)}
+              value={language}
             >
               <LanguageIndicator language={language} />
               {language}
@@ -111,7 +111,7 @@ export const LanguageSelect = ({
           </Button>
         }
       />
-      <PopoverContent className="w-auto p-0" align="end">
+      <PopoverContent align="end" className="w-auto p-0">
         <LanguageSelectContent />
       </PopoverContent>
     </Popover>

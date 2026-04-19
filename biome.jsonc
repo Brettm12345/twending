@@ -1,11 +1,13 @@
 {
-	"root": true,
-	"formatter": {
-		"enabled": true,
-		"indentWidth": 2,
-		"indentStyle": "space"
-	},
-	"linter": {
-		"enabled": true
-	}
+  "root": true,
+  "formatter": {
+    "enabled": true,
+    "indentWidth": 2,
+    "indentStyle": "space"
+  },
+  "linter": {
+    "enabled": true
+  },
+  "extends": ["ultracite/biome/core", "ultracite/biome/react"],
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json"
 }

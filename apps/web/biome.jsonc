@@ -9,7 +9,8 @@
       "tsconfig.json",
       "biome.json",
       "!**/*.gen.ts",
-      "!**/node_modules"
+      "!**/node_modules",
+      "!**/coverage"
     ]
   },
   "css": {
@@ -30,6 +31,8 @@
       },
       "nursery": {
         "useSortedClasses": {
+          "level": "error",
+          "fix": "safe",
           "options": {
             "attributes": ["classList"],
             "functions": ["clsx", "cva", "cn"]
@@ -42,5 +45,6 @@
     "formatter": {
       "enabled": true
     }
-  }
+  },
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json"
 }

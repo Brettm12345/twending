@@ -1,5 +1,8 @@
 {
   "root": false,
+  "files": {
+    "includes": ["src/**", "!**/node_modules", "!**/coverage"]
+  },
   "formatter": {
     "enabled": true,
     "indentWidth": 2,

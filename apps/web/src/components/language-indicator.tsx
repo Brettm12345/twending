@@ -11,18 +11,16 @@ export const LanguageIndicator = ({
   language = "Unknown",
   className,
   ...props
-}: LanguageIndicatorProps) => {
-  return (
-    <div
-      className={cn("size-4 rounded-full border border-border", className)}
-      data-slot="language-indicator"
-      style={{
-        backgroundColor:
-          language === "All Languages"
-            ? allLanguagesColor
-            : languages.colors[language as keyof typeof languages.colors],
-      }}
-      {...props}
-    />
-  );
-};
+}: LanguageIndicatorProps) => (
+  <div
+    className={cn("size-4 rounded-full border border-border", className)}
+    data-slot="language-indicator"
+    style={{
+      backgroundColor:
+        language === "All Languages"
+          ? allLanguagesColor
+          : languages.colors[language as keyof typeof languages.colors],
+    }}
+    {...props}
+  />
+);

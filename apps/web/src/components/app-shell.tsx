@@ -17,11 +17,11 @@ export function AppShell({ children, ...props }: React.ComponentProps<"div">) {
           </div>
         </div>
       </AppBar>
-      <h1 className="text-2xl text-center mt-24 md:mt-32">
+      <h1 className="mt-24 text-center text-2xl md:mt-32">
         Trending Repositories
       </h1>
-      <div className="flex px-4 flex-1">
-        <div className="container mx-auto rounded-2xl bg-card mt-8 md:mt-16 mb-4 border border-border overflow-hidden">
+      <div className="flex flex-1 px-4">
+        <div className="container mx-auto mt-8 mb-4 overflow-hidden rounded-2xl border border-border bg-card md:mt-16">
           {children}
         </div>
       </div>

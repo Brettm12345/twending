@@ -25,7 +25,7 @@ export function NotFound({
   return (
     <div
       className={cn(
-        "flex flex-col items-center justify-center h-dvh w-dvw",
+        "flex h-dvh w-dvw flex-col items-center justify-center",
         className,
       )}
       {...props}
@@ -39,7 +39,7 @@ export function NotFound({
           <EmptyDescription>{message}</EmptyDescription>
         </EmptyHeader>
         <EmptyContent>
-          <Button variant="outline" render={<Link to="/">{buttonText}</Link>} />
+          <Button render={<Link to="/">{buttonText}</Link>} variant="outline" />
         </EmptyContent>
       </Empty>
     </div>

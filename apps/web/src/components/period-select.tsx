@@ -43,8 +43,8 @@ function PeriodSelectContent() {
           {periods.map((p) => (
             <CommandItem
               key={p.value}
-              value={p.value}
               onSelect={() => setPeriod(p.value)}
+              value={p.value}
             >
               {p.label}
             </CommandItem>
@@ -66,7 +66,7 @@ export function PeriodSelect({
     return (
       <Drawer>
         <DrawerTrigger asChild>
-          <Button variant="outline" className={className} {...props}>
+          <Button className={className} variant="outline" {...props}>
             <RiCalendar2Line />
             {currentPeriod?.label ?? "Daily"}
             <RiArrowDownSLine />
@@ -86,14 +86,14 @@ export function PeriodSelect({
     <Popover>
       <PopoverTrigger
         render={
-          <Button variant="outline" className={className} {...props}>
+          <Button className={className} variant="outline" {...props}>
             <RiCalendar2Line />
             {currentPeriod?.label ?? "Daily"}
             <RiArrowDownSLine />
           </Button>
         }
       />
-      <PopoverContent className="w-auto p-0" align="end">
+      <PopoverContent align="end" className="w-auto p-0">
         <PeriodSelectContent />
       </PopoverContent>
     </Popover>

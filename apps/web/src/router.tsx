@@ -40,7 +40,7 @@ const trpcClient = createTRPCClient<AppRouter>({
 
 const trpc = createTRPCOptionsProxy({
   client: trpcClient,
-  queryClient: queryClient,
+  queryClient,
 });
 
 export const getRouter = () => {
@@ -53,7 +53,7 @@ export const getRouter = () => {
     defaultNotFoundComponent: () => <NotFound />,
     Wrap: ({ children }) => (
       <QueryClientProvider client={queryClient}>
-        <TRPCProvider trpcClient={trpcClient} queryClient={queryClient}>
+        <TRPCProvider queryClient={queryClient} trpcClient={trpcClient}>
           {children}
         </TRPCProvider>
       </QueryClientProvider>
