@@ -3,7 +3,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 export const appBarVariants = cva(
-  "flex items-center justify-between border-border border-b bg-sidebar px-4 shadow-sm",
+  "flex max-w-svw items-center justify-between border-border border-b bg-sidebar px-4 shadow-sm",
   {
     variants: {
       size: {

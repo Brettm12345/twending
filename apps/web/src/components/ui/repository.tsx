@@ -16,9 +16,10 @@ export function Repository({
   return (
     <Item
       className={cn(
-        "flex-nowrap rounded-none border not-last:border-b-border p-4 first-of-type:rounded-t-lg last-of-type:rounded-b-lg",
+        "flex-nowrap rounded-none border not-last:border-b-border px-4 pt-3 pb-4 first-of-type:rounded-t-lg last-of-type:rounded-b-lg",
         className,
       )}
+      size="sm"
       {...props}
     />
   );
@@ -62,7 +63,10 @@ export function RepositoryFooter({
 }: ComponentProps<typeof ItemFooter>) {
   return (
     <ItemFooter
-      className={cn("justify-start [&>span]:text-sm", className)}
+      className={cn(
+        "mt-2 flex flex-wrap justify-start [&>span]:text-sm",
+        className,
+      )}
       {...props}
     />
   );
@@ -75,7 +79,7 @@ export function RepositoryFooterItem({
   return (
     <span
       className={cn(
-        "flex gap-1 font-normal text-muted-foreground text-sm [&>svg:not([class*='size-'])]:size-4",
+        "flex items-center gap-1 rounded-full bg-muted px-2.5 py-1 font-normal text-muted-foreground text-xs [&>svg:not([class*='size-'])]:size-3.5",
         className,
       )}
       {...props}

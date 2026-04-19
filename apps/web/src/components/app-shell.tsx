@@ -20,7 +20,7 @@ export function AppShell({ children, ...props }: React.ComponentProps<"div">) {
       <h1 className="mt-24 text-center text-2xl md:mt-32">
         Trending Repositories
       </h1>
-      <div className="flex flex-1 px-4">
+      <div className="flex max-w-svw flex-1 px-4">
         <div className="container mx-auto mt-8 mb-4 overflow-hidden rounded-2xl border border-border bg-card md:mt-16">
           {children}
         </div>
