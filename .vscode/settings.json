@@ -26,5 +26,6 @@
   "[json5]": {
     "editor.defaultFormatter": "biomejs.biome"
   },
-  "editor.defaultFormatter": "biomejs.biome"
+  "editor.defaultFormatter": "biomejs.biome",
+  "git.openRepositoryInParentFolders": "always"
 }

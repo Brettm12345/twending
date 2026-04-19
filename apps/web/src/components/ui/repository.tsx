@@ -38,7 +38,7 @@ export function RepositoryTitle({
 }: ComponentProps<typeof ItemTitle>) {
   return (
     <ItemTitle
-      className={cn("truncate max-w-[calc(100svw-6.5rem)]", className)}
+      className={cn("truncate max-w-[calc(100svw-7rem)]", className)}
       {...props}
     />
   );
@@ -50,7 +50,7 @@ export function RepositoryDescription({
 }: ComponentProps<typeof ItemDescription>) {
   return (
     <ItemDescription
-      className={cn("line-clamp-2 max-w-[calc(100svw-6.5rem)]", className)}
+      className={cn("line-clamp-2 max-w-[calc(100svw-7rem)]", className)}
       {...props}
     />
   );
