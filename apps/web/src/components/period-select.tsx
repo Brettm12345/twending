@@ -1,4 +1,5 @@
 import { RiArrowDownSLine, RiCalendar2Line } from "@remixicon/react";
+import { useState } from "react";
 import { usePeriodValue, useSetPeriod } from "@/atoms/period";
 import { Button } from "@/components/ui/button";
 import {
@@ -31,7 +32,7 @@ const periods = [
   { value: "yearly", label: "Yearly" } as const,
 ];
 
-function PeriodSelectContent() {
+function PeriodSelectContent({ onClose }: { onClose: () => void }) {
   const period = usePeriodValue();
   const setPeriod = useSetPeriod();
   return (
@@ -43,7 +44,10 @@ function PeriodSelectContent() {
           {periods.map((p) => (
             <CommandItem
               key={p.value}
-              onSelect={() => setPeriod(p.value)}
+              onSelect={() => {
+                setPeriod(p.value);
+                onClose();
+              }}
               value={p.value}
             >
               {p.label}
@@ -62,9 +66,11 @@ export function PeriodSelect({
   const period = usePeriodValue();
   const currentPeriod = periods.find((p) => p.value === period);
   const isMobile = useMediaQuery("(max-width: 768px)");
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [popoverOpen, setPopoverOpen] = useState(false);
   if (isMobile) {
     return (
-      <Drawer>
+      <Drawer onOpenChange={setDrawerOpen} open={drawerOpen}>
         <DrawerTrigger asChild>
           <Button className={className} variant="outline" {...props}>
             <RiCalendar2Line />
@@ -77,13 +83,13 @@ export function PeriodSelect({
             <DrawerTitle>Period</DrawerTitle>
             <DrawerDescription>Select your period</DrawerDescription>
           </DrawerHeader>
-          <PeriodSelectContent />
+          <PeriodSelectContent onClose={() => setDrawerOpen(false)} />
         </DrawerContent>
       </Drawer>
     );
   }
   return (
-    <Popover>
+    <Popover onOpenChange={setPopoverOpen} open={popoverOpen}>
       <PopoverTrigger
         render={
           <Button className={className} variant="outline" {...props}>
@@ -94,7 +100,7 @@ export function PeriodSelect({
         }
       />
       <PopoverContent align="end" className="w-auto p-0">
-        <PeriodSelectContent />
+        <PeriodSelectContent onClose={() => setPopoverOpen(false)} />
       </PopoverContent>
     </Popover>
   );

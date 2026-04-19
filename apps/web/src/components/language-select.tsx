@@ -1,7 +1,7 @@
 "use client";
 
 import { RiArrowDownSLine } from "@remixicon/react";
-
+import { useState } from "react";
 import { useLanguageValue, useSetLanguage } from "@/atoms/language";
 import { LanguageIndicator } from "@/components/language-indicator";
 import { Button } from "@/components/ui/button";
@@ -29,7 +29,7 @@ import {
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { languages } from "@/lib/languages";
 
-function LanguageSelectContent() {
+function LanguageSelectContent({ onClose }: { onClose: () => void }) {
   const setLanguage = useSetLanguage();
   return (
     <Command className="bg-transparent">
@@ -49,7 +49,10 @@ function LanguageSelectContent() {
           {languages.popular.map((language) => (
             <CommandItem
               key={language}
-              onSelect={() => setLanguage(language)}
+              onSelect={() => {
+                setLanguage(language);
+                onClose();
+              }}
               value={language}
             >
               <LanguageIndicator language={language} />
@@ -61,7 +64,10 @@ function LanguageSelectContent() {
           {languages.everythingElse.map((language) => (
             <CommandItem
               key={language}
-              onSelect={() => setLanguage(language)}
+              onSelect={() => {
+                setLanguage(language);
+                onClose();
+              }}
               value={language}
             >
               <LanguageIndicator language={language} />
@@ -80,9 +86,11 @@ export const LanguageSelect = ({
 }: React.ComponentProps<typeof Button>) => {
   const language = useLanguageValue();
   const isMobile = useMediaQuery("(max-width: 768px)");
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [popoverOpen, setPopoverOpen] = useState(false);
   if (isMobile) {
     return (
-      <Drawer>
+      <Drawer onOpenChange={setDrawerOpen} open={drawerOpen}>
         <DrawerTrigger asChild>
           <Button variant="outline" {...props}>
             <LanguageIndicator language={language} />
@@ -95,13 +103,13 @@ export const LanguageSelect = ({
             <DrawerTitle>Language</DrawerTitle>
             <DrawerDescription>Select your language</DrawerDescription>
           </DrawerHeader>
-          <LanguageSelectContent />
+          <LanguageSelectContent onClose={() => setDrawerOpen(false)} />
         </DrawerContent>
       </Drawer>
     );
   }
   return (
-    <Popover>
+    <Popover onOpenChange={setPopoverOpen} open={popoverOpen}>
       <PopoverTrigger
         render={
           <Button variant="outline" {...props}>
@@ -112,7 +120,7 @@ export const LanguageSelect = ({
         }
       />
       <PopoverContent align="end" className="w-auto p-0">
-        <LanguageSelectContent />
+        <LanguageSelectContent onClose={() => setPopoverOpen(false)} />
       </PopoverContent>
     </Popover>
   );
