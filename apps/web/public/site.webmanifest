@@ -1,0 +1,10 @@
+{
+  "name":"Twending",
+  "short_name":"Twending",
+  "description":"Twending is the best way to find new trending repositories on github.",
+  "icons":[
+    {"src":"/android-chrome-maskable_128x128.png","sizes":"128x128","type":"image/png","purpose":"any maskable"},
+    {"src":"/android-chrome-maskable_512x512.png","sizes":"512x512","type":"image/png","purpose":"any maskable"}
+  ],
+  "display":"standalone"
+}

@@ -1,7 +1,12 @@
+import {
+  RiComputerLine,
+  RiLock2Line,
+  RiMoonLine,
+  RiSettings2Line,
+  RiSunLine,
+} from "@remixicon/react";
 import { useRouter } from "@tanstack/react-router";
-import { Key, Monitor, Moon, Settings, Settings2Icon, Sun } from "lucide-react";
 import { useState } from "react";
-
 import { PersonalAccessTokenForm } from "@/components/personal-access-token-form";
 import { Button } from "@/components/ui/button";
 import { Command, CommandItem, CommandList } from "@/components/ui/command";
@@ -61,7 +66,7 @@ export function SettingsDropdown({
               size="icon"
               {...props}
             >
-              <Settings />
+              <RiSettings2Line />
             </Button>
           </DrawerTrigger>
           <DrawerContent>
@@ -74,27 +79,31 @@ export function SettingsDropdown({
             <Command className="bg-transparent">
               <CommandList>
                 <CommandItem
-                  className="[&>.lucide-check]:hidden"
                   onSelect={() => {
                     setSettingsOpen(false);
                     setThemeDrawerOpen(true);
                   }}
                 >
-                  <Moon />
+                  <RiMoonLine />
                   <span>Theme</span>
-                  <span className="ml-auto text-xs text-muted-foreground capitalize">
+                  <span
+                    data-slot="command-shortcut"
+                    className="ml-auto text-xs text-muted-foreground capitalize"
+                  >
                     {theme}
                   </span>
                 </CommandItem>
                 <CommandItem
-                  className="[&>.lucide-check]:hidden"
                   onSelect={() => {
                     setPatOpen(true);
                   }}
                 >
-                  <Key />
+                  <RiLock2Line />
                   <span>Personal Access Token</span>
-                  <Settings2Icon className="ml-auto size-4" />
+                  <RiSettings2Line
+                    className="ml-auto text-xs text-muted-foreground capitalize"
+                    data-slot="command-shortcut"
+                  />
                 </CommandItem>
               </CommandList>
             </Command>
@@ -127,9 +136,9 @@ export function SettingsDropdown({
                       });
                     }}
                   >
-                    {value === "dark" && <Moon />}
-                    {value === "light" && <Sun />}
-                    {value === "system" && <Monitor />}
+                    {value === "dark" && <RiMoonLine />}
+                    {value === "light" && <RiSunLine />}
+                    {value === "system" && <RiComputerLine />}
                     <span className="capitalize">{value}</span>
                   </CommandItem>
                 ))}
@@ -175,7 +184,7 @@ export function SettingsDropdown({
               size="icon"
               {...props}
             >
-              <Settings />
+              <RiSettings2Line />
             </Button>
           }
         />
@@ -184,7 +193,7 @@ export function SettingsDropdown({
             <DropdownMenuLabel>Settings</DropdownMenuLabel>
             <DropdownMenuSub>
               <DropdownMenuSubTrigger>
-                <Moon />
+                <RiMoonLine />
                 Theme
               </DropdownMenuSubTrigger>
               <DropdownMenuSubContent>
@@ -205,9 +214,9 @@ export function SettingsDropdown({
                       value={value}
                       className="capitalize"
                     >
-                      {value === "dark" && <Moon />}
-                      {value === "light" && <Sun />}
-                      {value === "system" && <Monitor />}
+                      {value === "dark" && <RiMoonLine />}
+                      {value === "light" && <RiSunLine />}
+                      {value === "system" && <RiComputerLine />}
                       {value}
                     </DropdownMenuRadioItem>
                   ))}
@@ -217,9 +226,8 @@ export function SettingsDropdown({
             <DialogTrigger
               render={
                 <DropdownMenuItem>
-                  <Key />
+                  <RiLock2Line />
                   Personal Access Token
-                  <Settings2Icon className="ml-auto size-4" />
                 </DropdownMenuItem>
               }
             />

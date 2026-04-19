@@ -1,14 +1,14 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
-import { Fragment, useCallback, useRef } from "react";
+import { useCallback, useRef } from "react";
 
 import { useLanguageValue } from "@/atoms/language";
 import { usePeriodValue } from "@/atoms/period";
 import { usePersonalAccessTokenValue } from "@/atoms/personal-access-token";
 import { AppShell } from "@/components/app-shell";
+import { GithubRepository } from "@/components/github-repository";
 import Loader from "@/components/loader";
-import { Repository } from "@/components/repository";
-import { ItemGroup, ItemSeparator } from "@/components/ui/item";
+import { ItemGroup } from "@/components/ui/item";
 import { useIntersectionObserver } from "@/hooks/use-intersection-observer";
 import { useTRPC } from "@/utils/trpc";
 
@@ -56,21 +56,19 @@ function HomeComponent() {
 
   return (
     <AppShell>
-      <ItemGroup className="gap-0">
+      <ItemGroup className="has-data-[size=sm]:gap-0!">
         {listRepositories.data?.pages.map((page, pageIndex) =>
           page.repositories.map((repository, index) => (
-            <Fragment key={repository.id}>
-              <Repository
-                repository={repository}
-                ref={
-                  pageIndex === listRepositories.data?.pages.length - 1 &&
-                  index === page.repositories.length - 1
-                    ? lastRepoRef
-                    : undefined
-                }
-              />
-              <ItemSeparator className="my-0" />
-            </Fragment>
+            <GithubRepository
+              repository={repository}
+              key={repository.id}
+              ref={
+                pageIndex === listRepositories.data?.pages.length - 1 &&
+                index === page.repositories.length - 1
+                  ? lastRepoRef
+                  : undefined
+              }
+            />
           )),
         )}
       </ItemGroup>

@@ -1,20 +1,25 @@
-import { Github } from "lucide-react";
-
+import { Image } from "@unpic/react";
 import { cn } from "@/lib/utils";
 
-export function Logo({ className, ...props }: React.ComponentProps<"a">) {
+export function Logo({ className }: { className?: string }) {
   return (
     <a
       href="https://github.com/brettm12345/twending"
       target="_blank"
-      rel="noopener"
+      rel="noopener noreferrer"
       className={cn(
-        "outline-none focus-visible:ring-ring/50 focus-visible:ring-[3px] rounded-md",
+        "outline-none focus-visible:ring-ring/50 focus-visible:ring-[3px] rounded-md relative",
         className,
       )}
-      {...props}
     >
-      <Github className="size-10" />
+      <Image
+        src="/logo.png"
+        alt="Twending"
+        layout="constrained"
+        width={40}
+        height={40}
+        className={className}
+      />
     </a>
   );
 }

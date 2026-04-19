@@ -1,5 +1,4 @@
-import { CalendarDays, ChevronDown } from "lucide-react";
-
+import { RiArrowDownSLine, RiCalendar2Line } from "@remixicon/react";
 import { usePeriodValue, useSetPeriod } from "@/atoms/period";
 import { Button } from "@/components/ui/button";
 import {
@@ -33,9 +32,10 @@ const periods = [
 ];
 
 function PeriodSelectContent() {
+  const period = usePeriodValue();
   const setPeriod = useSetPeriod();
   return (
-    <Command className="bg-transparent">
+    <Command className="bg-transparent" value={period}>
       <CommandInput placeholder="Search for a period" />
       <CommandList>
         <CommandEmpty>No periods found</CommandEmpty>
@@ -67,9 +67,9 @@ export function PeriodSelect({
       <Drawer>
         <DrawerTrigger asChild>
           <Button variant="outline" className={className} {...props}>
-            <CalendarDays />
+            <RiCalendar2Line />
             {currentPeriod?.label ?? "Daily"}
-            <ChevronDown />
+            <RiArrowDownSLine />
           </Button>
         </DrawerTrigger>
         <DrawerContent>
@@ -87,12 +87,12 @@ export function PeriodSelect({
       <PopoverTrigger
         render={
           <Button variant="outline" className={className} {...props}>
-            <CalendarDays />
+            <RiCalendar2Line />
             {currentPeriod?.label ?? "Daily"}
-            <ChevronDown />
+            <RiArrowDownSLine />
           </Button>
         }
-      ></PopoverTrigger>
+      />
       <PopoverContent className="w-auto p-0" align="end">
         <PeriodSelectContent />
       </PopoverContent>

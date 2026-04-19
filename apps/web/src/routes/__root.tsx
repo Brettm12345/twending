@@ -10,12 +10,14 @@ import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import type { TRPCOptionsProxy } from "@trpc/tanstack-react-query";
 import type { AppRouter } from "@twending/api/routers/index";
 import { Provider } from "jotai";
+import posthog from "posthog-js";
 import { useEffect, useState } from "react";
 
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { getThemeServerFn, type T as ThemePreference } from "@/lib/theme";
 
 import appCss from "@/styles.css?url";
+import { seo } from "@/utils/seo";
 
 export interface RouterAppContext {
   trpc: TRPCOptionsProxy<AppRouter>;
@@ -34,17 +36,32 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
       {
         charSet: "utf-8",
       },
+      ...seo({
+        title: "Twending",
+        description:
+          "Twending is the best way to find new trending repositories on github.",
+        image: "/og.png",
+        keywords: ["twending", "github", "trending", "repositories"],
+      }),
+    ],
+    links: [
       {
-        rel: "icon",
-        type: "image/png",
-        sizes: "512x512",
-        href: "/android-chrome-512x512.png",
+        rel: "stylesheet",
+        href: appCss,
       },
       {
         rel: "icon",
         type: "image/png",
-        sizes: "192x192",
-        href: "/android-chrome-192x192.png",
+        sizes: "512x512",
+        purpose: "any maskable",
+        href: "/android-chrome-maskable_512x512.png",
+      },
+      {
+        rel: "icon",
+        type: "image/png",
+        sizes: "128x128",
+        purpose: "any maskable",
+        href: "/android-chrome-maskable_128x128.png",
       },
       {
         rel: "icon",
@@ -70,26 +87,8 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
         href: "/favicon-96x96.png",
       },
       {
-        name: "viewport",
-        content: "width=device-width, initial-scale=1",
-      },
-      {
-        title: "Twending",
-        description:
-          "Twending is a new way to view trending repositories from github.",
-        ogTitle: "Twending",
-        ogDescription:
-          "Twending is a new way to view trending repositories from github.",
-        ogUrl: "https://twending.vercel.app",
-        ogType: "website",
-        ogLocale: "en_US",
-        ogSiteName: "Twending",
-      },
-    ],
-    links: [
-      {
-        rel: "stylesheet",
-        href: appCss,
+        rel: "manifest",
+        href: "/site.webmanifest",
       },
     ],
   }),
@@ -113,10 +112,16 @@ function useResolvedTheme(preference: ThemePreference) {
 
   return resolved;
 }
-
 function RootDocument() {
   const { theme } = Route.useLoaderData();
   const resolvedTheme = useResolvedTheme(theme);
+  useEffect(() => {
+    posthog.init("phc_dAam8kgQPVoA93AZYmMNBcknT1PXOmwseN1FA3fjGYG", {
+      api_host: "/ph",
+      defaults: "2025-11-30",
+      autocapture: true,
+    });
+  }, []);
 
   return (
     <Provider>

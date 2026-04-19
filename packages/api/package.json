@@ -10,12 +10,16 @@
   },
   "type": "module",
   "scripts": {
+    "test": "vitest run --config vitest.config.ts",
+    "test:coverage": "vitest run --config vitest.config.ts --coverage",
     "lint": "biome check .",
     "lint:fix": "biome check . --write",
     "format": "biome format . --write"
   },
   "devDependencies": {
-    "@twending/config": "workspace:*"
+    "@twending/config": "workspace:*",
+    "@vitest/coverage-v8": "^4.1.4",
+    "vitest": "^4.1.4"
   },
   "peerDependencies": {
     "typescript": "^5"
