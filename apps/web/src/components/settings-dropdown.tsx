@@ -1,11 +1,10 @@
 import {
-  ComputerPhoneSyncIcon,
-  MoonIcon,
-  Settings01Icon,
-  SquareLockIcon,
-  SunIcon,
-} from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
+  RiComputerLine,
+  RiLock2Line,
+  RiMoonLine,
+  RiSettings2Line,
+  RiSunLine,
+} from "@remixicon/react";
 import { useRouter } from "@tanstack/react-router";
 import { useState } from "react";
 import { PersonalAccessTokenForm } from "@/components/personal-access-token-form";
@@ -67,7 +66,7 @@ export function SettingsDropdown({
               size="icon"
               {...props}
             >
-              <HugeiconsIcon icon={Settings01Icon} />
+              <RiSettings2Line />
             </Button>
           </DrawerTrigger>
           <DrawerContent>
@@ -80,29 +79,31 @@ export function SettingsDropdown({
             <Command className="bg-transparent">
               <CommandList>
                 <CommandItem
-                  className="[&>.lucide-check]:hidden"
                   onSelect={() => {
                     setSettingsOpen(false);
                     setThemeDrawerOpen(true);
                   }}
                 >
-                  <HugeiconsIcon icon={MoonIcon} />
+                  <RiMoonLine />
                   <span>Theme</span>
-                  <span className="ml-auto text-xs text-muted-foreground capitalize">
+                  <span
+                    data-slot="command-shortcut"
+                    className="ml-auto text-xs text-muted-foreground capitalize"
+                  >
                     {theme}
                   </span>
                 </CommandItem>
                 <CommandItem
-                  className="[&>.lucide-check]:hidden"
                   onSelect={() => {
                     setPatOpen(true);
                   }}
                 >
-                  <HugeiconsIcon
-                    icon={SquareLockIcon}
-                    className="ml-auto size-4"
-                  />
+                  <RiLock2Line />
                   <span>Personal Access Token</span>
+                  <RiSettings2Line
+                    className="ml-auto text-xs text-muted-foreground capitalize"
+                    data-slot="command-shortcut"
+                  />
                 </CommandItem>
               </CommandList>
             </Command>
@@ -135,11 +136,9 @@ export function SettingsDropdown({
                       });
                     }}
                   >
-                    {value === "dark" && <HugeiconsIcon icon={MoonIcon} />}
-                    {value === "light" && <HugeiconsIcon icon={SunIcon} />}
-                    {value === "system" && (
-                      <HugeiconsIcon icon={ComputerPhoneSyncIcon} />
-                    )}
+                    {value === "dark" && <RiMoonLine />}
+                    {value === "light" && <RiSunLine />}
+                    {value === "system" && <RiComputerLine />}
                     <span className="capitalize">{value}</span>
                   </CommandItem>
                 ))}
@@ -185,7 +184,7 @@ export function SettingsDropdown({
               size="icon"
               {...props}
             >
-              <HugeiconsIcon icon={Settings01Icon} />
+              <RiSettings2Line />
             </Button>
           }
         />
@@ -194,7 +193,7 @@ export function SettingsDropdown({
             <DropdownMenuLabel>Settings</DropdownMenuLabel>
             <DropdownMenuSub>
               <DropdownMenuSubTrigger>
-                <HugeiconsIcon icon={MoonIcon} />
+                <RiMoonLine />
                 Theme
               </DropdownMenuSubTrigger>
               <DropdownMenuSubContent>
@@ -215,11 +214,9 @@ export function SettingsDropdown({
                       value={value}
                       className="capitalize"
                     >
-                      {value === "dark" && <HugeiconsIcon icon={MoonIcon} />}
-                      {value === "light" && <HugeiconsIcon icon={SunIcon} />}
-                      {value === "system" && (
-                        <HugeiconsIcon icon={ComputerPhoneSyncIcon} />
-                      )}
+                      {value === "dark" && <RiMoonLine />}
+                      {value === "light" && <RiSunLine />}
+                      {value === "system" && <RiComputerLine />}
                       {value}
                     </DropdownMenuRadioItem>
                   ))}
@@ -229,7 +226,7 @@ export function SettingsDropdown({
             <DialogTrigger
               render={
                 <DropdownMenuItem>
-                  <HugeiconsIcon icon={SquareLockIcon} />
+                  <RiLock2Line />
                   Personal Access Token
                 </DropdownMenuItem>
               }

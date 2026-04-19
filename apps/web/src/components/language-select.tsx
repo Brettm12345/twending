@@ -1,7 +1,6 @@
 "use client";
 
-import { ChevronDown } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
+import { RiArrowDownSLine } from "@remixicon/react";
 
 import { useLanguageValue, useSetLanguage } from "@/atoms/language";
 import { LanguageIndicator } from "@/components/language-indicator";
@@ -88,7 +87,7 @@ export const LanguageSelect = ({
           <Button variant="outline" {...props}>
             <LanguageIndicator language={language} />
             {language}
-            <HugeiconsIcon icon={ChevronDown} />
+            <RiArrowDownSLine />
           </Button>
         </DrawerTrigger>
         <DrawerContent>
@@ -108,7 +107,7 @@ export const LanguageSelect = ({
           <Button variant="outline" {...props}>
             <LanguageIndicator language={language} />
             {language}
-            <HugeiconsIcon icon={ChevronDown} />
+            <RiArrowDownSLine />
           </Button>
         }
       />

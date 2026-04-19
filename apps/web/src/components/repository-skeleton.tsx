@@ -17,17 +17,17 @@ export function RepositorySkeleton({
   return (
     <Item
       size="sm"
-      className="p-4 first-of-type:rounded-t-lg last-of-type:rounded-b-lg not-last:border-b-border border"
+      className="p-4 first-of-type:rounded-t-lg last-of-type:rounded-b-lg not-last:border-b-border rounded-none border"
       {...props}
     >
       <ItemMedia variant="image">
         <Skeleton className="size-full rounded-sm" />
       </ItemMedia>
       <ItemContent>
-        <ItemTitle>
+        <ItemTitle className="mb-0.5">
           <Skeleton className="w-24 h-4" />
         </ItemTitle>
-        <ItemDescription className="flex flex-col gap-1">
+        <ItemDescription className="flex flex-col gap-2">
           <Skeleton className="w-1/5 h-2" />
           <Skeleton className="w-4/5 h-2" />
         </ItemDescription>

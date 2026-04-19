@@ -1,9 +1,7 @@
-import { EyeIcon, GitBranchIcon, StarIcon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
+import { RiEyeLine, RiGitBranchLine, RiStarLine } from "@remixicon/react";
 import type { inferRouterOutputs } from "@trpc/server";
 import type { AppRouter } from "@twending/api/routers/index";
 import type { ComponentProps } from "react";
-
 import { LanguageIndicator } from "@/components/language-indicator";
 import {
   Item,
@@ -69,15 +67,15 @@ export function Repository({
                 {repository.language}
               </span>
               <span>
-                <HugeiconsIcon icon={StarIcon} />
+                <RiStarLine />
                 {Intl.NumberFormat("en-US").format(repository.stargazers_count)}
               </span>
               <span>
-                <HugeiconsIcon icon={EyeIcon} />
+                <RiEyeLine />
                 {Intl.NumberFormat("en-US").format(repository.watchers_count)}
               </span>
               <span>
-                <HugeiconsIcon icon={GitBranchIcon} />
+                <RiGitBranchLine />
                 {Intl.NumberFormat("en-US").format(repository.forks)}
               </span>
             </ItemFooter>
