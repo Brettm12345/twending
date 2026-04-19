@@ -16,9 +16,10 @@ export function Repository({
   return (
     <Item
       className={cn(
-        "flex-nowrap rounded-none border not-last:border-b-border p-4 first-of-type:rounded-t-lg last-of-type:rounded-b-lg",
+        "flex-nowrap rounded-none border not-last:border-b-border px-4 pt-2 pb-4 first-of-type:rounded-t-lg last-of-type:rounded-b-lg",
         className,
       )}
+      size="sm"
       {...props}
     />
   );
