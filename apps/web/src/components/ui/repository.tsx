@@ -63,10 +63,7 @@ export function RepositoryFooter({
 }: ComponentProps<typeof ItemFooter>) {
   return (
     <ItemFooter
-      className={cn(
-        "mt-2 flex flex-wrap justify-start",
-        className,
-      )}
+      className={cn("mt-2 flex flex-wrap justify-start", className)}
       {...props}
     />
   );
