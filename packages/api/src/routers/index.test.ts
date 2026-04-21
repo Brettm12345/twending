@@ -69,6 +69,63 @@ describe("appRouter", () => {
     });
   });
 
+  it.each([
+    {
+      period: "daily",
+      expectedRange: "2026-04-16T12:00:00.000Z..2026-04-17T12:00:00.000Z",
+    },
+    {
+      period: "monthly",
+      expectedRange: "2026-02-17T12:00:00.000Z..2026-03-19T12:00:00.000Z",
+    },
+    {
+      period: "yearly",
+      expectedRange: "2024-04-18T12:00:00.000Z..2025-04-18T12:00:00.000Z",
+    },
+  ] as const)("builds the correct $period range without an authorization header", async ({
+    period,
+    expectedRange,
+  }) => {
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date("2026-04-18T12:00:00.000Z"));
+
+    const fetchMock = vi.fn().mockResolvedValue({
+      json: async () => ({
+        total_count: 1,
+        incomplete_results: false,
+        items: [repository],
+      }),
+    });
+    vi.stubGlobal("fetch", fetchMock);
+
+    const caller = appRouter.createCaller({});
+    await caller.listRepositories({
+      language: "TypeScript",
+      period,
+      cursor: 1,
+    });
+
+    expect(fetchMock).toHaveBeenCalledOnce();
+    const [url, options] = fetchMock.mock.calls[0] ?? [];
+    const called = new URL(url);
+
+    expect(called.searchParams.get("q")).toBe(
+      `language:TypeScript created:${expectedRange}`,
+    );
+    const headers = options?.headers;
+
+    if (headers instanceof Headers) {
+      expect(headers.has("Authorization")).toBe(false);
+    } else if (Array.isArray(headers)) {
+      expect(
+        headers.some(([name]) => name.toLowerCase() === "authorization"),
+      ).toBe(false);
+    } else {
+      expect(headers?.Authorization).toBeUndefined();
+      expect(headers?.authorization).toBeUndefined();
+    }
+  });
+
   it("rejects invalid period input before calling GitHub", async () => {
     const fetchMock = vi.fn();
     vi.stubGlobal("fetch", fetchMock);
@@ -84,5 +141,33 @@ describe("appRouter", () => {
       code: "BAD_REQUEST",
     });
     expect(fetchMock).not.toHaveBeenCalled();
+  });
+
+  it("defaults cursor to zero when omitted", async () => {
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date("2026-04-18T12:00:00.000Z"));
+
+    const fetchMock = vi.fn().mockResolvedValue({
+      json: async () => ({
+        total_count: 1,
+        incomplete_results: false,
+        items: [repository],
+      }),
+    });
+    vi.stubGlobal("fetch", fetchMock);
+
+    const caller = appRouter.createCaller({});
+    const result = await caller.listRepositories({
+      language: "TypeScript",
+      period: "daily",
+    });
+
+    expect(fetchMock).toHaveBeenCalledOnce();
+    const url = fetchMock.mock.calls[0]?.[0];
+    const called = new URL(url);
+    expect(called.searchParams.get("q")).toBe(
+      "language:TypeScript created:2026-04-17T12:00:00.000Z..2026-04-18T12:00:00.000Z",
+    );
+    expect(result.nextCursor).toBe(1);
   });
 });
