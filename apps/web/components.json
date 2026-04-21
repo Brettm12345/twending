@@ -22,6 +22,7 @@
     "hooks": "@/hooks"
   },
   "registries": {
-    "@fonttrio": "https://www.fonttrio.xyz/r/{name}.json"
+    "@fonttrio": "https://www.fonttrio.xyz/r/{name}.json",
+    "@heroicons-animated": "https://www.heroicons-animated.com/r/{name}.json"
   }
 }

@@ -1,16 +1,11 @@
-import type { HugeiconsIcon } from "@hugeicons/react";
 import { render, screen } from "@testing-library/react";
 import { Provider } from "jotai";
 import type { ComponentProps, ReactNode } from "react";
 import { describe, expect, it, vi } from "vitest";
 import { LanguageSelect } from "./language-select";
 
-vi.mock("@hugeicons/core-free-icons", () => ({
-  ArrowDownIcon: () => <span data-testid="arrow-icon" />,
-}));
-
-vi.mock("@hugeicons/react", () => ({
-  HugeiconsIcon: ({ icon: Icon }: { icon: HugeiconsIcon }) => <Icon />,
+vi.mock("@/components/ui/chevron-down", () => ({
+  ChevronDownIcon: () => <span data-testid="chevron-down-icon" />,
 }));
 
 vi.mock("@/components/language-indicator", () => ({
@@ -119,7 +114,7 @@ describe("LanguageSelect", () => {
     // Current language appears in the button trigger
     const indicators = screen.getAllByTestId("language-indicator");
     expect(indicators.length).toBeGreaterThanOrEqual(1);
-    expect(screen.getByTestId("arrow-icon")).toBeInTheDocument();
+    expect(screen.getByTestId("chevron-down-icon")).toBeInTheDocument();
   });
 
   it("renders the All Languages option", () => {

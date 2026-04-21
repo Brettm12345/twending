@@ -1,8 +1,14 @@
-import { ArrowDownIcon, CalendarIcon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { usePeriodValue, useSetPeriod } from "@/atoms/period";
 import { Button } from "@/components/ui/button";
+import {
+  CalendarDaysIcon,
+  type CalendarDaysIconHandle,
+} from "@/components/ui/calendar-days";
+import {
+  ChevronDownIcon,
+  type ChevronDownIconHandle,
+} from "@/components/ui/chevron-down";
 import {
   Command,
   CommandEmpty,
@@ -68,16 +74,35 @@ export function PeriodSelect({
   const currentPeriod = periods.find((p) => p.value === period);
   const isMobile = useMediaQuery("(max-width: 768px)");
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const calendarDaysRef = useRef<CalendarDaysIconHandle>(null);
+  const chevronDownRef = useRef<ChevronDownIconHandle>(null);
   const [popoverOpen, setPopoverOpen] = useState(false);
+  function Trigger(props: React.ComponentProps<typeof Button>) {
+    return (
+      <Button
+        className={className}
+        variant="outline"
+        onMouseEnter={() => {
+          calendarDaysRef.current?.startAnimation();
+          chevronDownRef.current?.startAnimation();
+        }}
+        onMouseLeave={() => {
+          calendarDaysRef.current?.stopAnimation();
+          chevronDownRef.current?.stopAnimation();
+        }}
+        {...props}
+      >
+        <CalendarDaysIcon ref={calendarDaysRef} />
+        {currentPeriod?.label ?? "Daily"}
+        <ChevronDownIcon ref={chevronDownRef} />
+      </Button>
+    );
+  }
   if (isMobile) {
     return (
       <Drawer onOpenChange={setDrawerOpen} open={drawerOpen}>
         <DrawerTrigger asChild>
-          <Button className={className} variant="outline" {...props}>
-            <HugeiconsIcon icon={CalendarIcon} />
-            {currentPeriod?.label ?? "Daily"}
-            <HugeiconsIcon icon={ArrowDownIcon} />
-          </Button>
+          <Trigger {...props} />
         </DrawerTrigger>
         <DrawerContent>
           <DrawerHeader>
@@ -91,15 +116,7 @@ export function PeriodSelect({
   }
   return (
     <Popover onOpenChange={setPopoverOpen} open={popoverOpen}>
-      <PopoverTrigger
-        render={
-          <Button className={className} variant="outline" {...props}>
-            <HugeiconsIcon icon={CalendarIcon} />
-            {currentPeriod?.label ?? "Daily"}
-            <HugeiconsIcon icon={ArrowDownIcon} />
-          </Button>
-        }
-      />
+      <PopoverTrigger render={<Trigger {...props} />} />
       <PopoverContent align="end" className="w-auto p-0">
         <PeriodSelectContent onClose={() => setPopoverOpen(false)} />
       </PopoverContent>
