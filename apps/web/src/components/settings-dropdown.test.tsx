@@ -1,5 +1,6 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import type { ComponentProps, ReactNode } from "react";
+import { forwardRef, useImperativeHandle } from "react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { SettingsDropdown } from "./settings-dropdown";
 
@@ -12,6 +13,8 @@ const useLoaderDataMock = vi.fn(() => ({
 }));
 const useMediaQueryMock = vi.fn(() => false);
 let mockRadioGroupValueChangeHandler: ((value: string) => void) | undefined;
+const cogStartAnimationMock = vi.fn();
+const cogStopAnimationMock = vi.fn();
 
 vi.mock("@/routes/__root", () => ({
   Route: {
@@ -41,7 +44,13 @@ vi.mock("@/components/personal-access-token-form", () => ({
 }));
 
 vi.mock("@/components/ui/cog-6-tooth", () => ({
-  Cog6ToothIcon: () => <span data-testid="cog-icon" />,
+  Cog6ToothIcon: forwardRef((_, ref) => {
+    useImperativeHandle(ref, () => ({
+      startAnimation: cogStartAnimationMock,
+      stopAnimation: cogStopAnimationMock,
+    }));
+    return <span data-testid="cog-icon" />;
+  }),
 }));
 
 vi.mock("@/components/ui/computer-desktop", () => ({
@@ -237,6 +246,8 @@ beforeEach(() => {
     Promise.resolve({ data: "system" }),
   );
   routerInvalidateMock.mockClear();
+  cogStartAnimationMock.mockClear();
+  cogStopAnimationMock.mockClear();
   useLoaderDataMock.mockReturnValue({ theme: "system" });
   useMediaQueryMock.mockReturnValue(false);
   mockRadioGroupValueChangeHandler = undefined;
@@ -248,6 +259,17 @@ describe("SettingsDropdown - desktop", () => {
 
     expect(screen.getByTestId("cog-icon")).toBeInTheDocument();
     expect(screen.getByTestId("dropdown-menu")).toBeInTheDocument();
+  });
+
+  it("starts and stops trigger icon animation on focus and blur", () => {
+    render(<SettingsDropdown data-testid="settings-trigger" />);
+
+    const trigger = screen.getByTestId("settings-trigger");
+    fireEvent.focus(trigger);
+    fireEvent.blur(trigger);
+
+    expect(cogStartAnimationMock).toHaveBeenCalledOnce();
+    expect(cogStopAnimationMock).toHaveBeenCalledOnce();
   });
 
   it("renders the Settings label and Theme + Personal Access Token entries", () => {
