@@ -1,4 +1,5 @@
-import { RiEyeLine, RiGitBranchLine, RiStarLine } from "@remixicon/react";
+import { EyeIcon, GitBranchIcon, StarIcon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import type { inferRouterOutputs } from "@trpc/server";
 import type { AppRouter } from "@twending/api/routers/index";
 import type { ComponentProps } from "react";
@@ -66,15 +67,15 @@ export function GithubRepository({
                 {repository.language ?? "Unknown"}
               </RepositoryFooterItem>
               <RepositoryFooterItem>
-                <RiStarLine />
+                <HugeiconsIcon icon={StarIcon} />
                 {formatNumber(repository.stargazers_count)}
               </RepositoryFooterItem>
               <RepositoryFooterItem>
-                <RiEyeLine />
+                <HugeiconsIcon icon={EyeIcon} />
                 {formatNumber(repository.watchers_count)}
               </RepositoryFooterItem>
               <RepositoryFooterItem>
-                <RiGitBranchLine />
+                <HugeiconsIcon icon={GitBranchIcon} />
                 {formatNumber(repository.forks)}
               </RepositoryFooterItem>
             </RepositoryFooter>

@@ -1,4 +1,5 @@
-import { RiArrowDownSLine, RiCalendar2Line } from "@remixicon/react";
+import { ArrowDownIcon, CalendarIcon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { useState } from "react";
 import { usePeriodValue, useSetPeriod } from "@/atoms/period";
 import { Button } from "@/components/ui/button";
@@ -73,9 +74,9 @@ export function PeriodSelect({
       <Drawer onOpenChange={setDrawerOpen} open={drawerOpen}>
         <DrawerTrigger asChild>
           <Button className={className} variant="outline" {...props}>
-            <RiCalendar2Line />
+            <HugeiconsIcon icon={CalendarIcon} />
             {currentPeriod?.label ?? "Daily"}
-            <RiArrowDownSLine />
+            <HugeiconsIcon icon={ArrowDownIcon} />
           </Button>
         </DrawerTrigger>
         <DrawerContent>
@@ -93,9 +94,9 @@ export function PeriodSelect({
       <PopoverTrigger
         render={
           <Button className={className} variant="outline" {...props}>
-            <RiCalendar2Line />
+            <HugeiconsIcon icon={CalendarIcon} />
             {currentPeriod?.label ?? "Daily"}
-            <RiArrowDownSLine />
+            <HugeiconsIcon icon={ArrowDownIcon} />
           </Button>
         }
       />
