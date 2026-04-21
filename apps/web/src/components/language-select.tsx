@@ -1,11 +1,13 @@
 "use client";
 
-import { ArrowDownIcon } from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useLanguageValue, useSetLanguage } from "@/atoms/language";
 import { LanguageIndicator } from "@/components/language-indicator";
 import { Button } from "@/components/ui/button";
+import {
+  ChevronDownIcon,
+  type ChevronDownIconHandle,
+} from "@/components/ui/chevron-down";
 import {
   Command,
   CommandEmpty,
@@ -92,15 +94,39 @@ export const LanguageSelect = ({
   const isMobile = useMediaQuery("(max-width: 768px)");
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [popoverOpen, setPopoverOpen] = useState(false);
+  const chevronDownRef = useRef<ChevronDownIconHandle>(null);
+  function Trigger(props: React.ComponentProps<typeof Button>) {
+    const {
+      onMouseEnter,
+      onMouseLeave,
+      ...buttonProps
+    } = props;
+
+    return (
+      <Button
+        {...buttonProps}
+        className={className}
+        variant="outline"
+        onMouseEnter={(event) => {
+          onMouseEnter?.(event);
+          chevronDownRef.current?.startAnimation();
+        }}
+        onMouseLeave={(event) => {
+          onMouseLeave?.(event);
+          chevronDownRef.current?.stopAnimation();
+        }}
+      >
+        <LanguageIndicator language={language} />
+        {language}
+        <ChevronDownIcon ref={chevronDownRef} />
+      </Button>
+    );
+  }
   if (isMobile) {
     return (
       <Drawer onOpenChange={setDrawerOpen} open={drawerOpen}>
         <DrawerTrigger asChild>
-          <Button variant="outline" {...props}>
-            <LanguageIndicator language={language} />
-            {language}
-            <HugeiconsIcon icon={ArrowDownIcon} />
-          </Button>
+          <Trigger {...props} />
         </DrawerTrigger>
         <DrawerContent>
           <DrawerHeader>
@@ -114,15 +140,7 @@ export const LanguageSelect = ({
   }
   return (
     <Popover onOpenChange={setPopoverOpen} open={popoverOpen}>
-      <PopoverTrigger
-        render={
-          <Button variant="outline" {...props}>
-            <LanguageIndicator language={language} />
-            {language}
-            <HugeiconsIcon icon={ArrowDownIcon} />
-          </Button>
-        }
-      />
+      <PopoverTrigger render={<Trigger {...props} />} />
       <PopoverContent align="end" className="w-auto p-0">
         <LanguageSelectContent onClose={() => setPopoverOpen(false)} />
       </PopoverContent>

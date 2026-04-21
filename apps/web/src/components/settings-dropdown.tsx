@@ -1,16 +1,16 @@
-import {
-  ComputerPhoneSyncIcon,
-  Key01Icon,
-  MoonIcon,
-  SettingsIcon,
-  SunIcon,
-} from "@hugeicons/core-free-icons";
-import { HugeiconsIcon } from "@hugeicons/react";
 import { useRouter } from "@tanstack/react-router";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { PersonalAccessTokenForm } from "@/components/personal-access-token-form";
 import { Button } from "@/components/ui/button";
+import {
+  Cog6ToothIcon,
+  type Cog6ToothIconHandle,
+} from "@/components/ui/cog-6-tooth";
 import { Command, CommandItem, CommandList } from "@/components/ui/command";
+import {
+  ComputerDesktopIcon,
+  type ComputerDesktopIconHandle,
+} from "@/components/ui/computer-desktop";
 import {
   Dialog,
   DialogContent,
@@ -42,6 +42,14 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+  LockClosedIcon,
+  type LockClosedIconHandle,
+} from "@/components/ui/lock-closed";
+import { MoonIcon, type MoonIconHandle } from "@/components/ui/moon";
+import { SunIcon, type SunIconHandle } from "@/components/ui/sun";
+import { SwatchIcon, type SwatchIconHandle } from "@/components/ui/swatch";
+
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { setThemeServerFn } from "@/lib/theme";
 import { Route } from "@/routes/__root";
@@ -56,19 +64,46 @@ export function SettingsDropdown({
   const [themeDrawerOpen, setThemeDrawerOpen] = useState(false);
   const [patOpen, setPatOpen] = useState(false);
   const isMobile = useMediaQuery("(max-width: 768px)");
+  const cog6ToothTriggerRef = useRef<Cog6ToothIconHandle>(null);
+  const cog6ToothShortcutRef = useRef<Cog6ToothIconHandle>(null);
+  const lockClosedIconMobileRef = useRef<LockClosedIconHandle>(null);
+  const lockClosedIconRef = useRef<LockClosedIconHandle>(null);
+  const swatchIconMobileRef = useRef<SwatchIconHandle>(null);
+  const swatchIconRef = useRef<SwatchIconHandle>(null);
+  const moonIconMobileRef = useRef<MoonIconHandle>(null);
+  const moonIconRef = useRef<MoonIconHandle>(null);
+  const sunIconMobileRef = useRef<SunIconHandle>(null);
+  const sunIconRef = useRef<SunIconHandle>(null);
+  const computerDesktopIconMobileRef = useRef<ComputerDesktopIconHandle>(null);
+  const computerDesktopIconRef = useRef<ComputerDesktopIconHandle>(null);
+  function Trigger(props: React.ComponentProps<typeof Button>) {
+    const { onMouseEnter, onMouseLeave, ...buttonProps } = props;
+
+    return (
+      <Button
+        {...buttonProps}
+        className={className}
+        size="icon"
+        variant="outline"
+        onMouseEnter={(event) => {
+          onMouseEnter?.(event);
+          cog6ToothTriggerRef.current?.startAnimation();
+        }}
+        onMouseLeave={(event) => {
+          onMouseLeave?.(event);
+          cog6ToothTriggerRef.current?.stopAnimation();
+        }}
+      >
+        <Cog6ToothIcon ref={cog6ToothTriggerRef} />
+      </Button>
+    );
+  }
   if (isMobile) {
     return (
       <>
         <Drawer onOpenChange={setSettingsOpen} open={settingsOpen}>
           <DrawerTrigger asChild>
-            <Button
-              className={className}
-              size="icon"
-              variant="outline"
-              {...props}
-            >
-              <HugeiconsIcon icon={SettingsIcon} />
-            </Button>
+            <Trigger {...props} />
           </DrawerTrigger>
           <DrawerContent>
             <DrawerHeader>
@@ -80,12 +115,18 @@ export function SettingsDropdown({
             <Command className="bg-transparent">
               <CommandList>
                 <CommandItem
+                  onMouseEnter={() =>
+                    swatchIconMobileRef.current?.startAnimation()
+                  }
+                  onMouseLeave={() =>
+                    swatchIconMobileRef.current?.stopAnimation()
+                  }
                   onSelect={() => {
                     setSettingsOpen(false);
                     setThemeDrawerOpen(true);
                   }}
                 >
-                  <HugeiconsIcon icon={MoonIcon} />
+                  <SwatchIcon ref={swatchIconMobileRef} />
                   <span>Theme</span>
                   <span
                     className="ml-auto text-muted-foreground text-xs capitalize"
@@ -95,15 +136,23 @@ export function SettingsDropdown({
                   </span>
                 </CommandItem>
                 <CommandItem
+                  onMouseEnter={() => {
+                    lockClosedIconMobileRef.current?.startAnimation();
+                    cog6ToothShortcutRef.current?.startAnimation();
+                  }}
+                  onMouseLeave={() => {
+                    lockClosedIconMobileRef.current?.stopAnimation();
+                    cog6ToothShortcutRef.current?.stopAnimation();
+                  }}
                   onSelect={() => {
                     setPatOpen(true);
                   }}
                 >
-                  <HugeiconsIcon icon={Key01Icon} />
+                  <LockClosedIcon ref={lockClosedIconMobileRef} />
                   <span>Personal Access Token</span>
-                  <HugeiconsIcon
+                  <Cog6ToothIcon
+                    ref={cog6ToothShortcutRef}
                     data-slot="command-shortcut"
-                    icon={SettingsIcon}
                   />
                 </CommandItem>
               </CommandList>
@@ -130,6 +179,24 @@ export function SettingsDropdown({
                   <CommandItem
                     data-checked={theme === value}
                     key={value}
+                    onMouseEnter={() => {
+                      if (value === "dark") {
+                        moonIconMobileRef.current?.startAnimation();
+                      } else if (value === "light") {
+                        sunIconMobileRef.current?.startAnimation();
+                      } else {
+                        computerDesktopIconMobileRef.current?.startAnimation();
+                      }
+                    }}
+                    onMouseLeave={() => {
+                      if (value === "dark") {
+                        moonIconMobileRef.current?.stopAnimation();
+                      } else if (value === "light") {
+                        sunIconMobileRef.current?.stopAnimation();
+                      } else {
+                        computerDesktopIconMobileRef.current?.stopAnimation();
+                      }
+                    }}
                     onSelect={() => {
                       setThemeServerFn({ data: value }).then(() => {
                         router.invalidate();
@@ -137,10 +204,10 @@ export function SettingsDropdown({
                       });
                     }}
                   >
-                    {value === "dark" && <HugeiconsIcon icon={MoonIcon} />}
-                    {value === "light" && <HugeiconsIcon icon={SunIcon} />}
+                    {value === "dark" && <MoonIcon ref={moonIconMobileRef} />}
+                    {value === "light" && <SunIcon ref={sunIconMobileRef} />}
                     {value === "system" && (
-                      <HugeiconsIcon icon={ComputerPhoneSyncIcon} />
+                      <ComputerDesktopIcon ref={computerDesktopIconMobileRef} />
                     )}
                     <span className="capitalize">{value}</span>
                   </CommandItem>
@@ -179,24 +246,16 @@ export function SettingsDropdown({
   return (
     <Dialog onOpenChange={setPatOpen} open={patOpen}>
       <DropdownMenu>
-        <DropdownMenuTrigger
-          render={
-            <Button
-              className={className}
-              size="icon"
-              variant="outline"
-              {...props}
-            >
-              <HugeiconsIcon icon={SettingsIcon} />
-            </Button>
-          }
-        />
+        <DropdownMenuTrigger render={<Trigger {...props} />} />
         <DropdownMenuContent align="end" className="w-56">
           <DropdownMenuGroup>
             <DropdownMenuLabel>Settings</DropdownMenuLabel>
             <DropdownMenuSub>
-              <DropdownMenuSubTrigger>
-                <HugeiconsIcon icon={MoonIcon} />
+              <DropdownMenuSubTrigger
+                onMouseEnter={() => swatchIconRef.current?.startAnimation()}
+                onMouseLeave={() => swatchIconRef.current?.stopAnimation()}
+              >
+                <SwatchIcon ref={swatchIconRef} />
                 Theme
               </DropdownMenuSubTrigger>
               <DropdownMenuSubContent>
@@ -216,11 +275,29 @@ export function SettingsDropdown({
                       className="capitalize"
                       key={value}
                       value={value}
+                      onMouseEnter={() => {
+                        if (value === "dark") {
+                          moonIconRef.current?.startAnimation();
+                        } else if (value === "light") {
+                          sunIconRef.current?.startAnimation();
+                        } else {
+                          computerDesktopIconRef.current?.startAnimation();
+                        }
+                      }}
+                      onMouseLeave={() => {
+                        if (value === "dark") {
+                          moonIconRef.current?.stopAnimation();
+                        } else if (value === "light") {
+                          sunIconRef.current?.stopAnimation();
+                        } else {
+                          computerDesktopIconRef.current?.stopAnimation();
+                        }
+                      }}
                     >
-                      {value === "dark" && <HugeiconsIcon icon={MoonIcon} />}
-                      {value === "light" && <HugeiconsIcon icon={SunIcon} />}
+                      {value === "dark" && <MoonIcon ref={moonIconRef} />}
+                      {value === "light" && <SunIcon ref={sunIconRef} />}
                       {value === "system" && (
-                        <HugeiconsIcon icon={ComputerPhoneSyncIcon} />
+                        <ComputerDesktopIcon ref={computerDesktopIconRef} />
                       )}
                       {value}
                     </DropdownMenuRadioItem>
@@ -230,8 +307,15 @@ export function SettingsDropdown({
             </DropdownMenuSub>
             <DialogTrigger
               render={
-                <DropdownMenuItem>
-                  <HugeiconsIcon icon={Key01Icon} />
+                <DropdownMenuItem
+                  onMouseEnter={() =>
+                    lockClosedIconRef.current?.startAnimation()
+                  }
+                  onMouseLeave={() =>
+                    lockClosedIconRef.current?.stopAnimation()
+                  }
+                >
+                  <LockClosedIcon ref={lockClosedIconRef} />
                   Personal Access Token
                 </DropdownMenuItem>
               }

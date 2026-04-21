@@ -15,6 +15,7 @@ export function Repository({
 }: ComponentProps<typeof Item>) {
   return (
     <Item
+      data-slot="repository"
       className={cn(
         "flex-nowrap rounded-none border not-last:border-b-border px-4 pt-3 pb-4 first-of-type:rounded-t-lg last-of-type:rounded-b-lg",
         className,
@@ -26,11 +27,11 @@ export function Repository({
 }
 
 export function RepositoryMedia(props: ComponentProps<typeof ItemMedia>) {
-  return <ItemMedia variant="image" {...props} />;
+  return <ItemMedia data-slot="repository-media" variant="image" {...props} />;
 }
 
 export function RepositoryContent(props: ComponentProps<typeof ItemContent>) {
-  return <ItemContent {...props} />;
+  return <ItemContent data-slot="repository-content" {...props} />;
 }
 
 export function RepositoryTitle({
@@ -39,6 +40,7 @@ export function RepositoryTitle({
 }: ComponentProps<typeof ItemTitle>) {
   return (
     <ItemTitle
+      data-slot="repository-title"
       className={cn("max-w-[calc(100svw-7rem)] truncate", className)}
       {...props}
     />
@@ -51,6 +53,7 @@ export function RepositoryDescription({
 }: ComponentProps<typeof ItemDescription>) {
   return (
     <ItemDescription
+      data-slot="repository-description"
       className={cn("line-clamp-2 max-w-[calc(100svw-7rem)]", className)}
       {...props}
     />
@@ -63,6 +66,7 @@ export function RepositoryFooter({
 }: ComponentProps<typeof ItemFooter>) {
   return (
     <ItemFooter
+      data-slot="repository-footer"
       className={cn("mt-2 flex flex-wrap justify-start", className)}
       {...props}
     />
@@ -75,6 +79,7 @@ export function RepositoryFooterItem({
 }: ComponentProps<"span">) {
   return (
     <span
+      data-slot="repository-footer-item"
       className={cn(
         "flex items-center gap-1 rounded-full bg-muted px-2.5 py-1 font-normal text-muted-foreground text-xs [&>svg:not([class*='size-'])]:size-3.5",
         className,

@@ -17,7 +17,7 @@ export function AppShell({ children, ...props }: React.ComponentProps<"div">) {
           </div>
         </div>
       </AppBar>
-      <h1 className="mt-24 text-center text-2xl md:mt-32">
+      <h1 className="mt-24 text-center font-heading font-medium text-2xl md:mt-32">
         Trending Repositories
       </h1>
       <div className="flex max-w-svw flex-1 px-4">
