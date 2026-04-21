@@ -1,5 +1,7 @@
 # Twending
 
+[![codecov](https://codecov.io/github/Brettm12345/twending/branch/main/graph/badge.svg?token=Py8vq2M7gJ)](https://codecov.io/github/Brettm12345/twending)
+
 <img alt="Twending" src="apps/web/public/og.png">
 
 Twending is a new way to view trending repositories from github.
