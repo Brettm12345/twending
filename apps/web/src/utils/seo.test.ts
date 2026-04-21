@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { seo } from "./seo";
 
 describe("seo", () => {
-  it("returns the base metadata when no image is provided", () => {
+  it("returns the base metadata when image is an empty string", () => {
     const metadata = seo({
       title: "Twending",
       description: "Trending repositories by language",
