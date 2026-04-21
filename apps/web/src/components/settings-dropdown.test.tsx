@@ -416,7 +416,7 @@ describe("SettingsDropdown - mobile", () => {
     render(<SettingsDropdown />);
 
     const closeButtons = screen.getAllByText("Close");
-    // Settings, theme, and PAT drawers each have a close button
+    // Settings and theme drawers have a close button; the PAT drawer does not
     expect(closeButtons.length).toBeGreaterThanOrEqual(2);
   });
 });
