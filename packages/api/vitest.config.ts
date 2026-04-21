@@ -9,7 +9,6 @@ export default defineConfig({
     include: ["src/**/*.test.ts"],
     exclude: excludedFiles,
     coverage: {
-      all: true,
       provider: "v8",
       include: ["src/**/*.ts"],
       reporter: ["text", "html", "lcov"],
