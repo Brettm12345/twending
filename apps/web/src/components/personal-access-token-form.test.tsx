@@ -36,10 +36,13 @@ vi.mock("@/components/ui/field", () => ({
     <div data-testid="field-error">{errors.join(", ")}</div>
   ),
   FieldGroup: ({ children }: { children: ReactNode }) => <div>{children}</div>,
-  FieldLabel: ({ children }: { children: ReactNode }) => (
-    // eslint-disable-next-line jsx-a11y/label-has-associated-control
-    <span>{children}</span>
-  ),
+  FieldLabel: ({
+    children,
+    htmlFor,
+  }: {
+    children: ReactNode;
+    htmlFor?: string;
+  }) => <label htmlFor={htmlFor}>{children}</label>,
 }));
 
 vi.mock("@/components/ui/input", () => ({
