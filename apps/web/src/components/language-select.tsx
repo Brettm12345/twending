@@ -96,13 +96,25 @@ export const LanguageSelect = ({
   const [popoverOpen, setPopoverOpen] = useState(false);
   const chevronDownRef = useRef<ChevronDownIconHandle>(null);
   function Trigger(props: React.ComponentProps<typeof Button>) {
+    const {
+      onMouseEnter,
+      onMouseLeave,
+      ...buttonProps
+    } = props;
+
     return (
       <Button
+        {...buttonProps}
         className={className}
         variant="outline"
-        onMouseEnter={() => chevronDownRef.current?.startAnimation()}
-        onMouseLeave={() => chevronDownRef.current?.stopAnimation()}
-        {...props}
+        onMouseEnter={(event) => {
+          onMouseEnter?.(event);
+          chevronDownRef.current?.startAnimation();
+        }}
+        onMouseLeave={(event) => {
+          onMouseLeave?.(event);
+          chevronDownRef.current?.stopAnimation();
+        }}
       >
         <LanguageIndicator language={language} />
         {language}
