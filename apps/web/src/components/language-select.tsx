@@ -137,7 +137,7 @@ export const LanguageSelect = ({
   return (
     <Popover onOpenChange={setPopoverOpen} open={popoverOpen}>
       <PopoverTrigger render={<Trigger {...props} />} />
-      <PopoverContent align="end" className="w-auto p-0">
+      <PopoverContent align="end" className="dark w-auto p-0">
         <LanguageSelectContent onClose={() => setPopoverOpen(false)} />
       </PopoverContent>
     </Popover>
