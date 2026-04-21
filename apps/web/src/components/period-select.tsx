@@ -78,19 +78,27 @@ export function PeriodSelect({
   const chevronDownRef = useRef<ChevronDownIconHandle>(null);
   const [popoverOpen, setPopoverOpen] = useState(false);
   function Trigger(props: React.ComponentProps<typeof Button>) {
+    const {
+      onMouseEnter,
+      onMouseLeave,
+      ...buttonProps
+    } = props;
+
     return (
       <Button
+        {...buttonProps}
         className={className}
         variant="outline"
-        onMouseEnter={() => {
+        onMouseEnter={(event) => {
           calendarDaysRef.current?.startAnimation();
           chevronDownRef.current?.startAnimation();
+          onMouseEnter?.(event);
         }}
-        onMouseLeave={() => {
+        onMouseLeave={(event) => {
           calendarDaysRef.current?.stopAnimation();
           chevronDownRef.current?.stopAnimation();
+          onMouseLeave?.(event);
         }}
-        {...props}
       >
         <CalendarDaysIcon ref={calendarDaysRef} />
         {currentPeriod?.label ?? "Daily"}
