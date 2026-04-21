@@ -64,7 +64,8 @@ export function SettingsDropdown({
   const [themeDrawerOpen, setThemeDrawerOpen] = useState(false);
   const [patOpen, setPatOpen] = useState(false);
   const isMobile = useMediaQuery("(max-width: 768px)");
-  const cog6ToothRef = useRef<Cog6ToothIconHandle>(null);
+  const cog6ToothTriggerRef = useRef<Cog6ToothIconHandle>(null);
+  const cog6ToothShortcutRef = useRef<Cog6ToothIconHandle>(null);
   const lockClosedIconMobileRef = useRef<LockClosedIconHandle>(null);
   const lockClosedIconRef = useRef<LockClosedIconHandle>(null);
   const swatchIconMobileRef = useRef<SwatchIconHandle>(null);
@@ -86,14 +87,14 @@ export function SettingsDropdown({
         variant="outline"
         onMouseEnter={(event) => {
           onMouseEnter?.(event);
-          cog6ToothRef.current?.startAnimation();
+          cog6ToothTriggerRef.current?.startAnimation();
         }}
         onMouseLeave={(event) => {
           onMouseLeave?.(event);
-          cog6ToothRef.current?.stopAnimation();
+          cog6ToothTriggerRef.current?.stopAnimation();
         }}
       >
-        <Cog6ToothIcon ref={cog6ToothRef} />
+        <Cog6ToothIcon ref={cog6ToothTriggerRef} />
       </Button>
     );
   }
@@ -137,11 +138,11 @@ export function SettingsDropdown({
                 <CommandItem
                   onMouseEnter={() => {
                     lockClosedIconMobileRef.current?.startAnimation();
-                    cog6ToothRef.current?.startAnimation();
+                    cog6ToothShortcutRef.current?.startAnimation();
                   }}
                   onMouseLeave={() => {
                     lockClosedIconMobileRef.current?.stopAnimation();
-                    cog6ToothRef.current?.stopAnimation();
+                    cog6ToothShortcutRef.current?.stopAnimation();
                   }}
                   onSelect={() => {
                     setPatOpen(true);
@@ -150,7 +151,7 @@ export function SettingsDropdown({
                   <LockClosedIcon ref={lockClosedIconMobileRef} />
                   <span>Personal Access Token</span>
                   <Cog6ToothIcon
-                    ref={cog6ToothRef}
+                    ref={cog6ToothShortcutRef}
                     data-slot="command-shortcut"
                   />
                 </CommandItem>
