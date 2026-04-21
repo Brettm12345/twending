@@ -122,7 +122,8 @@
   --font-mono: var(--font-source-code-pro);
   --font-inter: "Inter Variable", "Inter", sans-serif;
   --font-be-vietnam-pro: "Be Vietnam Pro", sans-serif;
-  --font-source-code-pro: "Source Code Pro Variable", "Source Code Pro", monospace;
+  --font-source-code-pro:
+    "Source Code Pro Variable", "Source Code Pro", monospace;
 }
 
 @layer base {

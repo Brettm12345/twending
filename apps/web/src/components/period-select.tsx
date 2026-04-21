@@ -78,11 +78,7 @@ export function PeriodSelect({
   const chevronDownRef = useRef<ChevronDownIconHandle>(null);
   const [popoverOpen, setPopoverOpen] = useState(false);
   function Trigger(props: React.ComponentProps<typeof Button>) {
-    const {
-      onMouseEnter,
-      onMouseLeave,
-      ...buttonProps
-    } = props;
+    const { onMouseEnter, onMouseLeave, ...buttonProps } = props;
 
     return (
       <Button
