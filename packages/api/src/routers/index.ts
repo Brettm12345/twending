@@ -75,12 +75,11 @@ export const appRouter = router({
     )
     .query(async ({ input }) => {
       const { language, period, cursor } = input;
-      const startDate = subtractPeriod(
-        period,
-        new Date(),
-        cursor ? cursor + 1 : 1,
-      );
-      const endDate = subtractPeriod(period, new Date(), cursor ?? 0);
+      const now = new Date();
+      const startCursor = cursor ? cursor + 1 : 1;
+      const endCursor = cursor ?? 0;
+      const startDate = subtractPeriod(period, now, startCursor);
+      const endDate = subtractPeriod(period, now, endCursor);
 
       const url = buildUrl({
         queryString: {
