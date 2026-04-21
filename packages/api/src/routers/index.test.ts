@@ -131,4 +131,32 @@ describe("appRouter", () => {
     });
     expect(fetchMock).not.toHaveBeenCalled();
   });
+
+  it("defaults cursor to zero when omitted", async () => {
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date("2026-04-18T12:00:00.000Z"));
+
+    const fetchMock = vi.fn().mockResolvedValue({
+      json: async () => ({
+        total_count: 1,
+        incomplete_results: false,
+        items: [repository],
+      }),
+    });
+    vi.stubGlobal("fetch", fetchMock);
+
+    const caller = appRouter.createCaller({});
+    const result = await caller.listRepositories({
+      language: "TypeScript",
+      period: "daily",
+    });
+
+    expect(fetchMock).toHaveBeenCalledOnce();
+    const url = fetchMock.mock.calls[0]?.[0];
+    const called = new URL(url);
+    expect(called.searchParams.get("q")).toBe(
+      "language:TypeScript created:2026-04-17T12:00:00.000Z..2026-04-18T12:00:00.000Z",
+    );
+    expect(result.nextCursor).toBe(1);
+  });
 });
