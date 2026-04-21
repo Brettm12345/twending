@@ -1,7 +1,9 @@
 "use client";
 
+import { useAtom } from "jotai";
+import { parseAsStringEnum, useQueryState } from "nuqs";
 import { useRef, useState } from "react";
-import { useLanguageValue, useSetLanguage } from "@/atoms/language";
+import { languageAtom, useLanguageValue } from "@/atoms/language";
 import { LanguageIndicator } from "@/components/language-indicator";
 import { Button } from "@/components/ui/button";
 import {
@@ -33,7 +35,13 @@ import { useMediaQuery } from "@/hooks/use-media-query";
 import { languages } from "@/lib/languages";
 
 function LanguageSelectContent({ onClose }: { onClose: () => void }) {
-  const setLanguage = useSetLanguage();
+  const [languageLocalStorage, setLanguageLocalStorage] = useAtom(languageAtom);
+  const [language, setLanguage] = useQueryState(
+    "language",
+    parseAsStringEnum(Object.keys(languages.colors)).withDefault(
+      languageLocalStorage,
+    ),
+  );
   return (
     <Command className="bg-transparent">
       <CommandInput placeholder="Search for a language" />
@@ -43,6 +51,7 @@ function LanguageSelectContent({ onClose }: { onClose: () => void }) {
           <CommandItem
             onSelect={() => {
               setLanguage("All Languages");
+              setLanguageLocalStorage("All Languages");
               onClose();
             }}
             value="all"
@@ -57,6 +66,7 @@ function LanguageSelectContent({ onClose }: { onClose: () => void }) {
               key={language}
               onSelect={() => {
                 setLanguage(language);
+                setLanguageLocalStorage(language);
                 onClose();
               }}
               value={language}
@@ -72,6 +82,7 @@ function LanguageSelectContent({ onClose }: { onClose: () => void }) {
               key={language}
               onSelect={() => {
                 setLanguage(language);
+                setLanguageLocalStorage(language);
                 onClose();
               }}
               value={language}
