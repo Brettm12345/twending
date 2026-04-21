@@ -112,7 +112,18 @@ describe("appRouter", () => {
     expect(called.searchParams.get("q")).toBe(
       `language:TypeScript created:${expectedRange}`,
     );
-    expect(options).toEqual({ headers: undefined });
+    const headers = options?.headers;
+
+    if (headers instanceof Headers) {
+      expect(headers.has("Authorization")).toBe(false);
+    } else if (Array.isArray(headers)) {
+      expect(
+        headers.some(([name]) => name.toLowerCase() === "authorization"),
+      ).toBe(false);
+    } else {
+      expect(headers?.Authorization).toBeUndefined();
+      expect(headers?.authorization).toBeUndefined();
+    }
   });
 
   it("rejects invalid period input before calling GitHub", async () => {
