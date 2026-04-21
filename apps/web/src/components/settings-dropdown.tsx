@@ -176,6 +176,7 @@ export function SettingsDropdown({
                   <Cog6ToothIcon
                     ref={cog6ToothShortcutRef}
                     data-slot="command-shortcut"
+                    className="ml-auto"
                   />
                 </CommandItem>
               </CommandList>
