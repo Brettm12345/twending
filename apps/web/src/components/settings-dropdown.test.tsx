@@ -233,7 +233,9 @@ vi.mock("@/components/ui/dropdown-menu", () => ({
 
 beforeEach(() => {
   setThemeServerFnMock.mockClear();
-  setThemeServerFnMock.mockImplementation(() => Promise.resolve());
+  setThemeServerFnMock.mockImplementation(() =>
+    Promise.resolve({ data: "system" }),
+  );
   routerInvalidateMock.mockClear();
   useLoaderDataMock.mockReturnValue({ theme: "system" });
   useMediaQueryMock.mockReturnValue(false);
