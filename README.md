@@ -13,6 +13,7 @@ Twending is a new way to view trending repositories from github.
 - **TailwindCSS** - Utility-first CSS for rapid UI development
 - **shadcn/ui** - Reusable UI components
 - **tRPC** - End-to-end type-safe APIs
+- **Vitest** - Minimal and fast testing
 
 ## Getting Started
 
