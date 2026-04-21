@@ -76,14 +76,22 @@ export function SettingsDropdown({
   const computerDesktopIconMobileRef = useRef<ComputerDesktopIconHandle>(null);
   const computerDesktopIconRef = useRef<ComputerDesktopIconHandle>(null);
   function Trigger(props: React.ComponentProps<typeof Button>) {
+    const { onMouseEnter, onMouseLeave, ...buttonProps } = props;
+
     return (
       <Button
+        {...buttonProps}
         className={className}
         size="icon"
         variant="outline"
-        onMouseEnter={() => cog6ToothRef.current?.startAnimation()}
-        onMouseLeave={() => cog6ToothRef.current?.stopAnimation()}
-        {...props}
+        onMouseEnter={(event) => {
+          onMouseEnter?.(event);
+          cog6ToothRef.current?.startAnimation();
+        }}
+        onMouseLeave={(event) => {
+          onMouseLeave?.(event);
+          cog6ToothRef.current?.stopAnimation();
+        }}
       >
         <Cog6ToothIcon ref={cog6ToothRef} />
       </Button>
