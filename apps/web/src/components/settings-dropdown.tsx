@@ -77,7 +77,8 @@ export function SettingsDropdown({
   const computerDesktopIconMobileRef = useRef<ComputerDesktopIconHandle>(null);
   const computerDesktopIconRef = useRef<ComputerDesktopIconHandle>(null);
   function Trigger(props: React.ComponentProps<typeof Button>) {
-    const { onMouseEnter, onMouseLeave, ...buttonProps } = props;
+    const { onMouseEnter, onMouseLeave, onFocus, onBlur, ...buttonProps } =
+      props;
 
     return (
       <Button
@@ -85,6 +86,14 @@ export function SettingsDropdown({
         className={className}
         size="icon"
         variant="outline"
+        onFocus={(event) => {
+          onFocus?.(event);
+          cog6ToothTriggerRef.current?.startAnimation();
+        }}
+        onBlur={(event) => {
+          onBlur?.(event);
+          cog6ToothTriggerRef.current?.stopAnimation();
+        }}
         onMouseEnter={(event) => {
           onMouseEnter?.(event);
           cog6ToothTriggerRef.current?.startAnimation();
@@ -121,6 +130,12 @@ export function SettingsDropdown({
                   onMouseLeave={() =>
                     swatchIconMobileRef.current?.stopAnimation()
                   }
+                  onFocus={() => {
+                    swatchIconMobileRef.current?.startAnimation();
+                  }}
+                  onBlur={() => {
+                    swatchIconMobileRef.current?.stopAnimation();
+                  }}
                   onSelect={() => {
                     setSettingsOpen(false);
                     setThemeDrawerOpen(true);
@@ -141,6 +156,14 @@ export function SettingsDropdown({
                     cog6ToothShortcutRef.current?.startAnimation();
                   }}
                   onMouseLeave={() => {
+                    lockClosedIconMobileRef.current?.stopAnimation();
+                    cog6ToothShortcutRef.current?.stopAnimation();
+                  }}
+                  onFocus={() => {
+                    lockClosedIconMobileRef.current?.startAnimation();
+                    cog6ToothShortcutRef.current?.startAnimation();
+                  }}
+                  onBlur={() => {
                     lockClosedIconMobileRef.current?.stopAnimation();
                     cog6ToothShortcutRef.current?.stopAnimation();
                   }}
@@ -179,6 +202,24 @@ export function SettingsDropdown({
                   <CommandItem
                     data-checked={theme === value}
                     key={value}
+                    onFocus={() => {
+                      if (value === "dark") {
+                        moonIconMobileRef.current?.startAnimation();
+                      } else if (value === "light") {
+                        sunIconMobileRef.current?.startAnimation();
+                      } else {
+                        computerDesktopIconMobileRef.current?.startAnimation();
+                      }
+                    }}
+                    onBlur={() => {
+                      if (value === "dark") {
+                        moonIconMobileRef.current?.stopAnimation();
+                      } else if (value === "light") {
+                        sunIconMobileRef.current?.stopAnimation();
+                      } else {
+                        computerDesktopIconMobileRef.current?.stopAnimation();
+                      }
+                    }}
                     onMouseEnter={() => {
                       if (value === "dark") {
                         moonIconMobileRef.current?.startAnimation();
@@ -254,6 +295,12 @@ export function SettingsDropdown({
               <DropdownMenuSubTrigger
                 onMouseEnter={() => swatchIconRef.current?.startAnimation()}
                 onMouseLeave={() => swatchIconRef.current?.stopAnimation()}
+                onFocus={() => {
+                  swatchIconRef.current?.startAnimation();
+                }}
+                onBlur={() => {
+                  swatchIconRef.current?.stopAnimation();
+                }}
               >
                 <SwatchIcon ref={swatchIconRef} />
                 Theme
@@ -275,6 +322,24 @@ export function SettingsDropdown({
                       className="capitalize"
                       key={value}
                       value={value}
+                      onFocus={() => {
+                        if (value === "dark") {
+                          moonIconRef.current?.startAnimation();
+                        } else if (value === "light") {
+                          sunIconRef.current?.startAnimation();
+                        } else {
+                          computerDesktopIconRef.current?.startAnimation();
+                        }
+                      }}
+                      onBlur={() => {
+                        if (value === "dark") {
+                          moonIconRef.current?.stopAnimation();
+                        } else if (value === "light") {
+                          sunIconRef.current?.stopAnimation();
+                        } else {
+                          computerDesktopIconRef.current?.stopAnimation();
+                        }
+                      }}
                       onMouseEnter={() => {
                         if (value === "dark") {
                           moonIconRef.current?.startAnimation();
@@ -306,6 +371,12 @@ export function SettingsDropdown({
               </DropdownMenuSubContent>
             </DropdownMenuSub>
             <DialogTrigger
+              onFocus={() => {
+                lockClosedIconRef.current?.startAnimation();
+              }}
+              onBlur={() => {
+                lockClosedIconRef.current?.stopAnimation();
+              }}
               render={
                 <DropdownMenuItem
                   onMouseEnter={() =>

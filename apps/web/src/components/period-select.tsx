@@ -78,7 +78,8 @@ export function PeriodSelect({
   const chevronDownRef = useRef<ChevronDownIconHandle>(null);
   const [popoverOpen, setPopoverOpen] = useState(false);
   function Trigger(props: React.ComponentProps<typeof Button>) {
-    const { onMouseEnter, onMouseLeave, ...buttonProps } = props;
+    const { onMouseEnter, onMouseLeave, onFocus, onBlur, ...buttonProps } =
+      props;
 
     return (
       <Button
@@ -94,6 +95,16 @@ export function PeriodSelect({
           calendarDaysRef.current?.stopAnimation();
           chevronDownRef.current?.stopAnimation();
           onMouseLeave?.(event);
+        }}
+        onFocus={(event) => {
+          onFocus?.(event);
+          calendarDaysRef.current?.startAnimation();
+          chevronDownRef.current?.startAnimation();
+        }}
+        onBlur={(event) => {
+          onBlur?.(event);
+          calendarDaysRef.current?.stopAnimation();
+          chevronDownRef.current?.stopAnimation();
         }}
       >
         <CalendarDaysIcon ref={calendarDaysRef} />
