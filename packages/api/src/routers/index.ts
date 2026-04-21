@@ -85,7 +85,9 @@ export const appRouter = router({
       const url = buildUrl({
         queryString: {
           language,
-          created: `${startDate.toISOString()}..${endDate.toISOString()}`,
+          created: [startDate, endDate]
+            .map((date) => date.toISOString())
+            .join(".."),
         },
         searchParams: {
           sort: "stars",
