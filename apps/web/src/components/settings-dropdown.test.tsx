@@ -1,5 +1,6 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import type { ComponentProps, ReactNode } from "react";
+import { Children, cloneElement, isValidElement } from "react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { SettingsDropdown } from "./settings-dropdown";
 
@@ -177,37 +178,31 @@ vi.mock("@/components/ui/dropdown-menu", () => ({
     value?: string;
   }) => (
     <div data-testid="theme-radio-group" data-value={value}>
-      <button
-        data-testid="select-light"
-        onClick={() => onValueChange?.("light")}
-        type="button"
-      >
-        select-light
-      </button>
-      <button
-        data-testid="select-dark"
-        onClick={() => onValueChange?.("dark")}
-        type="button"
-      >
-        select-dark
-      </button>
-      <button
-        data-testid="select-system"
-        onClick={() => onValueChange?.("system")}
-        type="button"
-      >
-        select-system
-      </button>
-      {children}
+      {Children.map(children, (child) => {
+        if (!isValidElement(child)) {
+          return child;
+        }
+        return cloneElement(child, { onValueChange });
+      })}
     </div>
   ),
   DropdownMenuRadioItem: ({
     children,
+    onValueChange,
     value,
   }: {
     children: ReactNode;
+    onValueChange?: (value: string) => void;
     value?: string;
-  }) => <div data-testid={`radio-item-${value}`}>{children}</div>,
+  }) => (
+    <button
+      data-testid={`radio-item-${value}`}
+      onClick={() => onValueChange?.(value ?? "")}
+      type="button"
+    >
+      {children}
+    </button>
+  ),
   DropdownMenuSub: ({ children }: { children: ReactNode }) => (
     <div>{children}</div>
   ),
@@ -359,6 +354,14 @@ describe("SettingsDropdown - mobile", () => {
   it("opens the theme drawer when the Theme item is selected", () => {
     render(<SettingsDropdown />);
 
+    const themeDescription = screen.getByText(
+      "Choose how Twending should follow your appearance.",
+    );
+    expect(themeDescription.closest("[data-open]")).toHaveAttribute(
+      "data-open",
+      "false",
+    );
+
     // First "Theme" text is the settings list item; clicking it opens the theme drawer
     const themeLabels = screen.getAllByText("Theme");
     const themeItem = themeLabels[0]?.closest("button");
@@ -367,9 +370,10 @@ describe("SettingsDropdown - mobile", () => {
       fireEvent.click(themeItem);
     }
 
-    expect(
-      screen.getByText("Choose how Twending should follow your appearance."),
-    ).toBeInTheDocument();
+    expect(themeDescription.closest("[data-open]")).toHaveAttribute(
+      "data-open",
+      "true",
+    );
   });
 
   it("calls setThemeServerFn and invalidates the router when a mobile theme option is selected", async () => {
