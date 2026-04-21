@@ -17,7 +17,7 @@ export function Repository({
     <Item
       data-slot="repository"
       className={cn(
-        "flex-nowrap rounded-none border not-last:border-b-border px-4 pt-3 pb-4 first-of-type:rounded-t-lg last-of-type:rounded-b-lg",
+        "group/repository flex-nowrap rounded-none border not-last:border-b-border px-4 pt-3 pb-4 first-of-type:rounded-t-lg last-of-type:rounded-b-lg",
         className,
       )}
       size="sm"
@@ -81,7 +81,7 @@ export function RepositoryFooterItem({
     <span
       data-slot="repository-footer-item"
       className={cn(
-        "flex items-center gap-1 rounded-full bg-muted px-2.5 py-1 font-normal text-muted-foreground text-xs [&>svg:not([class*='size-'])]:size-3.5",
+        "flex items-center gap-1 rounded-full bg-muted px-2.5 py-1 font-normal text-muted-foreground text-xs group-hover/repository:bg-input/50 [&>svg:not([class*='size-'])]:size-3.5",
         className,
       )}
       {...props}
