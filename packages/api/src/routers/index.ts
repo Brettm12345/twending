@@ -4,6 +4,31 @@ import type { RepositoryResponse } from "../types";
 
 const periodSchema = z.enum(["daily", "weekly", "monthly", "yearly"]);
 
+function buildQueryString(params: Record<string, string>) {
+  return Object.entries(params)
+    .map(([key, value]) => `${key}:${value}`)
+    .join("+");
+}
+// We cannot use a URLSearchParams object here because it will encode the values
+function buildSearchParamsString(params: Record<string, string>) {
+  return `${Object.entries(params)
+    .map(([key, value]) => `${key}=${value}`)
+    .join("&")}`;
+}
+
+function buildUrl({
+  queryString,
+  searchParams,
+}: {
+  queryString: Record<string, string>;
+  searchParams: Record<string, string>;
+}) {
+  return `https://api.github.com/search/repositories?${buildSearchParamsString({
+    q: buildQueryString(queryString),
+    ...searchParams,
+  })}`;
+}
+
 function subDays(date: Date, days: number) {
   const milliseconds = days * 24 * 60 * 60 * 1000;
   return new Date(date.getTime() - milliseconds);
@@ -57,10 +82,18 @@ export const appRouter = router({
       );
       const endDate = subtractPeriod(period, new Date(), cursor ?? 0);
 
-      const queryString = `language:${language}+created:${startDate.toISOString()}..${endDate.toISOString()}`;
-      const searchParams = `q=${queryString}&sort=stars&order=desc&per_page=30`;
+      const url = buildUrl({
+        queryString: {
+          language,
+          created: `${startDate.toISOString()}..${endDate.toISOString()}`,
+        },
+        searchParams: {
+          sort: "stars",
+          order: "desc",
+          per_page: "30",
+        },
+      });
 
-      const url = `https://api.github.com/search/repositories?${searchParams}`;
       const response = await fetch(url, {
         headers: input.publicAccessToken
           ? {
