@@ -281,7 +281,7 @@ describe("SettingsDropdown - desktop", () => {
   it("calls setThemeServerFn and invalidates router when a theme is chosen", async () => {
     render(<SettingsDropdown />);
 
-    fireEvent.click(screen.getByTestId("select-dark"));
+    fireEvent.click(screen.getByTestId("radio-item-dark"));
 
     expect(setThemeServerFnMock).toHaveBeenCalledWith({ data: "dark" });
 
