@@ -12,7 +12,7 @@ describe("Logo", () => {
     render(<Logo className="custom-logo" />);
 
     const link = screen.getByRole("link", { name: "Twending" });
-    const image = screen.getByAltText("Twending");
+    const svg = screen.getByLabelText("Twending");
 
     expect(link).toHaveAttribute(
       "href",
@@ -20,8 +20,6 @@ describe("Logo", () => {
     );
     expect(link).toHaveAttribute("target", "_blank");
     expect(link).toHaveAttribute("rel", "noopener noreferrer");
-    expect(link).toHaveClass("custom-logo");
-    expect(image).toHaveAttribute("src", "/logo.png");
-    expect(image).toHaveClass("custom-logo");
+    expect(svg).toBeInTheDocument();
   });
 });

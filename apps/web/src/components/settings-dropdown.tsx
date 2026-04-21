@@ -1,10 +1,11 @@
 import {
-  RiComputerLine,
-  RiLock2Line,
-  RiMoonLine,
-  RiSettings2Line,
-  RiSunLine,
-} from "@remixicon/react";
+  ComputerPhoneSyncIcon,
+  Key01Icon,
+  MoonIcon,
+  SettingsIcon,
+  SunIcon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { useRouter } from "@tanstack/react-router";
 import { useState } from "react";
 import { PersonalAccessTokenForm } from "@/components/personal-access-token-form";
@@ -66,7 +67,7 @@ export function SettingsDropdown({
               variant="outline"
               {...props}
             >
-              <RiSettings2Line />
+              <HugeiconsIcon icon={SettingsIcon} />
             </Button>
           </DrawerTrigger>
           <DrawerContent>
@@ -84,7 +85,7 @@ export function SettingsDropdown({
                     setThemeDrawerOpen(true);
                   }}
                 >
-                  <RiMoonLine />
+                  <HugeiconsIcon icon={MoonIcon} />
                   <span>Theme</span>
                   <span
                     className="ml-auto text-muted-foreground text-xs capitalize"
@@ -98,11 +99,11 @@ export function SettingsDropdown({
                     setPatOpen(true);
                   }}
                 >
-                  <RiLock2Line />
+                  <HugeiconsIcon icon={Key01Icon} />
                   <span>Personal Access Token</span>
-                  <RiSettings2Line
-                    className="ml-auto text-muted-foreground text-xs capitalize"
+                  <HugeiconsIcon
                     data-slot="command-shortcut"
+                    icon={SettingsIcon}
                   />
                 </CommandItem>
               </CommandList>
@@ -136,9 +137,11 @@ export function SettingsDropdown({
                       });
                     }}
                   >
-                    {value === "dark" && <RiMoonLine />}
-                    {value === "light" && <RiSunLine />}
-                    {value === "system" && <RiComputerLine />}
+                    {value === "dark" && <HugeiconsIcon icon={MoonIcon} />}
+                    {value === "light" && <HugeiconsIcon icon={SunIcon} />}
+                    {value === "system" && (
+                      <HugeiconsIcon icon={ComputerPhoneSyncIcon} />
+                    )}
                     <span className="capitalize">{value}</span>
                   </CommandItem>
                 ))}
@@ -184,7 +187,7 @@ export function SettingsDropdown({
               variant="outline"
               {...props}
             >
-              <RiSettings2Line />
+              <HugeiconsIcon icon={SettingsIcon} />
             </Button>
           }
         />
@@ -193,7 +196,7 @@ export function SettingsDropdown({
             <DropdownMenuLabel>Settings</DropdownMenuLabel>
             <DropdownMenuSub>
               <DropdownMenuSubTrigger>
-                <RiMoonLine />
+                <HugeiconsIcon icon={MoonIcon} />
                 Theme
               </DropdownMenuSubTrigger>
               <DropdownMenuSubContent>
@@ -214,9 +217,11 @@ export function SettingsDropdown({
                       key={value}
                       value={value}
                     >
-                      {value === "dark" && <RiMoonLine />}
-                      {value === "light" && <RiSunLine />}
-                      {value === "system" && <RiComputerLine />}
+                      {value === "dark" && <HugeiconsIcon icon={MoonIcon} />}
+                      {value === "light" && <HugeiconsIcon icon={SunIcon} />}
+                      {value === "system" && (
+                        <HugeiconsIcon icon={ComputerPhoneSyncIcon} />
+                      )}
                       {value}
                     </DropdownMenuRadioItem>
                   ))}
@@ -226,7 +231,7 @@ export function SettingsDropdown({
             <DialogTrigger
               render={
                 <DropdownMenuItem>
-                  <RiLock2Line />
+                  <HugeiconsIcon icon={Key01Icon} />
                   Personal Access Token
                 </DropdownMenuItem>
               }

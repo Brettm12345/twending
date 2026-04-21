@@ -1,4 +1,5 @@
-import { RiBinocularsLine } from "@remixicon/react";
+import { BinocularsIcon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
 import { Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import {
@@ -32,7 +33,7 @@ export function NotFound({
     >
       <Empty>
         <EmptyMedia variant="icon">
-          <RiBinocularsLine />
+          <HugeiconsIcon icon={BinocularsIcon} />
         </EmptyMedia>
         <EmptyHeader>
           <EmptyTitle>{title}</EmptyTitle>

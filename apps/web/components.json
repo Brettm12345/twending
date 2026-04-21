@@ -10,7 +10,7 @@
     "cssVariables": true,
     "prefix": ""
   },
-  "iconLibrary": "remixicon",
+  "iconLibrary": "hugeicons",
   "rtl": false,
   "aliases": {
     "components": "@/components",
@@ -19,7 +19,7 @@
     "lib": "@/lib",
     "hooks": "@/hooks"
   },
-  "menuColor": "inverted-translucent",
-  "menuAccent": "subtle",
+  "menuColor": "inverted",
+  "menuAccent": "bold",
   "registries": {}
 }
