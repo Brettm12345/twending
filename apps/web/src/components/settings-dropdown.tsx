@@ -203,10 +203,22 @@ export function SettingsDropdown({
                     data-checked={theme === value}
                     key={value}
                     onFocus={() => {
-                      moonIconMobileRef.current?.startAnimation();
+                      if (value === "dark") {
+                        moonIconMobileRef.current?.startAnimation();
+                      } else if (value === "light") {
+                        sunIconMobileRef.current?.startAnimation();
+                      } else {
+                        computerDesktopIconMobileRef.current?.startAnimation();
+                      }
                     }}
                     onBlur={() => {
-                      moonIconMobileRef.current?.stopAnimation();
+                      if (value === "dark") {
+                        moonIconMobileRef.current?.stopAnimation();
+                      } else if (value === "light") {
+                        sunIconMobileRef.current?.stopAnimation();
+                      } else {
+                        computerDesktopIconMobileRef.current?.stopAnimation();
+                      }
                     }}
                     onMouseEnter={() => {
                       if (value === "dark") {
