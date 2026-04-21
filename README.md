@@ -45,6 +45,7 @@ twending/
 - `pnpm run dev`: Start all applications in development mode
 - `pnpm run build`: Build all applications
 - `pnpm run check-types`: Check TypeScript types across all apps
-- `pnpm run lint`: Lint all code
-- `pnpm run lint:fix`: Fix lint errors
-- `pnpm run format`: Format all code
+- `pnpm run check`: Lint all code
+- `pnpm run fix`: Fix lint errors
+- `pnpm run test`: Runs the test suite
+- `pnpm run test:coverage`: Runs the test suite with coverage metrics
