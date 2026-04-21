@@ -96,11 +96,7 @@ export const LanguageSelect = ({
   const [popoverOpen, setPopoverOpen] = useState(false);
   const chevronDownRef = useRef<ChevronDownIconHandle>(null);
   function Trigger(props: React.ComponentProps<typeof Button>) {
-    const {
-      onMouseEnter,
-      onMouseLeave,
-      ...buttonProps
-    } = props;
+    const { onMouseEnter, onMouseLeave, ...buttonProps } = props;
 
     return (
       <Button
