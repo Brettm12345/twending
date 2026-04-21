@@ -1,6 +1,5 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import type { ComponentProps, ReactNode } from "react";
-import { Children, cloneElement, isValidElement } from "react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { SettingsDropdown } from "./settings-dropdown";
 
@@ -12,6 +11,7 @@ const useLoaderDataMock = vi.fn(() => ({
   theme: "system" as "light" | "dark" | "system",
 }));
 const useMediaQueryMock = vi.fn(() => false);
+let mockRadioGroupValueChangeHandler: ((value: string) => void) | undefined;
 
 vi.mock("@/routes/__root", () => ({
   Route: {
@@ -176,28 +176,31 @@ vi.mock("@/components/ui/dropdown-menu", () => ({
     children: ReactNode;
     onValueChange?: (value: string) => void;
     value?: string;
-  }) => (
-    <div data-testid="theme-radio-group" data-value={value}>
-      {Children.map(children, (child) => {
-        if (!isValidElement(child)) {
-          return child;
-        }
-        return cloneElement(child, { onValueChange });
-      })}
-    </div>
-  ),
+  }) => {
+    mockRadioGroupValueChangeHandler = onValueChange;
+    return (
+      <div data-testid="theme-radio-group" data-value={value}>
+        {children}
+      </div>
+    );
+  },
   DropdownMenuRadioItem: ({
     children,
-    onValueChange,
     value,
   }: {
     children: ReactNode;
-    onValueChange?: (value: string) => void;
     value?: string;
   }) => (
     <button
       data-testid={`radio-item-${value}`}
-      onClick={() => onValueChange?.(value ?? "")}
+      onClick={() => {
+        if (value === undefined) {
+          throw new Error(
+            "DropdownMenuRadioItem requires a value in this test",
+          );
+        }
+        mockRadioGroupValueChangeHandler?.(value);
+      }}
       type="button"
     >
       {children}
@@ -234,6 +237,7 @@ beforeEach(() => {
   routerInvalidateMock.mockClear();
   useLoaderDataMock.mockReturnValue({ theme: "system" });
   useMediaQueryMock.mockReturnValue(false);
+  mockRadioGroupValueChangeHandler = undefined;
 });
 
 describe("SettingsDropdown - desktop", () => {
