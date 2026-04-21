@@ -1,8 +1,18 @@
-# Ultracite Code Standards
+# Agents
+
+## Hosting locally
+
+```bash
+pnpm run dev
+```
+
+The application will be available at [http://localhost:3000](http://localhost:3000).
+
+## Ultracite Code Standards
 
 This project uses **Ultracite**, a zero-config preset that enforces strict code quality standards through automated formatting and linting.
 
-## Quick Reference
+### Quick Reference
 
 - **Format code**: `pnpm dlx ultracite fix`
 - **Check for issues**: `pnpm dlx ultracite check`
