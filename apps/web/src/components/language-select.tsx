@@ -2,7 +2,7 @@
 
 import { useAtom } from "jotai";
 import { parseAsStringEnum, useQueryState } from "nuqs";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { languageAtom, useLanguageValue } from "@/atoms/language";
 import { LanguageIndicator } from "@/components/language-indicator";
 import { Button } from "@/components/ui/button";
@@ -55,12 +55,15 @@ function getDefaultLanguageQueryValue(language: string) {
 
 function LanguageSelectContent({ onClose }: { onClose: () => void }) {
   const [languageLocalStorage, setLanguageLocalStorage] = useAtom(languageAtom);
-  const [, setLanguage] = useQueryState(
+  const [language, setLanguage] = useQueryState(
     "language",
     parseAsStringEnum(languageQueryValues).withDefault(
       getDefaultLanguageQueryValue(languageLocalStorage),
     ),
   );
+  useEffect(() => {
+    setLanguageLocalStorage(language);
+  }, [language, setLanguageLocalStorage]);
   return (
     <Command className="bg-transparent">
       <CommandInput placeholder="Search for a language" />
@@ -70,9 +73,9 @@ function LanguageSelectContent({ onClose }: { onClose: () => void }) {
           <CommandItem
             onSelect={() => {
               setLanguage(ALL_LANGUAGES_QUERY_VALUE);
-              setLanguageLocalStorage(ALL_LANGUAGES_LABEL);
               onClose();
             }}
+            data-testid="language-select-all-languages"
             value={ALL_LANGUAGES_QUERY_VALUE}
           >
             <LanguageIndicator language={ALL_LANGUAGES_LABEL} />
@@ -85,9 +88,9 @@ function LanguageSelectContent({ onClose }: { onClose: () => void }) {
               key={language}
               onSelect={() => {
                 setLanguage(language);
-                setLanguageLocalStorage(language);
                 onClose();
               }}
+              data-testid={`language-select-${language}`}
               value={language}
             >
               <LanguageIndicator language={language} />
@@ -101,9 +104,9 @@ function LanguageSelectContent({ onClose }: { onClose: () => void }) {
               key={language}
               onSelect={() => {
                 setLanguage(language);
-                setLanguageLocalStorage(language);
                 onClose();
               }}
+              data-testid={`language-select-${language}`}
               value={language}
             >
               <LanguageIndicator language={language} />

@@ -109,7 +109,7 @@ describe("getRouter", () => {
     const PendingComponent = capturedRouterConfig?.defaultPendingComponent;
     expect(PendingComponent).toBeDefined();
     if (PendingComponent) {
-      const { getByTestId } = render(<>{PendingComponent()}</>);
+      const { getByTestId } = render(PendingComponent());
       expect(getByTestId("loader")).toBeInTheDocument();
     }
   });
@@ -122,7 +122,7 @@ describe("getRouter", () => {
     const NotFoundComponent = capturedRouterConfig?.defaultNotFoundComponent;
     expect(NotFoundComponent).toBeDefined();
     if (NotFoundComponent) {
-      const { getByTestId } = render(<>{NotFoundComponent()}</>);
+      const { getByTestId } = render(NotFoundComponent());
       expect(getByTestId("not-found")).toBeInTheDocument();
     }
   });
@@ -136,7 +136,7 @@ describe("getRouter", () => {
     expect(Wrap).toBeDefined();
     if (Wrap) {
       const { getByTestId } = render(
-        <>{Wrap({ children: <span data-testid="child" /> })}</>,
+        Wrap({ children: <span data-testid="child" /> }),
       );
       expect(getByTestId("query-client-provider")).toBeInTheDocument();
       expect(getByTestId("trpc-provider")).toBeInTheDocument();
