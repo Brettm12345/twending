@@ -1,5 +1,7 @@
 # Agents
 
+Please be sure to check types, linting, and tests before committing code.
+
 ## Hosting locally
 
 ```bash
@@ -7,6 +9,36 @@ pnpm run dev
 ```
 
 The application will be available at [http://localhost:3000](http://localhost:3000).
+
+## Checking types
+
+```bash
+pnpm run check-types
+```
+
+## Checking linting
+
+```bash
+pnpm run check
+```
+
+## Fixing linting   
+
+```bash
+pnpm run fix
+```
+
+## Running tests
+
+```bash
+pnpm run test
+```
+
+## Running tests with coverage
+
+```bash
+pnpm run test:coverage
+```
 
 ## Ultracite Code Standards
 
