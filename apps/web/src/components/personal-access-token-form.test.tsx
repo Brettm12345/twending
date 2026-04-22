@@ -1,8 +1,10 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { Provider } from "jotai";
 import type { ComponentProps, ReactNode } from "react";
-import { describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { PersonalAccessTokenForm } from "./personal-access-token-form";
+
+const useMediaQueryMock = vi.fn(() => false);
 
 vi.mock("@/components/ui/button", () => ({
   Button: ({
@@ -69,12 +71,17 @@ vi.mock("@/components/ui/input", () => ({
 }));
 
 vi.mock("@/hooks/use-media-query", () => ({
-  useMediaQuery: vi.fn(() => false),
+  useMediaQuery: () => useMediaQueryMock(),
 }));
 
 function Wrapper({ children }: { children: ReactNode }) {
   return <Provider>{children}</Provider>;
 }
+
+beforeEach(() => {
+  useMediaQueryMock.mockReturnValue(false);
+  localStorage.clear();
+});
 
 describe("PersonalAccessTokenForm", () => {
   it("renders the form with personal access token field", () => {
@@ -159,5 +166,31 @@ describe("PersonalAccessTokenForm", () => {
     await waitFor(() => {
       expect(onClose).toHaveBeenCalled();
     });
+  });
+
+  it("renders DrawerFooter on mobile", () => {
+    useMediaQueryMock.mockReturnValue(true);
+    const onClose = vi.fn();
+
+    render(<PersonalAccessTokenForm onClose={onClose} />, { wrapper: Wrapper });
+
+    expect(screen.getByTestId("drawer-footer")).toBeInTheDocument();
+    expect(screen.queryByTestId("dialog-footer")).not.toBeInTheDocument();
+  });
+
+  it("does not call onClose when submitting an empty token", async () => {
+    localStorage.setItem("personalAccessToken", JSON.stringify(null));
+    const onClose = vi.fn();
+
+    render(<PersonalAccessTokenForm onClose={onClose} />, { wrapper: Wrapper });
+
+    const input = screen.getByTestId("token-input");
+    expect(input).toHaveValue("");
+
+    fireEvent.click(screen.getByText("Save"));
+
+    await new Promise((resolve) => setTimeout(resolve, 50));
+
+    expect(onClose).not.toHaveBeenCalled();
   });
 });

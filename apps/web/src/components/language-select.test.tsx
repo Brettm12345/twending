@@ -1,15 +1,23 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { Provider } from "jotai";
-import {
-  type UrlUpdateEvent,
-  withNuqsTestingAdapter,
-} from "nuqs/adapters/testing";
+import { withNuqsTestingAdapter } from "nuqs/adapters/testing";
 import type { ComponentProps, ReactNode } from "react";
-import { describe, expect, it, vi } from "vitest";
+import { forwardRef, useImperativeHandle } from "react";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { LanguageSelect } from "./language-select";
 
+const useMediaQueryMock = vi.fn(() => false);
+const chevronStartAnimationMock = vi.fn();
+const chevronStopAnimationMock = vi.fn();
+
 vi.mock("@/components/ui/chevron-down", () => ({
-  ChevronDownIcon: () => <span data-testid="chevron-down-icon" />,
+  ChevronDownIcon: forwardRef((_, ref) => {
+    useImperativeHandle(ref, () => ({
+      startAnimation: chevronStartAnimationMock,
+      stopAnimation: chevronStopAnimationMock,
+    }));
+    return <span data-testid="chevron-down-icon" />;
+  }),
 }));
 
 vi.mock("@/components/language-indicator", () => ({
@@ -89,7 +97,7 @@ vi.mock("@/components/ui/popover", () => ({
 }));
 
 vi.mock("@/hooks/use-media-query", () => ({
-  useMediaQuery: vi.fn(() => false),
+  useMediaQuery: () => useMediaQueryMock(),
 }));
 
 vi.mock("@/lib/languages", () => ({
@@ -106,6 +114,12 @@ vi.mock("@/lib/languages", () => ({
 function Wrapper({ children }: { children: ReactNode }) {
   return <Provider>{children}</Provider>;
 }
+
+beforeEach(() => {
+  useMediaQueryMock.mockReturnValue(false);
+  chevronStartAnimationMock.mockClear();
+  chevronStopAnimationMock.mockClear();
+});
 
 describe("LanguageSelect", () => {
   it("renders with current language in the button", () => {
@@ -157,5 +171,75 @@ describe("LanguageSelect", () => {
     expect(screen.getAllByText("Java").length).toBeGreaterThanOrEqual(1);
     expect(screen.getAllByText("Kotlin").length).toBeGreaterThanOrEqual(1);
     expect(screen.getAllByText("Swift").length).toBeGreaterThanOrEqual(1);
+  });
+
+  it("starts and stops the chevron animation on hover, focus and blur", () => {
+    localStorage.setItem("language", JSON.stringify("TypeScript"));
+
+    render(<LanguageSelect data-testid="language-select" />, {
+      wrapper: withNuqsTestingAdapter(),
+    });
+
+    const trigger = screen.getByTestId("language-select");
+    fireEvent.mouseEnter(trigger);
+    fireEvent.mouseLeave(trigger);
+    fireEvent.focus(trigger);
+    fireEvent.blur(trigger);
+
+    expect(chevronStartAnimationMock).toHaveBeenCalledTimes(2);
+    expect(chevronStopAnimationMock).toHaveBeenCalledTimes(2);
+  });
+
+  it("renders the mobile drawer trigger and content when on a mobile viewport", () => {
+    useMediaQueryMock.mockReturnValue(true);
+    localStorage.setItem("language", JSON.stringify("TypeScript"));
+
+    render(<LanguageSelect />, { wrapper: withNuqsTestingAdapter() });
+
+    expect(screen.getByText("Language")).toBeInTheDocument();
+    expect(screen.getByText("Select your language")).toBeInTheDocument();
+    expect(screen.getAllByText("All Languages").length).toBeGreaterThanOrEqual(
+      1,
+    );
+  });
+
+  it("selects the All Languages option without throwing", () => {
+    localStorage.setItem("language", JSON.stringify("TypeScript"));
+
+    render(<LanguageSelect />, { wrapper: withNuqsTestingAdapter() });
+
+    const allLanguagesItems = screen
+      .getAllByText("All Languages")
+      .map((node) => node.closest("button"))
+      .filter((node): node is HTMLButtonElement => node !== null);
+    expect(allLanguagesItems.length).toBeGreaterThanOrEqual(1);
+
+    const target = allLanguagesItems[0];
+    if (target) {
+      fireEvent.click(target);
+    }
+
+    expect(localStorage.getItem("language")).toBe(
+      JSON.stringify("All Languages"),
+    );
+  });
+
+  it("selects a popular language and persists it to local storage", () => {
+    localStorage.setItem("language", JSON.stringify("All Languages"));
+
+    render(<LanguageSelect />, { wrapper: withNuqsTestingAdapter() });
+
+    const tsButtons = screen
+      .getAllByText("TypeScript")
+      .map((node) => node.closest("button"))
+      .filter((node): node is HTMLButtonElement => node !== null);
+    expect(tsButtons.length).toBeGreaterThanOrEqual(1);
+
+    const target = tsButtons[0];
+    if (target) {
+      fireEvent.click(target);
+    }
+
+    expect(localStorage.getItem("language")).toBe(JSON.stringify("TypeScript"));
   });
 });
