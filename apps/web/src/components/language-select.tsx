@@ -34,12 +34,31 @@ import {
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { languages } from "@/lib/languages";
 
+const ALL_LANGUAGES_LABEL = "All Languages";
+const ALL_LANGUAGES_QUERY_VALUE = "all";
+const languageQueryValues = [
+  ALL_LANGUAGES_QUERY_VALUE,
+  ...Object.keys(languages.colors),
+];
+
+function getDefaultLanguageQueryValue(language: string) {
+  if (language === ALL_LANGUAGES_LABEL) {
+    return ALL_LANGUAGES_QUERY_VALUE;
+  }
+
+  if (languageQueryValues.includes(language)) {
+    return language;
+  }
+
+  return ALL_LANGUAGES_QUERY_VALUE;
+}
+
 function LanguageSelectContent({ onClose }: { onClose: () => void }) {
   const [languageLocalStorage, setLanguageLocalStorage] = useAtom(languageAtom);
-  const [language, setLanguage] = useQueryState(
+  const [, setLanguage] = useQueryState(
     "language",
-    parseAsStringEnum(Object.keys(languages.colors)).withDefault(
-      languageLocalStorage,
+    parseAsStringEnum(languageQueryValues).withDefault(
+      getDefaultLanguageQueryValue(languageLocalStorage),
     ),
   );
   return (
@@ -50,14 +69,14 @@ function LanguageSelectContent({ onClose }: { onClose: () => void }) {
         <CommandGroup>
           <CommandItem
             onSelect={() => {
-              setLanguage("All Languages");
-              setLanguageLocalStorage("All Languages");
+              setLanguage(ALL_LANGUAGES_QUERY_VALUE);
+              setLanguageLocalStorage(ALL_LANGUAGES_LABEL);
               onClose();
             }}
-            value="all"
+            value={ALL_LANGUAGES_QUERY_VALUE}
           >
-            <LanguageIndicator language="All Languages" />
-            All Languages
+            <LanguageIndicator language={ALL_LANGUAGES_LABEL} />
+            {ALL_LANGUAGES_LABEL}
           </CommandItem>
         </CommandGroup>
         <CommandGroup heading="Popular">

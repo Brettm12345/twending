@@ -1,5 +1,4 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import { Provider } from "jotai";
 import { withNuqsTestingAdapter } from "nuqs/adapters/testing";
 import type { ComponentProps, ReactNode } from "react";
 import { forwardRef, useImperativeHandle } from "react";
@@ -110,10 +109,6 @@ vi.mock("@/lib/languages", () => ({
     },
   },
 }));
-
-function Wrapper({ children }: { children: ReactNode }) {
-  return <Provider>{children}</Provider>;
-}
 
 beforeEach(() => {
   useMediaQueryMock.mockReturnValue(false);
