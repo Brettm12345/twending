@@ -15,6 +15,16 @@ const useMediaQueryMock = vi.fn(() => false);
 let mockRadioGroupValueChangeHandler: ((value: string) => void) | undefined;
 const cogStartAnimationMock = vi.fn();
 const cogStopAnimationMock = vi.fn();
+const swatchStartAnimationMock = vi.fn();
+const swatchStopAnimationMock = vi.fn();
+const lockStartAnimationMock = vi.fn();
+const lockStopAnimationMock = vi.fn();
+const moonStartAnimationMock = vi.fn();
+const moonStopAnimationMock = vi.fn();
+const sunStartAnimationMock = vi.fn();
+const sunStopAnimationMock = vi.fn();
+const computerStartAnimationMock = vi.fn();
+const computerStopAnimationMock = vi.fn();
 
 vi.mock("@/routes/__root", () => ({
   Route: {
@@ -54,23 +64,53 @@ vi.mock("@/components/ui/cog-6-tooth", () => ({
 }));
 
 vi.mock("@/components/ui/computer-desktop", () => ({
-  ComputerDesktopIcon: () => <span data-testid="computer-desktop-icon" />,
+  ComputerDesktopIcon: forwardRef((_, ref) => {
+    useImperativeHandle(ref, () => ({
+      startAnimation: computerStartAnimationMock,
+      stopAnimation: computerStopAnimationMock,
+    }));
+    return <span data-testid="computer-desktop-icon" />;
+  }),
 }));
 
 vi.mock("@/components/ui/lock-closed", () => ({
-  LockClosedIcon: () => <span data-testid="lock-closed-icon" />,
+  LockClosedIcon: forwardRef((_, ref) => {
+    useImperativeHandle(ref, () => ({
+      startAnimation: lockStartAnimationMock,
+      stopAnimation: lockStopAnimationMock,
+    }));
+    return <span data-testid="lock-closed-icon" />;
+  }),
 }));
 
 vi.mock("@/components/ui/moon", () => ({
-  MoonIcon: () => <span data-testid="moon-icon" />,
+  MoonIcon: forwardRef((_, ref) => {
+    useImperativeHandle(ref, () => ({
+      startAnimation: moonStartAnimationMock,
+      stopAnimation: moonStopAnimationMock,
+    }));
+    return <span data-testid="moon-icon" />;
+  }),
 }));
 
 vi.mock("@/components/ui/sun", () => ({
-  SunIcon: () => <span data-testid="sun-icon" />,
+  SunIcon: forwardRef((_, ref) => {
+    useImperativeHandle(ref, () => ({
+      startAnimation: sunStartAnimationMock,
+      stopAnimation: sunStopAnimationMock,
+    }));
+    return <span data-testid="sun-icon" />;
+  }),
 }));
 
 vi.mock("@/components/ui/swatch", () => ({
-  SwatchIcon: () => <span data-testid="swatch-icon" />,
+  SwatchIcon: forwardRef((_, ref) => {
+    useImperativeHandle(ref, () => ({
+      startAnimation: swatchStartAnimationMock,
+      stopAnimation: swatchStopAnimationMock,
+    }));
+    return <span data-testid="swatch-icon" />;
+  }),
 }));
 
 vi.mock("@/components/ui/button", () => ({
@@ -93,14 +133,20 @@ vi.mock("@/components/ui/command", () => ({
     onSelect,
     onMouseEnter,
     onMouseLeave,
+    onFocus,
+    onBlur,
   }: {
     children: ReactNode;
     onSelect?: () => void;
     onMouseEnter?: () => void;
     onMouseLeave?: () => void;
+    onFocus?: () => void;
+    onBlur?: () => void;
   }) => (
     <button
+      onBlur={onBlur}
       onClick={onSelect}
+      onFocus={onFocus}
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
       type="button"
@@ -147,7 +193,24 @@ vi.mock("@/components/ui/dialog", () => ({
     <div>{children}</div>
   ),
   DialogTitle: ({ children }: { children: ReactNode }) => <div>{children}</div>,
-  DialogTrigger: ({ render }: { render: ReactNode }) => <div>{render}</div>,
+  DialogTrigger: ({
+    render,
+    onFocus,
+    onBlur,
+  }: {
+    render: ReactNode;
+    onFocus?: () => void;
+    onBlur?: () => void;
+  }) => (
+    <button
+      data-testid="dialog-trigger"
+      onBlur={onBlur}
+      onFocus={onFocus}
+      type="button"
+    >
+      {render}
+    </button>
+  ),
 }));
 
 vi.mock("@/components/ui/dropdown-menu", () => ({
@@ -196,12 +259,21 @@ vi.mock("@/components/ui/dropdown-menu", () => ({
   DropdownMenuRadioItem: ({
     children,
     value,
+    onMouseEnter,
+    onMouseLeave,
+    onFocus,
+    onBlur,
   }: {
     children: ReactNode;
     value?: string;
+    onMouseEnter?: () => void;
+    onMouseLeave?: () => void;
+    onFocus?: () => void;
+    onBlur?: () => void;
   }) => (
     <button
       data-testid={`radio-item-${value}`}
+      onBlur={onBlur}
       onClick={() => {
         if (value === undefined) {
           throw new Error(
@@ -210,6 +282,9 @@ vi.mock("@/components/ui/dropdown-menu", () => ({
         }
         mockRadioGroupValueChangeHandler?.(value);
       }}
+      onFocus={onFocus}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
       type="button"
     >
       {children}
@@ -225,15 +300,25 @@ vi.mock("@/components/ui/dropdown-menu", () => ({
     children,
     onMouseEnter,
     onMouseLeave,
+    onFocus,
+    onBlur,
   }: {
     children: ReactNode;
     onMouseEnter?: () => void;
     onMouseLeave?: () => void;
+    onFocus?: () => void;
+    onBlur?: () => void;
   }) => (
-    // biome-ignore lint/a11y/noStaticElementInteractions: Simplified for testing
-    <div onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+    <button
+      data-testid="theme-submenu-trigger"
+      onBlur={onBlur}
+      onFocus={onFocus}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+      type="button"
+    >
       {children}
-    </div>
+    </button>
   ),
   DropdownMenuTrigger: ({ render }: { render: ReactNode }) => (
     <div>{render}</div>
@@ -248,6 +333,16 @@ beforeEach(() => {
   routerInvalidateMock.mockClear();
   cogStartAnimationMock.mockClear();
   cogStopAnimationMock.mockClear();
+  swatchStartAnimationMock.mockClear();
+  swatchStopAnimationMock.mockClear();
+  lockStartAnimationMock.mockClear();
+  lockStopAnimationMock.mockClear();
+  moonStartAnimationMock.mockClear();
+  moonStopAnimationMock.mockClear();
+  sunStartAnimationMock.mockClear();
+  sunStopAnimationMock.mockClear();
+  computerStartAnimationMock.mockClear();
+  computerStopAnimationMock.mockClear();
   useLoaderDataMock.mockReturnValue({ theme: "system" });
   useMediaQueryMock.mockReturnValue(false);
   mockRadioGroupValueChangeHandler = undefined;
@@ -333,6 +428,69 @@ describe("SettingsDropdown - desktop", () => {
     );
     expect(link).toHaveAttribute("target", "_blank");
     expect(link).toHaveAttribute("rel", "noopener noreferrer");
+  });
+
+  it("animates the swatch icon when hovering or focusing the theme submenu trigger", () => {
+    render(<SettingsDropdown />);
+
+    const submenuTrigger = screen.getByTestId("theme-submenu-trigger");
+    fireEvent.mouseEnter(submenuTrigger);
+    fireEvent.mouseLeave(submenuTrigger);
+    fireEvent.focus(submenuTrigger);
+    fireEvent.blur(submenuTrigger);
+
+    expect(swatchStartAnimationMock).toHaveBeenCalledTimes(2);
+    expect(swatchStopAnimationMock).toHaveBeenCalledTimes(2);
+  });
+
+  it("animates the moon icon when hovering or focusing the dark theme radio item", () => {
+    render(<SettingsDropdown />);
+
+    const darkItem = screen.getByTestId("radio-item-dark");
+    fireEvent.mouseEnter(darkItem);
+    fireEvent.mouseLeave(darkItem);
+    fireEvent.focus(darkItem);
+    fireEvent.blur(darkItem);
+
+    expect(moonStartAnimationMock).toHaveBeenCalledTimes(2);
+    expect(moonStopAnimationMock).toHaveBeenCalledTimes(2);
+  });
+
+  it("animates the sun icon when hovering or focusing the light theme radio item", () => {
+    render(<SettingsDropdown />);
+
+    const lightItem = screen.getByTestId("radio-item-light");
+    fireEvent.mouseEnter(lightItem);
+    fireEvent.mouseLeave(lightItem);
+    fireEvent.focus(lightItem);
+    fireEvent.blur(lightItem);
+
+    expect(sunStartAnimationMock).toHaveBeenCalledTimes(2);
+    expect(sunStopAnimationMock).toHaveBeenCalledTimes(2);
+  });
+
+  it("animates the computer-desktop icon when hovering or focusing the system theme radio item", () => {
+    render(<SettingsDropdown />);
+
+    const systemItem = screen.getByTestId("radio-item-system");
+    fireEvent.mouseEnter(systemItem);
+    fireEvent.mouseLeave(systemItem);
+    fireEvent.focus(systemItem);
+    fireEvent.blur(systemItem);
+
+    expect(computerStartAnimationMock).toHaveBeenCalledTimes(2);
+    expect(computerStopAnimationMock).toHaveBeenCalledTimes(2);
+  });
+
+  it("animates the lock icon when hovering or focusing the personal access token entry", () => {
+    render(<SettingsDropdown />);
+
+    const dialogTrigger = screen.getByTestId("dialog-trigger");
+    fireEvent.focus(dialogTrigger);
+    fireEvent.blur(dialogTrigger);
+
+    expect(lockStartAnimationMock).toHaveBeenCalledTimes(1);
+    expect(lockStopAnimationMock).toHaveBeenCalledTimes(1);
   });
 });
 
@@ -450,5 +608,77 @@ describe("SettingsDropdown - mobile", () => {
     const closeButtons = screen.getAllByText("Close");
     // Settings and theme drawers have a close button; the PAT drawer does not
     expect(closeButtons.length).toBeGreaterThanOrEqual(2);
+  });
+
+  it("animates the swatch and lock icons when hovering the corresponding settings entries", () => {
+    render(<SettingsDropdown />);
+
+    const themeEntry = screen.getAllByText("Theme")[0]?.closest("button");
+    const patEntry = screen
+      .getAllByText("Personal Access Token")[0]
+      ?.closest("button");
+
+    if (themeEntry) {
+      fireEvent.mouseEnter(themeEntry);
+      fireEvent.mouseLeave(themeEntry);
+    }
+    if (patEntry) {
+      fireEvent.focus(patEntry);
+      fireEvent.blur(patEntry);
+    }
+
+    expect(swatchStartAnimationMock).toHaveBeenCalled();
+    expect(swatchStopAnimationMock).toHaveBeenCalled();
+    expect(lockStartAnimationMock).toHaveBeenCalled();
+    expect(lockStopAnimationMock).toHaveBeenCalled();
+  });
+
+  it("animates the moon icon when hovering the dark theme drawer option", () => {
+    render(<SettingsDropdown />);
+
+    const darkOption = screen.getByText("dark").closest("button");
+    if (darkOption) {
+      fireEvent.mouseEnter(darkOption);
+      fireEvent.mouseLeave(darkOption);
+      fireEvent.focus(darkOption);
+      fireEvent.blur(darkOption);
+    }
+
+    expect(moonStartAnimationMock).toHaveBeenCalledTimes(2);
+    expect(moonStopAnimationMock).toHaveBeenCalledTimes(2);
+  });
+
+  it("animates the sun icon when hovering the light theme drawer option", () => {
+    render(<SettingsDropdown />);
+
+    const lightOption = screen.getByText("light").closest("button");
+    if (lightOption) {
+      fireEvent.mouseEnter(lightOption);
+      fireEvent.mouseLeave(lightOption);
+      fireEvent.focus(lightOption);
+      fireEvent.blur(lightOption);
+    }
+
+    expect(sunStartAnimationMock).toHaveBeenCalledTimes(2);
+    expect(sunStopAnimationMock).toHaveBeenCalledTimes(2);
+  });
+
+  it("animates the computer-desktop icon when hovering the system theme drawer option", () => {
+    useLoaderDataMock.mockReturnValue({ theme: "dark" });
+    render(<SettingsDropdown />);
+
+    const systemOption = screen
+      .getAllByText("system")
+      .map((node) => node.closest("button"))
+      .filter((node): node is HTMLButtonElement => node !== null)[0];
+    if (systemOption) {
+      fireEvent.mouseEnter(systemOption);
+      fireEvent.mouseLeave(systemOption);
+      fireEvent.focus(systemOption);
+      fireEvent.blur(systemOption);
+    }
+
+    expect(computerStartAnimationMock).toHaveBeenCalledTimes(2);
+    expect(computerStopAnimationMock).toHaveBeenCalledTimes(2);
   });
 });

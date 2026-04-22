@@ -16,7 +16,7 @@ import { useEffect, useState } from "react";
 
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { getThemeServerFn, type T as ThemePreference } from "@/lib/theme";
-
+import { cn } from "@/lib/utils";
 import appCss from "@/styles.css?url";
 import { seo } from "@/utils/seo";
 
@@ -124,14 +124,17 @@ function RootDocument() {
     });
   }, []);
 
+  const darkClassName = resolvedTheme === "dark" ? "dark" : undefined;
   return (
     <Provider>
-      <html className={resolvedTheme === "dark" ? "dark" : undefined} lang="en">
+      <html lang="en" className={darkClassName}>
         <head>
           <HeadContent />
         </head>
-        <body>
-          <main className="grid h-svh grid-rows-[auto_1fr]">
+        <body data-testid="body">
+          <main
+            className={cn("grid h-svh grid-rows-[auto_1fr]", darkClassName)}
+          >
             <NuqsAdapter>
               <Outlet />
             </NuqsAdapter>

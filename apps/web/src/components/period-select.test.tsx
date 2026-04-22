@@ -1,15 +1,34 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { withNuqsTestingAdapter } from "nuqs/adapters/testing";
 import type { ComponentProps, ReactNode } from "react";
-import { describe, expect, it, vi } from "vitest";
+import { forwardRef, useImperativeHandle } from "react";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { PeriodSelect } from "./period-select";
 
+const useMediaQueryMock = vi.fn(() => false);
+const calendarStartAnimationMock = vi.fn();
+const calendarStopAnimationMock = vi.fn();
+const chevronStartAnimationMock = vi.fn();
+const chevronStopAnimationMock = vi.fn();
+
 vi.mock("@/components/ui/calendar-days", () => ({
-  CalendarDaysIcon: () => <span data-testid="calendar-days-icon" />,
+  CalendarDaysIcon: forwardRef((_, ref) => {
+    useImperativeHandle(ref, () => ({
+      startAnimation: calendarStartAnimationMock,
+      stopAnimation: calendarStopAnimationMock,
+    }));
+    return <span data-testid="calendar-days-icon" />;
+  }),
 }));
 
 vi.mock("@/components/ui/chevron-down", () => ({
-  ChevronDownIcon: () => <span data-testid="chevron-down-icon" />,
+  ChevronDownIcon: forwardRef((_, ref) => {
+    useImperativeHandle(ref, () => ({
+      startAnimation: chevronStartAnimationMock,
+      stopAnimation: chevronStopAnimationMock,
+    }));
+    return <span data-testid="chevron-down-icon" />;
+  }),
 }));
 
 vi.mock("@/components/ui/button", () => ({
@@ -74,8 +93,16 @@ vi.mock("@/components/ui/popover", () => ({
 }));
 
 vi.mock("@/hooks/use-media-query", () => ({
-  useMediaQuery: vi.fn(() => false),
+  useMediaQuery: () => useMediaQueryMock(),
 }));
+
+beforeEach(() => {
+  useMediaQueryMock.mockReturnValue(false);
+  calendarStartAnimationMock.mockClear();
+  calendarStopAnimationMock.mockClear();
+  chevronStartAnimationMock.mockClear();
+  chevronStopAnimationMock.mockClear();
+});
 
 describe("PeriodSelect", () => {
   it("renders with current period label in the button", () => {
@@ -112,5 +139,59 @@ describe("PeriodSelect", () => {
     const weeklyButtons = screen.getAllByText("Weekly");
     // At least one in the trigger button and one in the dropdown
     expect(weeklyButtons.length).toBeGreaterThanOrEqual(2);
+  });
+
+  it("falls back to the Daily label when the stored period is unknown", () => {
+    localStorage.setItem("period", JSON.stringify("not-a-real-period"));
+
+    render(<PeriodSelect />, { wrapper: withNuqsTestingAdapter() });
+
+    expect(screen.getAllByText("Daily").length).toBeGreaterThanOrEqual(1);
+  });
+
+  it("starts and stops both icon animations on hover, focus and blur", () => {
+    localStorage.setItem("period", JSON.stringify("daily"));
+
+    render(<PeriodSelect data-testid="period-select" />, {
+      wrapper: withNuqsTestingAdapter(),
+    });
+
+    const trigger = screen.getByTestId("period-select");
+    fireEvent.mouseEnter(trigger);
+    fireEvent.mouseLeave(trigger);
+    fireEvent.focus(trigger);
+    fireEvent.blur(trigger);
+
+    expect(calendarStartAnimationMock).toHaveBeenCalledTimes(2);
+    expect(calendarStopAnimationMock).toHaveBeenCalledTimes(2);
+    expect(chevronStartAnimationMock).toHaveBeenCalledTimes(2);
+    expect(chevronStopAnimationMock).toHaveBeenCalledTimes(2);
+  });
+
+  it("renders the mobile drawer when on a mobile viewport", () => {
+    useMediaQueryMock.mockReturnValue(true);
+    localStorage.setItem("period", JSON.stringify("daily"));
+
+    render(<PeriodSelect />, { wrapper: withNuqsTestingAdapter() });
+
+    expect(screen.getByText("Period")).toBeInTheDocument();
+    expect(screen.getByText("Select your period")).toBeInTheDocument();
+  });
+
+  it("persists the chosen period to local storage when an option is selected", () => {
+    localStorage.setItem("period", JSON.stringify("daily"));
+
+    render(<PeriodSelect />, { wrapper: withNuqsTestingAdapter() });
+
+    const monthly = screen
+      .getAllByText("Monthly")
+      .map((node) => node.closest("button"))
+      .filter((node): node is HTMLButtonElement => node !== null)[0];
+    expect(monthly).toBeDefined();
+    if (monthly) {
+      fireEvent.click(monthly);
+    }
+
+    expect(localStorage.getItem("period")).toBe(JSON.stringify("monthly"));
   });
 });
