@@ -1,6 +1,6 @@
 import { useAtom } from "jotai";
 import { parseAsStringEnum, useQueryState } from "nuqs";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { periodAtom, usePeriodValue } from "@/atoms/period";
 import { Button } from "@/components/ui/button";
 import {
@@ -49,6 +49,9 @@ function PeriodSelectContent({ onClose }: { onClose: () => void }) {
       periodLocalStorage,
     ),
   );
+  useEffect(() => {
+    setPeriodLocalStorage(period);
+  }, [period, setPeriodLocalStorage]);
   return (
     <Command className="bg-transparent" value={period}>
       <CommandInput placeholder="Search for a period" />
@@ -58,9 +61,9 @@ function PeriodSelectContent({ onClose }: { onClose: () => void }) {
           {periods.map((p) => (
             <CommandItem
               key={p.value}
+              data-testid={`period-select-${p.value}`}
               onSelect={() => {
                 setPeriod(p.value);
-                setPeriodLocalStorage(p.value);
                 onClose();
               }}
               value={p.value}

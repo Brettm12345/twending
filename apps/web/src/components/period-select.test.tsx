@@ -1,9 +1,50 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { createStore, Provider as JotaiProvider } from "jotai";
 import { withNuqsTestingAdapter } from "nuqs/adapters/testing";
 import type { ComponentProps, ReactNode } from "react";
 import { forwardRef, useImperativeHandle } from "react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
+import { periodAtom } from "@/atoms/period";
 import { PeriodSelect } from "./period-select";
+
+type AdapterProps = Parameters<typeof withNuqsTestingAdapter>[0];
+type PeriodValue = "daily" | "weekly" | "monthly" | "yearly";
+const validPeriods: readonly PeriodValue[] = [
+  "daily",
+  "weekly",
+  "monthly",
+  "yearly",
+];
+
+// Each test gets a fresh Jotai store. We also pre-seed the period atom from
+// the current localStorage value before render: jotai's atomWithStorage
+// captures its initial value when the module is first loaded, so a per-test
+// `localStorage.setItem(...)` would otherwise be ignored on the very first
+// render — letting the URL <-> localStorage sync effect overwrite the value
+// the test just set with the stale fallback.
+function createWrapper(adapterProps?: AdapterProps) {
+  const NuqsWrapper = withNuqsTestingAdapter(adapterProps);
+  const store = createStore();
+  const stored = localStorage.getItem("period");
+  if (stored !== null) {
+    try {
+      const parsed: unknown = JSON.parse(stored);
+      if (
+        typeof parsed === "string" &&
+        validPeriods.includes(parsed as PeriodValue)
+      ) {
+        store.set(periodAtom, parsed as PeriodValue);
+      }
+    } catch {
+      // Ignore unparseable values; the atom will fall back to its default.
+    }
+  }
+  return ({ children }: { children: ReactNode }) => (
+    <JotaiProvider store={store}>
+      <NuqsWrapper>{children}</NuqsWrapper>
+    </JotaiProvider>
+  );
+}
 
 const useMediaQueryMock = vi.fn(() => false);
 const calendarStartAnimationMock = vi.fn();
@@ -97,6 +138,7 @@ vi.mock("@/hooks/use-media-query", () => ({
 }));
 
 beforeEach(() => {
+  localStorage.clear();
   useMediaQueryMock.mockReturnValue(false);
   calendarStartAnimationMock.mockClear();
   calendarStopAnimationMock.mockClear();
@@ -109,7 +151,7 @@ describe("PeriodSelect", () => {
     localStorage.setItem("period", JSON.stringify("daily"));
 
     render(<PeriodSelect data-testid="period-select" />, {
-      wrapper: withNuqsTestingAdapter(),
+      wrapper: createWrapper(),
     });
 
     // Daily appears both in button and dropdown
@@ -122,19 +164,20 @@ describe("PeriodSelect", () => {
   it("renders all period options in dropdown", () => {
     localStorage.setItem("period", JSON.stringify("daily"));
 
-    render(<PeriodSelect />, { wrapper: withNuqsTestingAdapter() });
+    render(<PeriodSelect />, { wrapper: createWrapper() });
 
-    // All periods appear in the dropdown options
     expect(screen.getAllByText("Daily").length).toBeGreaterThanOrEqual(1);
     expect(screen.getAllByText("Weekly").length).toBeGreaterThanOrEqual(1);
     expect(screen.getAllByText("Monthly").length).toBeGreaterThanOrEqual(1);
     expect(screen.getAllByText("Yearly").length).toBeGreaterThanOrEqual(1);
   });
 
-  it("renders with weekly period when selected", () => {
+  it("renders with weekly period when the URL carries weekly", () => {
     localStorage.setItem("period", JSON.stringify("weekly"));
 
-    render(<PeriodSelect />, { wrapper: withNuqsTestingAdapter() });
+    render(<PeriodSelect />, {
+      wrapper: createWrapper({ searchParams: "?period=weekly" }),
+    });
 
     const weeklyButtons = screen.getAllByText("Weekly");
     // At least one in the trigger button and one in the dropdown
@@ -144,7 +187,7 @@ describe("PeriodSelect", () => {
   it("falls back to the Daily label when the stored period is unknown", () => {
     localStorage.setItem("period", JSON.stringify("not-a-real-period"));
 
-    render(<PeriodSelect />, { wrapper: withNuqsTestingAdapter() });
+    render(<PeriodSelect />, { wrapper: createWrapper() });
 
     expect(screen.getAllByText("Daily").length).toBeGreaterThanOrEqual(1);
   });
@@ -153,7 +196,7 @@ describe("PeriodSelect", () => {
     localStorage.setItem("period", JSON.stringify("daily"));
 
     render(<PeriodSelect data-testid="period-select" />, {
-      wrapper: withNuqsTestingAdapter(),
+      wrapper: createWrapper(),
     });
 
     const trigger = screen.getByTestId("period-select");
@@ -172,16 +215,19 @@ describe("PeriodSelect", () => {
     useMediaQueryMock.mockReturnValue(true);
     localStorage.setItem("period", JSON.stringify("daily"));
 
-    render(<PeriodSelect />, { wrapper: withNuqsTestingAdapter() });
+    render(<PeriodSelect />, { wrapper: createWrapper() });
 
     expect(screen.getByText("Period")).toBeInTheDocument();
     expect(screen.getByText("Select your period")).toBeInTheDocument();
   });
 
-  it("persists the chosen period to local storage when an option is selected", () => {
+  it("keeps URL state and local storage in sync when an option is selected", async () => {
     localStorage.setItem("period", JSON.stringify("daily"));
+    const onUrlUpdate = vi.fn();
 
-    render(<PeriodSelect />, { wrapper: withNuqsTestingAdapter() });
+    render(<PeriodSelect />, {
+      wrapper: createWrapper({ onUrlUpdate }),
+    });
 
     const monthly = screen
       .getAllByText("Monthly")
@@ -192,6 +238,40 @@ describe("PeriodSelect", () => {
       fireEvent.click(monthly);
     }
 
+    // The URL is updated with `period=monthly`. Note that the local-storage
+    // sync effect then refreshes the `useQueryState` default, after which nuqs
+    // may clear the param from the URL because it equals the new default. So
+    // we assert the value appeared at *some* point, not necessarily on the
+    // last update.
+    await waitFor(() => {
+      const updates = onUrlUpdate.mock.calls
+        .map(([event]) => event?.searchParams.get("period"))
+        .filter((value): value is string => typeof value === "string");
+      expect(updates).toContain("monthly");
+    });
     expect(localStorage.getItem("period")).toBe(JSON.stringify("monthly"));
+  });
+
+  it("syncs local storage to the URL period on mount (simulates navigate.back)", () => {
+    // The user previously chose "monthly" (mirrored to local storage), then
+    // navigated away and clicked the browser back button onto a URL whose
+    // period query is "yearly". Local storage must follow the URL.
+    localStorage.setItem("period", JSON.stringify("monthly"));
+
+    render(<PeriodSelect />, {
+      wrapper: createWrapper({ searchParams: "?period=yearly" }),
+    });
+
+    expect(localStorage.getItem("period")).toBe(JSON.stringify("yearly"));
+  });
+
+  it("leaves local storage unchanged when navigating back to a URL without a period query", () => {
+    localStorage.setItem("period", JSON.stringify("weekly"));
+
+    render(<PeriodSelect />, {
+      wrapper: createWrapper({ searchParams: "" }),
+    });
+
+    expect(localStorage.getItem("period")).toBe(JSON.stringify("weekly"));
   });
 });
