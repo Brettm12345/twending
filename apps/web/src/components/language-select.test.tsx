@@ -1,9 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { Provider } from "jotai";
-import {
-  type UrlUpdateEvent,
-  withNuqsTestingAdapter,
-} from "nuqs/adapters/testing";
+import { withNuqsTestingAdapter } from "nuqs/adapters/testing";
 import type { ComponentProps, ReactNode } from "react";
 import { describe, expect, it, vi } from "vitest";
 import { LanguageSelect } from "./language-select";
