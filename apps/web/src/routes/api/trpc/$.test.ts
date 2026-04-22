@@ -13,7 +13,8 @@ vi.mock("@tanstack/react-router", () => ({
 }));
 
 vi.mock("@trpc/server/adapters/fetch", () => ({
-  fetchRequestHandler: (...args: unknown[]) => fetchRequestHandlerMock(...args),
+  fetchRequestHandler: (...args: Parameters<typeof fetchRequestHandlerMock>) =>
+    fetchRequestHandlerMock(...args),
 }));
 
 vi.mock("@trpc/tanstack-react-query", () => ({
