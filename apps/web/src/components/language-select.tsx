@@ -36,7 +36,7 @@ import { languages } from "@/lib/languages";
 
 function LanguageSelectContent({ onClose }: { onClose: () => void }) {
   const [languageLocalStorage, setLanguageLocalStorage] = useAtom(languageAtom);
-  const [language, setLanguage] = useQueryState(
+  const [, setLanguage] = useQueryState(
     "language",
     parseAsStringEnum(Object.keys(languages.colors)).withDefault(
       languageLocalStorage,
