@@ -1,7 +1,7 @@
 import { useAtom } from "jotai";
 import { parseAsStringEnum, useQueryState } from "nuqs";
 import { useRef, useState } from "react";
-import { periodAtom, usePeriodValue, useSetPeriod } from "@/atoms/period";
+import { periodAtom, usePeriodValue } from "@/atoms/period";
 import { Button } from "@/components/ui/button";
 import {
   CalendarDaysIcon,
