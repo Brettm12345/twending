@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { Provider } from "jotai";
+import { withNuqsTestingAdapter } from "nuqs/adapters/testing";
 import type { ComponentProps, ReactNode } from "react";
 import { describe, expect, it, vi } from "vitest";
 import { LanguageSelect } from "./language-select";
@@ -108,7 +108,7 @@ describe("LanguageSelect", () => {
     localStorage.setItem("language", JSON.stringify("TypeScript"));
 
     render(<LanguageSelect data-testid="language-select" />, {
-      wrapper: Wrapper,
+      wrapper: withNuqsTestingAdapter(),
     });
 
     // Current language appears in the button trigger
@@ -120,7 +120,7 @@ describe("LanguageSelect", () => {
   it("renders the All Languages option", () => {
     localStorage.setItem("language", JSON.stringify("All Languages"));
 
-    render(<LanguageSelect />, { wrapper: Wrapper });
+    render(<LanguageSelect />, { wrapper: withNuqsTestingAdapter() });
 
     const allLanguagesElements = screen.getAllByText("All Languages");
     expect(allLanguagesElements.length).toBeGreaterThanOrEqual(1);
@@ -129,7 +129,7 @@ describe("LanguageSelect", () => {
   it("renders popular and other language groups", () => {
     localStorage.setItem("language", JSON.stringify("All Languages"));
 
-    render(<LanguageSelect />, { wrapper: Wrapper });
+    render(<LanguageSelect />, { wrapper: withNuqsTestingAdapter() });
 
     expect(screen.getByText("Popular")).toBeInTheDocument();
     expect(screen.getByText("Other")).toBeInTheDocument();
@@ -138,7 +138,7 @@ describe("LanguageSelect", () => {
   it("renders popular languages list", () => {
     localStorage.setItem("language", JSON.stringify("All Languages"));
 
-    render(<LanguageSelect />, { wrapper: Wrapper });
+    render(<LanguageSelect />, { wrapper: withNuqsTestingAdapter() });
 
     expect(screen.getAllByText("TypeScript").length).toBeGreaterThanOrEqual(1);
     expect(screen.getAllByText("JavaScript").length).toBeGreaterThanOrEqual(1);
@@ -148,7 +148,7 @@ describe("LanguageSelect", () => {
   it("renders other languages list", () => {
     localStorage.setItem("language", JSON.stringify("All Languages"));
 
-    render(<LanguageSelect />, { wrapper: Wrapper });
+    render(<LanguageSelect />, { wrapper: withNuqsTestingAdapter() });
 
     expect(screen.getAllByText("Java").length).toBeGreaterThanOrEqual(1);
     expect(screen.getAllByText("Kotlin").length).toBeGreaterThanOrEqual(1);

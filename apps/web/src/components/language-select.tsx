@@ -1,7 +1,9 @@
 "use client";
 
+import { useAtom } from "jotai";
+import { parseAsStringEnum, useQueryState } from "nuqs";
 import { useRef, useState } from "react";
-import { useLanguageValue, useSetLanguage } from "@/atoms/language";
+import { languageAtom, useLanguageValue } from "@/atoms/language";
 import { LanguageIndicator } from "@/components/language-indicator";
 import { Button } from "@/components/ui/button";
 import {
@@ -32,8 +34,33 @@ import {
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { languages } from "@/lib/languages";
 
+const ALL_LANGUAGES_LABEL = "All Languages";
+const ALL_LANGUAGES_QUERY_VALUE = "all";
+const languageQueryValues = [
+  ALL_LANGUAGES_QUERY_VALUE,
+  ...Object.keys(languages.colors),
+];
+
+function getDefaultLanguageQueryValue(language: string) {
+  if (language === ALL_LANGUAGES_LABEL) {
+    return ALL_LANGUAGES_QUERY_VALUE;
+  }
+
+  if (languageQueryValues.includes(language)) {
+    return language;
+  }
+
+  return ALL_LANGUAGES_QUERY_VALUE;
+}
+
 function LanguageSelectContent({ onClose }: { onClose: () => void }) {
-  const setLanguage = useSetLanguage();
+  const [languageLocalStorage, setLanguageLocalStorage] = useAtom(languageAtom);
+  const [, setLanguage] = useQueryState(
+    "language",
+    parseAsStringEnum(languageQueryValues).withDefault(
+      getDefaultLanguageQueryValue(languageLocalStorage),
+    ),
+  );
   return (
     <Command className="bg-transparent">
       <CommandInput placeholder="Search for a language" />
@@ -42,13 +69,14 @@ function LanguageSelectContent({ onClose }: { onClose: () => void }) {
         <CommandGroup>
           <CommandItem
             onSelect={() => {
-              setLanguage("All Languages");
+              setLanguage(ALL_LANGUAGES_QUERY_VALUE);
+              setLanguageLocalStorage(ALL_LANGUAGES_LABEL);
               onClose();
             }}
-            value="all"
+            value={ALL_LANGUAGES_QUERY_VALUE}
           >
-            <LanguageIndicator language="All Languages" />
-            All Languages
+            <LanguageIndicator language={ALL_LANGUAGES_LABEL} />
+            {ALL_LANGUAGES_LABEL}
           </CommandItem>
         </CommandGroup>
         <CommandGroup heading="Popular">
@@ -57,6 +85,7 @@ function LanguageSelectContent({ onClose }: { onClose: () => void }) {
               key={language}
               onSelect={() => {
                 setLanguage(language);
+                setLanguageLocalStorage(language);
                 onClose();
               }}
               value={language}
@@ -72,6 +101,7 @@ function LanguageSelectContent({ onClose }: { onClose: () => void }) {
               key={language}
               onSelect={() => {
                 setLanguage(language);
+                setLanguageLocalStorage(language);
                 onClose();
               }}
               value={language}

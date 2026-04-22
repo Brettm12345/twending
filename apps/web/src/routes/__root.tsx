@@ -10,6 +10,7 @@ import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import type { TRPCOptionsProxy } from "@trpc/tanstack-react-query";
 import type { AppRouter } from "@twending/api/routers/index";
 import { Provider } from "jotai";
+import { NuqsAdapter } from "nuqs/adapters/tanstack-router";
 import posthog from "posthog-js";
 import { useEffect, useState } from "react";
 
@@ -131,7 +132,9 @@ function RootDocument() {
         </head>
         <body>
           <main className="grid h-svh grid-rows-[auto_1fr]">
-            <Outlet />
+            <NuqsAdapter>
+              <Outlet />
+            </NuqsAdapter>
           </main>
           <TanStackRouterDevtools position="bottom-left" />
           <ReactQueryDevtools buttonPosition="bottom-right" position="bottom" />

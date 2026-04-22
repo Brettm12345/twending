@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { Provider } from "jotai";
+import { withNuqsTestingAdapter } from "nuqs/adapters/testing";
 import type { ComponentProps, ReactNode } from "react";
 import { describe, expect, it, vi } from "vitest";
 import { PeriodSelect } from "./period-select";
@@ -77,15 +77,13 @@ vi.mock("@/hooks/use-media-query", () => ({
   useMediaQuery: vi.fn(() => false),
 }));
 
-function Wrapper({ children }: { children: ReactNode }) {
-  return <Provider>{children}</Provider>;
-}
-
 describe("PeriodSelect", () => {
   it("renders with current period label in the button", () => {
     localStorage.setItem("period", JSON.stringify("daily"));
 
-    render(<PeriodSelect data-testid="period-select" />, { wrapper: Wrapper });
+    render(<PeriodSelect data-testid="period-select" />, {
+      wrapper: withNuqsTestingAdapter(),
+    });
 
     // Daily appears both in button and dropdown
     const dailyElements = screen.getAllByText("Daily");
@@ -97,7 +95,7 @@ describe("PeriodSelect", () => {
   it("renders all period options in dropdown", () => {
     localStorage.setItem("period", JSON.stringify("daily"));
 
-    render(<PeriodSelect />, { wrapper: Wrapper });
+    render(<PeriodSelect />, { wrapper: withNuqsTestingAdapter() });
 
     // All periods appear in the dropdown options
     expect(screen.getAllByText("Daily").length).toBeGreaterThanOrEqual(1);
@@ -109,7 +107,7 @@ describe("PeriodSelect", () => {
   it("renders with weekly period when selected", () => {
     localStorage.setItem("period", JSON.stringify("weekly"));
 
-    render(<PeriodSelect />, { wrapper: Wrapper });
+    render(<PeriodSelect />, { wrapper: withNuqsTestingAdapter() });
 
     const weeklyButtons = screen.getAllByText("Weekly");
     // At least one in the trigger button and one in the dropdown

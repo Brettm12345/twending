@@ -1,5 +1,7 @@
+import { useAtom } from "jotai";
+import { parseAsStringEnum, useQueryState } from "nuqs";
 import { useRef, useState } from "react";
-import { usePeriodValue, useSetPeriod } from "@/atoms/period";
+import { periodAtom, usePeriodValue, useSetPeriod } from "@/atoms/period";
 import { Button } from "@/components/ui/button";
 import {
   CalendarDaysIcon,
@@ -40,8 +42,13 @@ const periods = [
 ];
 
 function PeriodSelectContent({ onClose }: { onClose: () => void }) {
-  const period = usePeriodValue();
-  const setPeriod = useSetPeriod();
+  const [periodLocalStorage, setPeriodLocalStorage] = useAtom(periodAtom);
+  const [period, setPeriod] = useQueryState(
+    "period",
+    parseAsStringEnum(["daily", "weekly", "monthly", "yearly"]).withDefault(
+      periodLocalStorage,
+    ),
+  );
   return (
     <Command className="bg-transparent" value={period}>
       <CommandInput placeholder="Search for a period" />
@@ -53,6 +60,7 @@ function PeriodSelectContent({ onClose }: { onClose: () => void }) {
               key={p.value}
               onSelect={() => {
                 setPeriod(p.value);
+                setPeriodLocalStorage(p.value);
                 onClose();
               }}
               value={p.value}
