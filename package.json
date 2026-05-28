@@ -7,7 +7,7 @@
     "@biomejs/biome": "2.4.12",
     "@types/node": "^22.13.11",
     "husky": "^9.1.7",
-    "turbo": "^2.5.4",
+    "turbo": "^2.9.14",
     "ultracite": "7.6.0"
   },
   "name": "twending",
